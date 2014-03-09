@@ -1,0 +1,163 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+{% block leftMenu %}
+<script>
+function getattendencelistfordate(dateofattend)
+{
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("tablevalues1").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/attendenceM?dateatten="+dateofattend,true);
+xmlhttp.send();
+
+
+}
+function isNumberKey(evt)
+          {
+             var charCode = (evt.which) ? evt.which : event.keyCode
+             if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+ 
+             return true;
+          }
+          function checkhour(hh) {
+
+if(hh>23)
+{
+alert("Please enter valid hour")
+document.getElementById("uniquesave").disabled=true;
+}
+else
+{
+document.getElementById("uniquesave").disabled=false;
+}
+
+}
+          function checkmin(mm) {
+
+if(mm>59)
+{
+alert("Please enter valid minutes")
+}
+
+}
+
+          
+</script>
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                       
+                      <li class="select"><a href="/attendences/" ><span class="ico gray shadow pictures_folder"></span><b>Staff Attendence</b></a></li>
+                      
+                      <li><a href="/report/attendence/" ><span class="ico gray shadow pictures_folder"></span><b>View Report</b></a></li>
+                      
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+                             {% block form1Title %}
+                             Mark Attendence
+                             
+                             {% endblock %}
+                                </div><!-- End widget-header -->	
+                                
+                                {% block form1Body %}
+                                    {% for error in errors %}
+                                    <font color="red">{{error}}<br></font>
+                                    {% endfor %}
+                                    
+                                    
+                                     
+                                      <form id="add_user" method="post" action="/attendence/add/"> 
+                                            <div class="section" >
+                                                <label>Date<sup>*</sup> </label>   
+                                                <div> <input type="text"  id="datepick" onchange="getattendencelistfordate(this.value)" class="datepicker"  name="date1"  value="{{date1}}" style="text-align:left"  /></div>
+                                           </div>
+                                           
+                                         
+                                    <div id="tablevalues1">
+                                    
+                                                                                    
+                                     <table class="table table-bordered table-striped " width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr>
+                                                        <td width="12%">EMPID</td>
+                                                        <td width="20%">Name</td>
+                                                      
+                                                        <td width="5%">Absent</td>
+
+                                                        
+                                                        <td width="15%">TimeIn</td>
+                                                        <td width="20%">TimeOut</td>
+                                                        
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody align="center" class="font_wght">
+                                                     
+                                                      {% for item in overall %}
+                                                       <tr>
+                                                        <td>{{item.0}}</td>
+                                                        <td>{{item.1}}</td>
+                                                    
+                                                        
+                                                         <td>
+                                                        {% if item.2 %}
+                                                    <input type="checkbox"   name="{{item.0}}" value="1" checked >
+                                                    {% else %}
+                                                      <input type="checkbox"  name="{{item.0}}" value="1">
+                                                      {% endif %}
+                                   
+     
+    
+                                                        </td>
+                                        	<td>
+                                        
+                                        	<input type="text" style="width:30px;" maxlength="2" name="{{item.0}}timeinhour" value="{{item.3}}" onkeypress="return isNumberKey(event)" placeholder="HH" onchange="checkhour(this.value)" /> : <input type="text" maxlength="2" style="width:30px;" name="{{item.0}}timeinmin" value="{{item.4}}" onkeypress="return isNumberKey(event)" placeholder="MM" onchange="checkmin(this.value)" />
+                                        	
+                                        	
+                                        	</td>
+                                        	<td>
+                                        	<input type="text" style="width:30px;" name="{{item.0}}timeouthour" value="{{item.5}}" maxlength="2" onkeypress="return isNumberKey(event)" placeholder="HH" onchange="checkhour(this.value)" /> : <input type="text" style="width:30px;" name="{{item.0}}timeoutmin" value="{{item.6}}" onkeypress="return isNumberKey(event)" placeholder="MM" onchange="checkmin(this.value)" maxlength="2" />
+                                        	</td>
+                                                                                                
+                                                      </tr>
+     {% empty %}
+     <tr><td colspan="5">No data at present</td></tr>
+                                                    {% endfor %}
+                                                      
+                                                    </tbody>
+                                                  </table> 
+                                           
+                                          
+                                           </div>
+                                           
+                                           
+                                           
+ <p align="center">                                          
+                                                  <input type="submit" id="uniquesave" value="Save" name="addAttendence" class="btn submit_form"></input>
+                                                  </p>
+ 
+                                        </form>
+                                </div><!--  end widget-content -->
+                         
+                            
+             <!-- start right section--> 
+{% endblock %}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}

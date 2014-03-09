@@ -1,0 +1,41 @@
+<html>
+<head>
+<script type="text/javascript">
+function addRow()
+{
+         if (!document.getElementsByTagName) return;
+         tabBody=document.getElementsByTagName("TBODY").item(0);
+         row=document.createElement("TR");
+         cell1 = document.createElement("TD");
+         cell2 = document.createElement("TD");
+         var textbox1 = document.createElement('input');  
+		textbox1.setAttribute('type', 'text');
+		textbox1.setAttribute('name', 'sib2id');
+		var textbox2 = document.createElement('input');  
+		textbox2.setAttribute('type', 'text');
+		textbox2.setAttribute('name', 'sib2id');
+
+         
+         
+         
+         cell1.appendChild(textbox1);
+         cell2.appendChild(textbox2);
+         row.appendChild(cell1);
+         row.appendChild(cell2);
+         tabBody.appendChild(row);
+
+
+}
+</script>
+</head>
+<body>
+<table border='1' id='mytable'>
+
+<tr><td width="5%">Fee Type</td><td width="5%">Fee Amount</td></tr>
+
+
+</table>
+<button onClick='addRow();return false;'>
+Add Row</button>
+</body>
+</html>

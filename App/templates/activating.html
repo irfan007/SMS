@@ -1,0 +1,83 @@
+{% extends 'dashboard.html'%}
+
+{% block header %}{%endblock%}
+{% block leftMenu %}{%endblock%}
+{% block topNavigation %}{%endblock%}
+
+
+{% block form2 %}{%endblock%}
+{% block form3 %}{%endblock%}
+
+
+
+{% block form1Title%}
+Activate Product
+{%endblock%}
+
+{%block form1Body%}
+
+                                  {% for error in errors %}
+                                    <font color="red">{{error}}<br>
+                                    {% endfor %}
+                                    </font>
+                                    
+                                     
+                                      <form method="post" action=""> 
+                                           
+                                           <legend><label style="color:red;">Customer</label></legend>
+                                           <div class="section" >
+                                                <label> Customer Name <sup>*</sup></label>   
+                                                <div> <input type="text" name="name" value="{{name}}" class="medium"  required/></div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label> Contact No. <sup>*</sup></label>   
+                                                <div> <input type="text" name="contact_no" value="{{contact_no}}" class="medium"  required/></div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label>Email ID <sup>*</sup></label>   
+                                                <div> <input type="text" name="email"  value="{{email}}" class="medium"  required/></div>
+                                           </div>
+                                           
+                                           
+                                           
+                                           <div class="section" >
+                                                <label> School Name <sup>*</sup></label>   
+                                                <div> <input type="text" name="school_name" value="{{school_name}}" class="medium"  required/></div>
+                                           </div>
+                                           
+                                           
+                                           <div class="section" >
+                                                <label>Address<sup>*</sup></label>   
+                                                <div><textArea style="width:40%;" placeholder=" " name="address" required>{{address}}</textArea></div>
+                                           </div>
+                                           
+                                           
+                                           
+                                           
+                                           <br/>
+                                           
+                                           <legend><label style="color:red;">Agent</label></legend>
+                                           <div class="section" >
+                                                <label> username <sup>*</sup></label>   
+                                                <div> <input type="text" name="username" value="{{username}}" class="medium"  required/></div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label>Password<sup>*</sup></label>   
+                                                <div> <input type="password" name="pwd" value="{{pwd}}" class=" medium"  /></div>
+                                           </div>
+                                           
+                                                                                     
+                                           <div class="section last">
+                                             <div>
+                                                  <input type="submit" name="activate" value="NEXT" class="btn submit_form" ></input>
+</div>
+                                           </div>
+                                        </form>
+                                        </form>
+{%endblock%}
+
+
+

@@ -1,0 +1,227 @@
+{% extends 'dashboard.html'%}
+{% load staticfiles %}
+
+
+
+{% block leftMenu %}
+              <div id="left_menu">
+                   <ul id="main_menu" class="main_menu">
+                       <li class="select"><a href="/subjectandteacher/" ><span class="ico gray shadow pictures_folder"></span><b>Subject & Teacher</b></a></li>
+                       
+                    </ul>
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+{% block form1Title%}
+Assign Subject's Teacher:
+{%endblock%}
+
+{%block form1Body%}
+<script>
+getMediumsOfStandardName
+
+
+function getMediumsOfStandardName(standardName)
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("medium_div").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/responder?getMediumsOfStandardName="+standardName,true);
+xmlhttp.send();
+}
+
+
+
+
+function getBlockByStandardNameAndMedium(standardName,mediumName)
+{
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("changing_div").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/responder?getBlockByStandardNameAndMedium="+standardName+":"+mediumName,true);
+xmlhttp.send();
+}
+</script>
+
+
+<form id="add_user" method="post" action="" >
+      <div style="background:lightyellow;{%if errors%}border:1px solid yellow;{%endif%}">
+      <ul style="color:red;style:disk;font-size:13px;">
+                	{% for e in errors %}
+                	  <li>&nbsp;{{e}}</li>
+                	{%endfor%}
+      </ul>
+      </div>
+      
+      
+      <div style="background:lightyellow;{%if cuMessages%}border:1px solid yellow;{%endif%}">
+      <ul style="color:green;style:disk;font-size:13px;">
+                	{% for m in cuMessages %}
+                	  <li>&nbsp;{{m}}</li>
+                	{%endfor%}
+      </ul>
+      </div>
+      
+      <div style="background:lightyellow;{%if cuWarnings%}border:1px solid yellow;{%endif%}">
+      <ul style="font-size:13px;">
+                	{% for w in cuWarnings %}
+                	  <li>&nbsp;{{w}}</li>
+                	{%endfor%}
+      </ul>
+      </div>
+      
+      
+                                           
+       
+                                                		  
+                                               
+                                                        
+                                           <div class="section" >
+                                                <label>&nbsp;&nbsp;&nbsp;STANDARD <sup>*</sup></label>   
+                                                <div class="selectWidth1" >
+                                                    <table>
+                                                    <tr>
+                                                    <td>
+                                                	<select class="small"  name="standardName" id="standard_id" onchange="getMediumsOfStandardName(this.value);">
+                                                	    <option value="-1"  selected>Select Standard</option>
+                                                	  {%for s,none in standards%}
+                                                	    {%ifequal standardName s%}
+                                                		<option value="{{s}}" selected>{{s|title}}</option>
+                                                		{%else%}
+                                                		<option value="{{s}}" >{{s|title}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > not found ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                	</td>
+                                                	
+                                                	</tr>
+                                                	</table>
+                                                </div>
+                                          </div>
+                                          
+                                          
+                                          <div class="section" >
+                                                <label>&nbsp;&nbsp;&nbsp;MEDIUM <sup>*</sup></label>
+                                                
+                                                <div class="selectWidth1" id="medium_div">
+                                                    <table>
+                                                    <tr>
+                                                    <td>
+                                                	<select class="small"  name="mediumName" onchange="getBlockByStandardNameAndMedium(document.getElementById('standard_id').value,this.value)">
+                                                	    <option value="-1"  selected>Select Medium</option>
+                                                	  {%for m in mediums%}
+                                                	    {%ifequal mediumName m%}
+                                                		<option value="{{m}}" selected>{{m|title}}</option>
+                                                		{%else%}
+                                                		<option value="{{m}}" >{{m|title}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > select Standard First ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                	</td>
+                                                	
+                                                	</tr>
+                                                	</table>
+                                                </div>
+                                          </div>
+                                          
+                  
+                  <div id="changing_div">
+                  {%if dataRows%}
+          		  <table class="table table-bordered table-striped  "  id="" width="100%">
+                                                    <thead align="center" >
+                                                     
+                                                      <tr class="tr_bg_list" >
+                                                        <td width="32%">Subject </td>
+                                                        {%for sec in uniqueSections%}
+                                                        <td width="32%">SECTION ({{sec}})</td>
+                                                        {%endfor %}
+                                                      </tr>
+                                                    </thead>
+                                                    
+                                                    
+                                                    <tbody align="center" class="font_wght">
+                                                    {%for r in dataRows%}
+                                                      <tr class="font_wght">
+                                                        <td>{{r.1}}</td>
+                                                        
+                                                        {%for mss,teacherId in r.2%}
+                                                        <td>
+                                                        	<select class="small"  name="tid_of_{{r.0}}:{{mss}}" >
+	                                                        	<option value="-1"  selected>Select Teacher</option>
+	                                                        	{%for t in teachers %}
+	                                                        		{%ifequal  t.id teacherId%}
+	                                                        	<option value="{{t.id}}" selected> {{t.getFullName}} / {{EP}}{{t.empId}}</option>
+                                                					{%else%}
+                                                				<option value="{{t.id}}" >{{t.getFullName}} / {{EP}}{{t.empId}}</option>
+                                                					{%endifequal%}
+                                                				{%empty%}
+                                                				<option value="-1" > teacher not defined ! </option>
+                                                      			{%endfor%}
+                                                       	
+                                                			</select>
+                                                		</td>
+                                                	   {%endfor%}
+                                                		
+                                                	  </tr>
+                                                	{%endfor%}
+                                                      
+                                                          
+                                               </tbody>
+                                               
+                                           </table>
+               {%endif%}                                           
+              </div>
+                                           
+                                           
+                                           <div class="section last">
+                                             <div>
+                                                  <input type="submit"  name="subjectAndTeacher" value="Save" class="btn submit_form"></input>
+                                             </div>
+                                           </div>
+                 
+                                        </form>
+{%endblock%}
+
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+
+
+
+
+
+

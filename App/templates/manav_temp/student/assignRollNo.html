@@ -1,0 +1,104 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+{% block leftMenu %}
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                  <li ><a href="/teacher/upload/marks" ><span class="ico gray shadow pictures_folder"></span><b>Upload Marks</b></a></li>
+                      <li ><a href="/teacher/view/marks" ><span class="ico gray shadow pictures_folder"></span><b>View Marks</b></a></li>
+                      <li ><a href="/result/" ><span class="ico gray shadow pictures_folder"></span><b>View Result</b></a></li>
+                      <li ><a href="/studPerformance/" ><span class="ico gray shadow pictures_folder"></span><b>View Performance</b></a></li>
+                      <li class="select"><a href="/assignRollNo/" ><span class="ico gray shadow pictures_folder"></span><b>Assign Roll No</b></a></li> 
+                    
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+                             {% block form1Title %}
+                             Assign Roll No      
+                         
+                             {% endblock %}
+                                </div><!-- End widget-header -->	
+                                
+                                {% block form1Body %}
+                                    {% for error in errors %}
+                                    <font color="red">{{error}}<br></font>
+                                    {% endfor %}
+                                    
+                                    
+                                     
+                                      <form id="add_user" method="post" action="/assignRollNo/"> 
+                                         
+                                           
+                                         
+                                    
+                                                                                    
+                                           <div class="section" >
+                                                <label>Class</label>   
+                                                <div class="selectWidth1">
+                                                <select class="small" name="getMSS" >
+                                                <option value="-1">Select</option>
+												{% for mss in allMSS %}
+												{% ifequal getmss mss.id %}
+												
+												<option value="{{mss.id}}" selected>{{mss.getName}}</option>
+												{% else %}
+												<option value="{{mss.id}}" >{{mss.getName}}</option>
+												{% endifequal %}
+												{% endfor %}		                                                                                         
+                                                </select>       
+                                      </div>
+                                           </div>
+                                    <div class="section">
+                                    <label>Order By</label>
+  									<div>
+  									<table><tr><td>
+  									{% ifequal orderby "1" %}
+  									<input type="radio" name="orderby" value="1" checked>
+  									{% else %}
+  									<input type="radio" name="orderby" value="1" >
+  									{% endifequal %}
+  									</td><td><label>Alphabet Order</label></td>
+  									
+  									
+  									
+  									
+  									<td> 
+  									{% ifequal orderby "2" %}
+  									<input type="radio" name="orderby" value="2" checked>
+  									{% else %}
+  									<input type="radio" name="orderby" value="2" >
+  									{% endifequal %}
+  									
+  									</td><td><label>AdmissionNo</label></td> 
+  									<td>
+  									
+  									
+  									</tr></table>
+  									</div>                                  
+                                    
+                                    
+                                    </div>       
+                                              
+                                           
+                                           
+                                         
+                                           
+                                          
+                                           
+                                           
+                                           
+                                            <div class="section last">
+                                                <div>
+                                                  <input type="submit" value="Save" name="assignRollNo" class="btn submit_form"></input>
+ </div>
+                                           </div>
+                                        </form>
+                                </div><!--  end widget-content -->
+                         
+                            
+             <!-- start right section--> 
+{% endblock %}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}

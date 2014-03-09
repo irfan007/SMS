@@ -1,0 +1,414 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+        <meta charset="utf-8">
+        <title>School Management System: :  Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+        <!-- Link shortcut icon-->
+        <link rel="shortcut icon" type="image/ico" href="images/favicon.html"/> 
+ 
+        <!-- CSS Stylesheet-->
+        <link type="text/css" rel="stylesheet" href="{% static "components/bootstrap/bootstrap.css" %}" />
+        <link type="text/css" rel="stylesheet" href="{% static "components/bootstrap/bootstrap-responsive.css" %}" />
+        <link type="text/css" rel="stylesheet" href="{% static "css/style.css" %}"/>
+		<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="{% static "components/flot/excanvas.min.js" %}"></script><![endif]-->  
+		        
+		<link rel="stylesheet" href="{% static "combo_input/css/style.css" %}" type="text/css" media="screen"/>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js" type="text/javascript"></script>
+ 
+		<script>
+		
+		     function isNumberKey(evt)
+	          {
+	             var charCode = (evt.which) ? evt.which : event.keyCode
+	             if (charCode > 31 && (charCode < 48 || charCode > 57))
+	                return false;
+	 
+	             return true;
+	          }
+
+			$(document).ready(function(){
+		    $(".magazine_div").show();
+		    $(".combo_div").hide();
+		     
+		    $('.magazine').click(function(){
+		    $(".magazine_div").slideToggle();
+		    $(".combo_div").hide();
+		    });
+		     
+		    $('.combo').click(function(){
+		    $(".combo_div").slideToggle();
+		     $(".magazine_div").hide();
+		    });
+            });
+ 
+			function openURLInCenterOfScreen(URL)
+			{
+			wp=window.screen.width /10;
+			hp=window.screen.height/10;
+			w=wp*8;
+			h=hp*8; 
+			var win = window.open(URL,'anyName', 'left='+wp+',top='+hp/2+',height='+h+',width='+w+',resizable=yes,scrollbars=yes');
+			win.focus();
+			return false;
+			}
+ 
+ 
+			function setPaymentDetails(value) {
+			  
+			  if (value=='out')
+			  {
+			  $(".division").hide();
+			  }
+			  else
+			  {$(".division").show();}
+			  
+			  if (value=='d')
+			  { 
+			  $(".when_cash").show();
+			  document.getElementById('pt_date').innerHTML="DD Date";
+			  document.getElementById('pt_no').innerHTML="DD No.";
+			  document.getElementById('pt_ddate').innerHTML="DD Deposite Date";
+			  document.getElementById('pt_cdate').innerHTML="DD Clearance Date";
+			  }
+			  else if(value=='chq')
+			  { 
+			  $(".when_cash").show();
+			  document.getElementById('pt_date').innerHTML="cheque Date";
+			  document.getElementById('pt_no').innerHTML="cheque No.";
+			  document.getElementById('pt_ddate').innerHTML="cheque Deposite Date";
+			  document.getElementById('pt_cdate').innerHTML="cheque Clearance Date";
+			  }
+			  else if(value=='a')
+			  { 
+			  $(".when_cash").show();
+			  document.getElementById('pt_date').innerHTML="NEFT Date";
+			  document.getElementById('pt_no').innerHTML="NEFT No.";
+			  document.getElementById('pt_ddate').innerHTML="NEFT Deposite Date";
+			  document.getElementById('pt_cdate').innerHTML="NEFT Clearance Date";
+			  }
+			  else if(value=='o')
+			  {
+			  $(".when_cash").show();
+			  document.getElementById('pt_date').innerHTML="Transaction Date";
+			  document.getElementById('pt_no').innerHTML="Transaction No.";
+			  $(".when_online").hide();
+			  document.getElementById('pt_cdate').innerHTML="Transaction Transferred Date";
+			  }
+			  else if(value=='c')
+			  {
+			  $(".when_cash").hide(); 
+			  document.getElementById('pt_date').innerHTML="Receipt Date";
+			  document.getElementById('pt_no').innerHTML="Receipt No.";
+			  }
+			}
+ 
+ 
+ 
+ 
+			$(function() {
+			$( "#datepicker" ).datepicker();
+			});
+ 
+		</script>
+ 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js" type="text/javascript"></script>
+        <script type="text/javascript" src="{% static "combo_input/jquery11111.js" %}"></script>
+        
+        <script type="text/javascript">
+            $(function() {
+                /**
+                * the element
+                */
+                var $ui         = $('#ui_element');
+                 
+                /**
+                * on focus and on click display the dropdown, 
+                * and change the arrow image
+                */
+                $ui.find('.sb_input').bind('focus click',function(){
+                    $ui.find('.sb_down')
+                       .addClass('sb_up')
+                       .removeClass('sb_down')
+                       .andSelf()
+                       .find('.sb_dropdown')
+                       .show();
+                });
+                 
+                /**
+                * on mouse leave hide the dropdown, 
+                * and change the arrow image
+                */
+                $ui.bind('mouseleave',function(){
+                    $ui.find('.sb_up')
+                       .addClass('sb_down')
+                       .removeClass('sb_up')
+                       .andSelf()
+                       .find('.sb_dropdown')
+                       .hide();
+                });
+                 
+                /**
+                * selecting all checkboxes
+                */
+                $ui.find('.sb_dropdown').find('label[for="all"]').prev().bind('click',function(){
+                    $(this).parent().siblings().find(':checkbox').attr('checked',this.checked).attr('disabled',this.checked);
+                });
+            });
+        </script>     
+        <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "components/ui/jquery.ui.min.js" %}"></script> 
+        <script type="text/javascript" src="{% static "components/bootstrap/bootstrap.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "components/ui/timepicker.js" %}"></script>
+        <script type="text/javascript" src="{% static "components/colorpicker/js/colorpicker.js" %}"></script>
+        <script type="text/javascript" src="{% static "components/form/form.js" %}"></script>
+        <script type="text/javascript" src="{% static "components/elfinder/js/elfinder.full.js" %}"></script>
+        <script type="text/javascript" src="{% static "components/datatables/dataTables.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "components/fancybox/jquery.fancybox.js" %}"></script>
+        <script type="text/javascript" src="{% static "components/jscrollpane/jscrollpane.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "components/editor/jquery.cleditor.js" %}"></script>
+        <script type="text/javascript" src="{% static "components/chosen/chosen.js" %}"></script>
+        <script type="text/javascript" src="{% static "components/validationEngine/jquery.validationEngine.js" %}"></script>
+        <script type="text/javascript" src="{% static "components/validationEngine/jquery.validationEngine-en.js" %}"></script>
+        <script type="text/javascript" src="{% static "components/fullcalendar/fullcalendar.js" %}"></script>
+        <script type="text/javascript" src="{% static "components/flot/flot.js" %}"></script>
+        <script type="text/javascript" src="{% static "components/uploadify/uploadify.js" %}"></script>       
+        <script type="text/javascript" src="{% static "components/Jcrop/jquery.Jcrop.js" %}"></script>
+        <script type="text/javascript" src="{% static "components/smartWizard/jquery.smartWizard.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/jquery.cookie.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/zice.custom.js" %}"></script>
+        
+        
+		<link rel="stylesheet" type="text/css" href="{% static "menu2/ddsmoothmenu.css" %}" />
+		<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>-->
+		<script type="text/javascript" src="{% static "menu2/ddsmoothmenu.js" %}"></script>
+		<script type="text/javascript">
+		ddsmoothmenu.init({
+		    mainmenuid: "smoothmenu1", //menu DIV id
+		    orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+		    classname: 'ddsmoothmenu', //class added to menu's outer DIV
+		    //customtheme: ["#1c5a80", "#18374a"],
+		    contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+		})
+		 
+		ddsmoothmenu.init({
+		    mainmenuid: "smoothmenu2", //Menu DIV id
+		    orientation: 'v', //Horizontal or vertical menu: Set to "h" or "v"
+		    classname: 'ddsmoothmenu-v', //class added to menu's outer DIV
+		    //customtheme: ["#804000", "#482400"],
+		    contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+		})
+		</script>
+		<script>
+        function updateClock ( )
+{
+var dayNames = new Array("Sunday","Monday","Tuesday","Wednesday",
+				"Thursday","Friday","Saturday");
+
+// Array of month Names
+var monthNames = new Array(
+"January","February","March","April","May","June","July",
+"August","September","October","November","December");
+
+var now = new Date();
+x=dayNames[now.getDay()] + ", " + 
+monthNames[now.getMonth()] + " " + 
+now.getDate() + ", " + now.getFullYear();
+  var currentTime = new Date ( );
+	
+  var currentHours = currentTime.getHours ( );
+  var currentMinutes = currentTime.getMinutes ( );
+  var currentSeconds = currentTime.getSeconds ( );
+
+  // Pad the minutes and seconds with leading zeros, if required
+  currentMinutes = ( currentMinutes < 10 ? "0" : "" ) + currentMinutes;
+  currentSeconds = ( currentSeconds < 10 ? "0" : "" ) + currentSeconds;
+
+  // Choose either "AM" or "PM" as appropriate
+  var timeOfDay = ( currentHours < 12 ) ? "AM" : "PM";
+
+  // Convert the hours component to 12-hour format if needed
+  currentHours = ( currentHours > 12 ) ? currentHours - 12 : currentHours;
+
+  // Convert an hours component of "0" to "12"
+  currentHours = ( currentHours == 0 ) ? 12 : currentHours;
+
+  // Compose the string for display
+  var currentTimeString = currentHours + ":" + currentMinutes + ":" + currentSeconds + " " + timeOfDay;
+
+  // Update the time display
+  document.getElementById("manav_time").firstChild.nodeValue = x+' '+currentTimeString;
+}
+        </script>
+        
+</head>        
+
+
+
+<body  onload="updateClock(); setInterval('updateClock()', 1000 )">
+      
+      
+      {%block header%}
+      <!-- Header -->
+      <div id="header" style="padding:10px 0 10px 10px; float:left">
+      	<div style="float:left;"><a href="/"><img src="{% static "uploaded/school/school.jpeg" %}" height="50px" width="100px" alt="logo" /></a></div>
+        <div style="float:left; padding:10px 0 0 30px;" class="schlname">
+        	{%if schoolTitle%}
+        		{{schoolTitle}}
+        	{%else%}
+        		International School
+        	{%endif%}
+        </div>
+        <!--
+        <div style="float:left; margin-left:80px ;">
+        	<input name="" type="text" class="header-search-input">
+        	<input type="submit"  class="btnLink" value="" />
+        </div>
+        -->
+        <div style="float:right; width:auto; padding-right:30px;">
+        	<div id="account_info">
+        		<div id="manav_time" class="time" style="float:left;padding:0px 0 0 10px;">
+                	
+				</div>
+				
+				<div >
+				    {%if CU.getImageURL%}
+					<img src="{% static CU.getImageURL %}" alt="NO IMAGE" width="50px" height="50px"  style="margin-top:-14px"/>
+					{%else%}
+					<img src="{% static 'images/noimage.jpeg' %}" alt="NO IMAGE"  style="margin-top:-14px"/>
+					{%endif%}
+					
+					<!--
+                    <ul class="subnav ">
+                        <li><a href="/">Dashboard</a></li>
+                        <li><a href="#">Profile</a></li>
+                        <li><a href="/school/">Setting</a></li>
+                        <li><a href="#">Reset password</a></li>
+                        <br class="clear"/>
+                    </ul>
+                    -->
+                </div>
+				
+				<span>welcome, {{CU.username}}</span>
+				
+				
+                <a href="/logout">&nbsp;&nbsp;&nbsp; Logout &nbsp;&nbsp;&nbsp;</a>
+            </div>
+        </div>
+       </div>
+       <!-- End Header -->
+       {%endblock%}
+       
+           
+     
+    
+    
+        {% block topNavigation %}
+        <!--start top navigation-->
+    	<div class="row-fluid fixed_element" >
+    		<div id="smoothmenu1" class="ddsmoothmenu">
+    			<ul>
+    			    {%if config or isAdmin%}
+				    <li><a href="{{config_default_url}}">Configuration</a></li>
+				    <li class="menu_gap">|</li>
+				    {%endif%}
+				    
+				    
+				    {%if CUP.teacher.v or isAdmin %}
+				    <li><a href="/teacher/upload/marks">Teacher</a></li>
+				    <li class="menu_gap">|</li>
+				    {%endif%}
+				    
+				    {%if CUP.student.v or isAdmin%}
+				    <li><a href="/students/">Student</a></li>
+				    <li class="menu_gap">|</li>
+				    {%endif%}
+				    
+				    {%if CUP.fees.v or isAdmin%}
+				    <li><a href="/feeCategory/">Fees</a></li>
+				    <li class="menu_gap">|</li>
+				    {%endif%}
+				    
+				    
+				    {%if CUP.attendance.v or isAdmin%}
+				    <li><a href="/attendences/">Attendance</a></li>
+				    <li class="menu_gap">|</li>
+				    {%endif%}
+				    
+				    {%if CUP.library.v or isAdmin%}
+				    <li><a href="/libItems/">Library</a></li>
+				    <li class="menu_gap">|</li>
+				    {%endif%}
+				    
+				    {%if CUP.assign.v or isAdmin%}
+				    <li><a href="/subjectandteacher/">Subject & Teacher</a></li>
+				    <li class="menu_gap">|</li>
+				    {%endif%}
+				    
+				    {%if CUP.schedule.v or isAdmin%}
+				    <li><a href="/timetable/">Schedule Period</a></li>
+				    <li class="menu_gap">|</li>
+				    {%endif%}
+				   {%if CUP.notice.v or isAdmin%}
+				    <li><a href="/notice/">Notice</a></li>
+				    <li class="menu_gap">|</li>
+				    {%endif%}
+				    
+				    <li><a href="/myaccount/">My Account </a></li>
+				    
+				    
+    			</ul>
+                
+                <br style="clear:left" />
+            </div>
+       </div>
+       <!--end top navigation-->
+       {% endblock %}
+       
+            
+       
+       {% block leftMenu %}
+       <!-- left_menu -->
+       <!-- end left_menu -->
+       {%endblock%}
+              
+       {%block content%}
+       <div id="content">
+       		<div class="inner">
+       			<div class="row-fluid element_pad" >
+       			<!-- Dashboard  widget -->
+                <div style="float:left; margin-top:20px;width:100%">
+                	<div style="float:left; width:{%block form1Width%}100%{%endblock%}; float:left;">
+                		<div class="widget span12 clearfix">
+                			<div class="widget-header">
+                			<span>{% block form1Title%}title{%endblock%}</span>
+                            
+                            {% block form1Header%}{%endblock%}
+                            </div>
+                            <!-- End widget-header -->     
+                                
+                            {%block widgetContent%}
+                            <div class="widget-content">
+                                
+                                {% block form1Body %}
+                                {% endblock%}                            	
+                            </div>
+                            
+                            <!--  end widget-content -->
+                            {%endblock%}
+                        </div>
+                    </div>
+                    <!-- widget  span12 clearfix-->
+                </div>
+            </div>
+            <!--End inner -->
+        </div>
+        <!--End content -->
+        {%endblock%}
+        
+</body>
+ 
+</html>

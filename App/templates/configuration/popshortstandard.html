@@ -1,0 +1,44 @@
+{% extends 'dashboard.html'%}
+
+{% block header %}{%endblock%}
+{% block leftMenu %}{%endblock%}
+{% block topNavigation %}{%endblock%}
+{% block form2 %}{%endblock%}
+{% block form3 %}{%endblock%}
+
+
+
+{% block form1Title%}
+Add Standard:
+{%endblock%}
+
+{%block form1Body%}
+
+                                    {% for error in errors %}
+                                    <font color="red">{{error}}<br>
+                                    </font>
+                                    {% endfor %}
+<form id="add_user" method="post" action="">
+                                       
+                                            <div class="section" >
+                                                <label>Standard Name<sup>*</sup> </label>   
+                                                <div> <input type="text" name="name" class=" large" value="{{name}}"  /></div>
+                                           </div>
+                                          
+                                          
+                                           
+
+                                          
+                                          
+                                           
+                                                                         
+                                            <div class="section last">
+                                                <div>
+                                                  <input type="submit" name="addshortstandard" value="submit" class="btn submit_form"></input>
+<a class="btn" title="Reset Form" onclick="ResetForm()">Clear Form</a> </div>
+                                           </div>
+                                        </form>
+{%endblock%}
+
+
+

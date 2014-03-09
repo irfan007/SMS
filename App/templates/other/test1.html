@@ -1,0 +1,267 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+{% block leftMenu %}
+
+
+
+             <div id="left_menu">
+              <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+ 
+
+
+             <script type="text/javascript">
+             var x=2
+function addRow()
+{
+document.getElementById('getHide').value=x
+
+         if (!document.getElementsByTagName) return;
+         tabBody=document.getElementsByTagName("TBODY").item(0);
+         row=document.createElement("TR");
+         cell1 = document.createElement("TD");
+         cell2 = document.createElement("TD");
+         cell3 = document.createElement("TD");
+         cell4 = document.createElement("TD");
+         cell5 = document.createElement("TD");
+         cell6 = document.createElement("TD");
+         
+         
+         var textbox1 = document.createElement('input');  
+		textbox1.setAttribute('type', 'text');
+		textbox1.setAttribute('name', 'standard'+x.toString());
+		textbox1.setAttribute('style','width:90px;');
+		textbox1.setAttribute('readonly',true);
+		textbox1.setAttribute('value',document.getElementById('standard1').value);
+		var textbox2 = document.createElement('select');  
+		textbox2.setAttribute('type', 'text');
+		textbox2.setAttribute('name', 'sib2id');
+		var textbox3 = document.createElement('input');  
+		textbox3.setAttribute('type', 'text');
+		textbox3.setAttribute('name', 'sib2id');
+		textbox3.setAttribute('style','width:90px;');
+		var textbox4 = document.createElement('input');  
+		textbox4.setAttribute('type', 'text');
+		textbox4.setAttribute('name', 'sib2id');
+		textbox4.setAttribute('style','width:50px;');
+		textbox4.setAttribute('value',document.getElementById('period1').value);
+		textbox4.setAttribute('readonly',true);
+        var textbox5 = document.createElement('select');  
+		textbox5.setAttribute('type', 'text');
+		textbox5.setAttribute('name', 'sib2id');
+		 
+		
+		var textbox6 = document.createElement('input');  
+		textbox6.setAttribute('type', 'text');
+		textbox6.setAttribute('name', 'sib2id');
+		textbox6.setAttribute('style','width:50px;');
+		textbox6.setAttribute('value', document.getElementById('timePeriod').value);
+		textbox6.setAttribute('readonly',true);
+		var textbox7 = document.createElement('input');  
+		textbox7.setAttribute('type', 'text');
+		textbox7.setAttribute('name', 'sib2id');
+		textbox7.setAttribute('style','width:30px;');
+		var textbox8 = document.createElement('input');  
+		textbox8.setAttribute('type', 'text');
+		textbox8.setAttribute('name', 'sib2id');
+		textbox8.setAttribute('style','width:30px;');
+         
+         
+         cell1.appendChild(textbox1);
+         cell2.innerHTML=document.getElementById('getmed').innerHTML
+         cell3.innerHTML=document.getElementById('getsec').innerHTML
+         cell4.appendChild(textbox4);
+         cell5.innerHTML=document.getElementById('getteacher').innerHTML
+         cell6.appendChild(textbox6)
+        
+         row.appendChild(cell1);
+         row.appendChild(cell2);
+         row.appendChild(cell3);
+         row.appendChild(cell4);
+         row.appendChild(cell5);
+         row.appendChild(cell6);
+         
+         tabBody.appendChild(row);
+
+x=x+1
+}
+</script>
+<script>
+function fun()
+{
+alert('dfdsf');
+alert(document.getElementById('123').innerHTML);
+document.getElementById('1234').innerHTML=document.getElementById('123').innerHTML
+}
+</script>
+             <script>
+           function setPopshortstandard(id)
+{
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  
+  
+  xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    
+    //alert(xmlhttp.responseText);
+    document.getElementById("idOf_popshortstandard").innerHTML=xmlhttp.responseText;
+    }
+  }
+  
+xmlhttp.open("GET","/responderM?popshortstandard="+id,true);
+xmlhttp.send();
+}
+function isNumberKey(evt)
+          {
+             var charCode = (evt.which) ? evt.which : event.keyCode
+             if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+ 
+             return true;
+          }
+
+           
+            
+             </script>
+                    <ul id="main_menu" class="main_menu">
+                       
+                 <li><a href="/role" ><span class="ico gray shadow pictures_folder"></span><b>Role</b></a></li>
+                       <li><a href="/user" ><span class="ico gray shadow pictures_folder"></span><b>User</b></a></li>
+                       <li  ><a href="/staff" ><span class="ico gray shadow pictures_folder"></span><b>Staff</b></a></li>
+                       <li ><a href="/mediums/" ><span class="ico gray shadow pictures_folder"></span><b>Medium</b></a></li>
+                       <li ><a href="/sections/" ><span class="ico gray shadow pictures_folder"></span><b>Section</b></a></li>
+                       <li class="select"><a href="/standards/" ><span class="ico gray shadow pictures_folder"></span><b>Standard</b></a></li>
+                       <li ><a href="/subjects/" ><span class="ico gray shadow pictures_folder"></span><b>Subject</b></a></li>
+                       <li ><a href="/manage/subject/" ><span class="ico gray shadow pictures_folder"></span><b>Assign Subject</b></a></li>
+                       <li ><a href="/holidays/" ><span class="ico gray shadow pictures_folder"></span><b>Holidays</b></a></li>
+                       <li ><a href="/school/" ><span class="ico gray shadow pictures_folder"></span><b>Setting</b></a></li>
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+                             {% block form1Title %}
+                             Add Standard
+                             
+                             {% endblock %}
+                                </div><!-- End widget-header -->	
+                                
+                                {% block form1Body %}
+                                    {% for error in errors %}
+                                    <font color="red">{{error}}<br>
+                                    {% endfor %}
+                                    </font>
+                                    
+                                     
+                                      <form id="add_user" method="post" action="/standard/adding/"> 
+                                      <input type="hidden" id="getHide" value="" name="fun123">
+                                    <table class="table table-bordered table-striped " id='mytable' width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr >
+                                                        
+                                                        <td width="10%">Standard Name</td>
+                                                        
+
+                                                        
+                                                        <td width="10%">Medium</td>
+                                                        <td width="10%">Sections</td>
+                                                      <td width="10%">Periods</td>
+                                                      <td width="10%">ClassTeacher</td>
+                                                      <td width="10%">PeriodDuration</td>
+                                                       
+                                                      
+                                                        
+                                                      </tr>
+                                                    </thead>                                             
+                                   
+
+
+
+
+ <tbody align="center" class="font_wght">
+ 
+<div id="123">
+ <tr>
+ <td>
+ <input type="text" id="standard1" name="standardname1" value="" style='width:90px;'>
+ </td>
+ <td>
+ <div id="getmed">
+ <select name="medium1">
+ <option value="-1">Select</option>
+ {% for v in mediums %}
+ <option value="{{v.id}}">{{v.name}}</option> 
+{% endfor %}
+</select>
+</div>
+</td>
+<td>
+<div id="getsec">
+ <pre><select name="section"><option value="-1">select</option>{% for s in sections %}<option value="s.id">{{s.name}}</option>{% endfor %}<select><a  onclick="addRow();" ><img src="{% static 'images/icon_addlink.gif' %}" ></a></pre>
+</div> 
+ </td>
+ 
+ <td>
+ <input type="text" name="period1" id="period1" value="" style='width:50px;'>
+ </td>
+ <td>
+ <div id="getteacher">
+ <select name="teacher1">
+ <option value="-1">Select</option>
+ {% for t in allTeachers %}
+ <option value="{{t.id}}">{{t.id}}</option> 
+{% endfor %}
+</select>
+</div>
+</td>
+<td>
+ <input type="text" name="timePeriod" id="timePeriod" value="" style='width:50px;'>
+ </td>
+ 
+  </tr>
+  </div>
+  <tr>
+  <div id="1234">
+  </div>
+</tr>
+ 
+ 
+ 
+ 
+
+                        </tbody></table>                   
+                                            <div class="section last">
+                                                <div>
+                                                  <input type="submit" value="Save" name="addStandard" class="btn submit_form"></input>
+<a class="btn" title="Reset Form" onclick="ResetForm()">Clear Form</a> </div>
+                                           </div>
+                                        </form>
+                                </div><!--  end widget-content -->
+                         
+                            
+             <!-- start right section--> 
+{% endblock %}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+
+
+
+<html>
+	<head>
+		
+	</head>
+	<body>
+		
+	</body>
+</html>

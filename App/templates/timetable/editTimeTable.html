@@ -1,0 +1,232 @@
+{% extends 'dashboard.html'%}
+{% load staticfiles %}
+
+
+
+{% block leftMenu %}
+              <div id="left_menu">
+                   <ul id="main_menu" class="main_menu">
+                       <li class="select"><a href="/timetable/" ><span class="ico gray shadow pictures_folder"></span><b>Schedule Periods</b></a></li>
+                    </ul>
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+{% block form1Title%}
+Schedule Periods:
+{%endblock%}
+
+{%block form1Body%}
+<script>
+function getPeriodBlock(classId)
+{
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("period_block_div").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/responder?periodofclass="+classId,true);
+xmlhttp.send();
+}
+
+function getTeacher(classId,subject,rid)
+{
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    
+    document.getElementById("tName_"+rid).innerHTML=xmlhttp.responseText.split(':')[0];
+    document.getElementById("teacher_id_"+rid).value=xmlhttp.responseText.split(':')[0];
+    document.getElementById("teacher_has_id_"+rid).value=xmlhttp.responseText.split(':')[1];
+    }
+  }
+xmlhttp.open("GET","/responder?teacherofsubjectofclass="+subject+"of"+classId,true);
+xmlhttp.send();
+}
+
+function hasEditForm(mss,day)
+{
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    
+				    if(xmlhttp.responseText=='yes')
+				    {
+				    str='/timetable/'+mss+'/'+day;
+					
+					location.href =str;
+				    }
+				    else
+				    {
+				    //alert('need to update ');
+				    getPeriodBlock(mss);
+				    }
+				    
+    }
+  }
+xmlhttp.open("GET","/responder?hastimetableofmssofday="+mss+":"+day,true);
+xmlhttp.send();
+}
+
+</script>
+
+
+<form id="add_user" method="post" action="" >
+      <div style="background:lightyellow;">
+      <ul style="color:red;style:disk;">
+                	{% for e in errors %}
+                	  <li>{{e}}</li>
+                	{%endfor%}
+      </ul>
+      </div>
+      
+      
+       
+                                                		  
+                                               
+                                                        
+                                           <div class="section" >
+                                                <label>Select CLASS <sup>*</sup></label>   
+                                                <div class="selectWidth1" >
+                                                	<select class="small"  name="mss" id="id_mss" onchange="getPeriodBlock(this.value);hasEditForm(this.value,document.getElementById('day_id').value);">
+                                                		<option value="-1"  selected>Select Class</option>
+                                                	  {%for c in classes%}
+                                                	    {%ifequal mss c.id%}
+                                                		<option value="{{c.id}}" selected>{{c.getName|upper}}</option>
+                                                		{%else%}
+                                                		<option value="{{c.id}}" >{{c.getName|upper}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > classes not defined ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                </div>
+                                          </div>
+                                          
+                                          
+                                           <div class="section" >
+                                                <label>Select Day <sup>*</sup></label>   
+                                                <div class="selectWidth1">
+                                                	<select class="small"  name="day" id="day_id" onchange="hasEditForm(document.getElementById('id_mss').value,this.value);">
+                                                		<option value="-1"  selected>Select Day</option>
+                                                	  {%for k,v in days.items%}
+                                                	    {%ifequal day k%}
+                                                		<option value="{{k}}" selected>{{v}}</option>
+                                                		{%else%}
+                                                		<option value="{{k}}" >{{v}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > not found ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                </div>
+                                          </div>
+            
+                  
+                  <div id="period_block_div">
+          		  <table class="table table-bordered table-striped  "  id="" width="100%">
+                                                    <thead align="center" >
+                                                     
+                                                      <tr class="tr_bg_list" >
+                                                        <td width="32%">Period</td>
+                                                        <td width="32%">Subject</td>
+                                                        <td width="36%">Subject Teacher</td>
+                                                      </tr>
+                                                    </thead>
+                                                    
+                                                    
+                                                    <tbody align="center" class="font_wght">
+                                                    {%for r in dataRows%}
+                                                      <tr>
+                                                     	<td>{{r.1}}</td>
+                                                     	
+                                                     	<td>
+                                                      					<select  class="small" name="subject_{{r.0}}" onchange="getTeacher(document.getElementById('id_mss').value,this.value,{{r.0}});">
+                                                           					<option value="-1"  selected>Select Subject</option>
+                                                           					{%for s in allSubject %}
+                                                           						{%ifequal s.name r.2%}
+	                                                        				<option value="{{s.name}}" selected>{{s.name|upper}}</option>
+			                                                					{%else%}
+			                                                				<option value="{{s.name}}" >{{s.name|upper}}</option>
+                                                								{%endifequal%}
+                                                							{%empty%}
+                                                							<option value="-1" > not found ! </option>
+                                                							{%endfor%}
+                                                       					</select>
+                                                     	</td>
+                                                     	
+                                                     	<td>
+                                                     		<label id="tName_{{r.0}}">{{r.3}}</label>
+                                                     		<input type="hidden" value="{{r.3}}" name="teacher_{{r.0}}" id="teacher_id_{{r.0}}">
+                                                     		<input type="hidden" value="{{r.4}}" name="teacher_for_id_{{r.0}}" id="teacher_has_id_{{r.0}}">
+                                                     	</td>
+                                                     </tr>
+                                                    {%empty%}
+                                                     <tr>
+                                                     	<td colspan="3">
+                                                     		<label >please select class first !</label> 
+                                                     	</td>
+                                                     </tr>
+                                                    {%endfor%}
+                                               
+                                               </tbody>
+                                               
+                                           </table>                                           
+                              </div>
+                                           
+                                           <div class="section last">
+                                             <div>
+                                             
+                                                  
+                                                  <input type="submit" name="createTimeTable" value="Save" class="btn submit_form"></input >
+                                                  
+                                             </div>
+                                           </div>
+                                        </form>
+{%endblock%}
+
+
+
+
+
+
+
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}

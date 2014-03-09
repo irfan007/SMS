@@ -1,0 +1,327 @@
+{% extends 'dashboard.html'%}
+{% load staticfiles%}
+{% block form1Title%}
+Purchase Item 
+{%endblock%}
+
+
+{% block leftMenu %}
+<script>
+function isNumberKey(evt)
+          {
+             var charCode = (evt.which) ? evt.which : event.keyCode
+             if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+ 
+             return true;
+          }
+function getPaymentSection()
+{
+
+   if(document.getElementById('donor1').checked==false)
+            {
+             document.getElementById("paysection").innerHTML = '<div class="section" ><label>Total Bill</label><div><input type="text" name="totalcost" maxlength="10" value="{{totalcost}}"\
+             class="small" onkeypress="return isNumberKey(event)" /></div></div>\
+              <div class="section" ><label>Payment Mode</label><div class="selectWidth1">\
+              <select name="paymentmode"><option value="cash">cash</option>\
+              <option value="cheque">cheque</option><option value="draft">draft</option></select>\
+              </div></div>\
+              <div class="section" ><label>ReciptNo</label><div><input type="text" maxlength="25" name="reciptno" value="{{reciptno}}"\
+             class="small" /></div></div>\
+              ';  
+    }
+            else if(document.getElementById('donor1').checked==true)
+            {
+            document.getElementById("paysection").innerHTML = ''; 
+            }
+
+
+}
+function getTotalBill()
+{
+
+quantity=document.getElementById('quantid').value
+price=document.getElementById('priceid').value
+
+totalAmt=parseInt(quantity)*parseInt(price)
+if (isNaN(parseInt(totalAmt)))
+{
+document.getElementById('totalamt').value=''
+}
+else
+{
+document.getElementById('totalamt').value=totalAmt
+}
+}
+
+</script>
+              <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                           <li class="select"><a href="/libItems/" ><span class="ico gray shadow pictures_folder"></span><b>Purchase Item</b></a></li>
+                        <li><a href="/manageStocks/" ><span class="ico gray shadow pictures_folder"></span><b>Item Stock</b></a></li>
+                         <li><a href="/libMembers/" ><span class="ico gray shadow pictures_folder"></span><b>Members</b></a></li>
+                          
+                          <li><a href="/Issues/" ><span class="ico gray shadow pictures_folder"></span><b>Issues</b></a></li>
+                    </ul>
+                    
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+{%endblock%}
+
+              
+{%block widgetContent%}
+
+
+   
+
+
+
+
+   
+
+
+
+
+    
+
+
+<div class="content" style="margin:0 10px 0 10px" >
+{% for error in errors %}
+<font color="red">{{error}}</font>
+<br>
+{% endfor %}
+		<!-- Smart Wizard -->
+  		<div id="wizard" class="swMain" >
+  			<ul>
+
+  				<li><a href="#step-1">
+                <span class="stepDesc">Item Detail<br />
+                </span>
+            </a></li>
+  				<li><a href="#step-2">
+                <span class="stepDesc">Supplier Details<br />
+                </span>
+            </a></li>
+
+         
+  			
+  			</ul>
+            
+             <form name="form1" method="post" action="/libItem/add/" enctype="multipart/form-data"> 
+  			<div id="step-1" style="width:100%;">
+			          <div class="widget-content" style="width:100%;">
+                                    <!-- title box -->
+											  <div class="section" >
+                                                <label>Name <sup>*</sup></label>   
+                                                <div> <input type="text" name="itemname" maxlength="100" value="{{itemname}}" class="medium"  /></div>
+
+                                           </div>
+                                             <div class="section" >
+                                                <label>Code <sup>*</sup></label>   
+                                                <div> <input type="text" name="itemcode" maxlength="100" value="{{itemcode}}"  class="medium"  /></div>
+											</div>
+                                           <div class="section" >
+                                                <label> Select Type<sup>*</sup></label>   
+                                                 <div class="selectWidth1"> 
+                                                 <select name="itemtype">
+                                                 {% for item in listitem %}
+                                                 {% ifequal item itemtype %}
+                                                 <option value="{{item}}" selected>{{item}}</option>
+                                                 {% else %}
+                                                 <option value="{{item}}">{{item}}</option>
+                                                 {% endifequal %}
+                                                 {% endfor %}
+                                                 
+                                                 
+                                                 </select>
+                                                 </div>
+                                           </div>
+                                           
+                                          
+                                          
+                                                                                      
+                                         
+                                           
+                                           <div class="section" >
+                                                <label>Quantity<sup>*</sup></label>   
+                                                <div> <input type="text" id="quantid" name="quantity" maxlength="4"  value="{{quantity}}" class="small" onkeypress="return isNumberKey(event)" onchange="getTotalBill()"  /></div>
+
+                                           </div>
+                                           
+                                           
+                                          
+                                           <div class="section" >
+                                                <label>
+                                                Author</label>   
+                                                <div class="selectWidth1">
+                                                <input type="text" maxlength="100" name="author" value="{{author}}">
+                                                
+                                           </div>
+                                           </div>
+                                           
+                                            <div class="section" >
+                                                <label>
+                                                Publication</label>   
+                                                <div class="selectWidth1">
+                                                <input type="text" maxlength="100" name="publication" value="{{publication}}">
+                                                
+                                           </div>
+                                           </div>
+                                           
+                                           
+                                            <div class="section" >
+                                                <label>
+                                                Edition</label>   
+                                                <div class="selectWidth1">
+                                                <input type="text" name="edition" maxlength="100" value="{{edition}}">
+                                                
+                                           </div>
+                                           </div>
+
+    <div class="section" >
+                                                <label>Price<sup>*</sup></label>   
+                                                <div class="selectWidth1">
+                                         <input type="text" maxlength="10" id="priceid" name="price"  value="{{price}}" onkeypress="return isNumberKey(event)" onchange="getTotalBill()" >
+                                           </div>
+                                           </div>
+
+                                             
+                                </div>
+            
+			
+			</div>
+  			<div id="step-2" style="width:100%;">
+			           <div class="widget-content" style="width:100%;">
+                                    <!-- title box -->
+                                    
+                                     <div class="section" >
+                                                <label>Date<sup>*</sup></label>   
+                                                 <div> <input type="text"  id="datepick" class="datepicker"  name="date"  value="{{date}}" style="text-align:left"  />
+                                                 </div>
+                                           </div>
+                                
+                                             
+                                             <div class="section" >
+                                                <label>Supplier Name <sup>*</sup></label>   
+                                                <div>
+                                                
+                                                
+                                                <input type="text" maxlength="100" name="suppliername" value="{{suppliername}}" class="select:width=35px" />
+                                                
+                                                
+                                                </div>
+                                           </div>
+                                             <div class="section" >
+                                                <label>Contact No</label>   
+                                                <div>
+                                                
+                                                
+                                                <input type="text" maxlength="12" name="suppliercontact" value="{{suppliercontact}}" onkeypress="return isNumberKey(event)" />
+                                                
+                                                
+                                                </div>
+                                           </div>     
+                                           
+                                                       <div class="section" >
+                                                <label>Address</label>   
+                                                <div>
+                                                
+                                                
+                                                <input type="text" maxlength="100" name="supplieraddress" value="{{supplieraddress}}" class="large" />
+                                                
+                                                
+                                                </div>
+                                           </div>
+                                                       <div class="section" >
+                                                <label>Donor</label>   
+                                                <div>
+                                                
+                                                
+                                                <input type="checkbox" name="donor" id="donor1" value="1" onchange="getPaymentSection()"  />
+                                                
+                                                
+                                                </div>
+                                           </div>
+                                           <br>
+                                           <div id="paysection">
+                                                    <div class="section" >
+                                                <label>Total Bill</label>   
+                                                <div>
+                                                
+                                                
+                                                <input type="text" id="totalamt" name="totalcost" maxlength="10" value="{{totalcost}}"  class="small" onkeypress="return isNumberKey(event)" />
+                                                
+                                                
+                                                </div>
+                                           </div>
+                                                <div class="section" >
+                                                <label>Payment Mode</label>   
+                                                <div class="selectWidth1">
+                                                
+                                              <select name="paymentmode">
+                                              {% for item in paymodelist %}
+                                              {% ifequal item paymentmode %}
+                                              <option value="{{item}}" selected>{{item}}</option>
+                                              {% else %}
+                                              <option value="{{item}}">{{item}}</option>
+                                              {% endifequal %}
+                                              {% endfor %}
+                                              </select>  
+                                              
+                                                
+                                                
+                                                </div>
+                                           </div> 
+                                           
+                <div class="section" >
+                                                <label>Recipt No</label>   
+                                                <div>
+                                                
+                                                
+                                                <input type="text" name="reciptno" maxlength="25" value="{{reciptno}}" class="small" />
+                                                
+                                                
+                                                </div>
+                                           </div>
+         
+      </div>
+      
+      
+                                 
+<div class="section last">
+                                               <div>
+                                                <input type="submit" name="addLibItem" class="btn" value="submit"  />
+                                               </div>
+                                           </div>
+                                 
+                                 
+                                 
+                                </div>
+					
+			
+			</div>                      
+  			                                       
+ 
+
+                                        
+                                                                                  
+                                                               
+                                         
+                                           <input type="hidden" value="{{warned}}" name="warned"/>
+                                </div>
+            </p>
+
+			</div>
+            
+            
+         
+            </form>
+  			
+  		</div>
+                                        
+                                        
+{%endblock%}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+

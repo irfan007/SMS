@@ -1,0 +1,141 @@
+{% extends 'dashboard.html'%}
+{% load staticfiles %}
+
+
+
+{% block leftMenu %}
+              <div id="left_menu">
+                   <ul id="main_menu" class="main_menu">
+                       <li class="select"><a href="/timetable/" ><span class="ico gray shadow pictures_folder"></span><b>Schedule Periods</b></a></li>
+                    </ul>
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+{% block form1Title%}
+Schedule Periods:
+{%endblock%}
+
+{%block form1Body%}
+<script>
+
+
+function submitForm(mssId)
+{
+
+
+try{
+document.getElementById("load_button").click();}catch(e){alert(e);}
+}
+</script>
+
+
+<form id="schedule" method="post" action="" >
+      <div style="background:lightyellow;">
+      <ul style="color:red;style:disk;">
+                	{% for e in errors %}
+                	  <li>{{e}}</li>
+                	{%endfor%}
+      </ul>
+      </div>
+      
+      
+       
+                                                		  
+                                               
+                                                        
+                                           <div class="section" >
+                                                <label>Select CLASS <sup>*</sup></label>   
+                                                <div class="selectWidth1" >
+                                                	<select class="small"  name="mss" id="id_mss" onchange="submitForm(this.value);">
+                                                		<option value="-1"  selected>Select Class</option>
+                                                	  {%for c in classes%}
+                                                	    {%ifequal mss c.id%}
+                                                		<option value="{{c.id}}" selected>{{c.getName|upper}}</option>
+                                                		{%else%}
+                                                		<option value="{{c.id}}" >{{c.getName|upper}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > classes not defined ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                </div>
+                                           </div>
+                                          
+                                          
+                                           
+            
+                  
+                  {% if dataRows%}
+                  <div id="period_block_div">
+          		  <table class="table table-bordered table-striped  "  width="100%">
+                                                    <thead align="center" >
+                                                     
+                                                      <tr class="tr_bg_list" >
+                                                        <td rowspan="2">Days</td>
+                                                        <td colspan="{{periodList|length}}">Periods</td>
+                                                      </tr>
+                                                      
+                                                      <tr class="tr_bg_list" >
+                                                        {% for p in periodList%}
+                                                        <td>{{p}}</td>
+                                                        {%endfor%}
+                                                      </tr>
+                                                    </thead>
+                                                    
+                                                    
+                                                    <tbody align="center" class="font_wght" style="border:none;">
+                                                    {%for dayNo,day,periodSubjects in dataRows%}
+                                                    <tr>
+                                                    	<td width="100px">{{day}}</td>
+                                                    	{%for ps in periodSubjects%}
+                                                    		<td width="1px">
+                                                    		    <select name="day_{{forloop.parentloop.counter}}_period_{{forloop.counter}}">
+                                                    			<option value="-1">select subject</option>
+                                                    			{%for s in subjects%}
+                                                    			    {%ifequal s.name ps%}
+                                                    				<option value="{{s.name}}" selected>{{s.name}}</option>
+                                                    				{%else%}
+                                                    				<option value="{{s.name}}">{{s.name}}</option>
+                                                    				{%endifequal%}
+                                                    			{%empty%}
+                                                    				<option value="-1">not found !</option>
+                                                    			{%endfor%}
+                                                    			
+                                                    			</select>
+                                                    		</td>
+                                                    	{%endfor%}
+                                                    	<td ></td>
+                                                    </tr>
+                                                    {%endfor%}
+                                                    </tbody>
+                                               
+                   </table>                                           
+                   </div>
+                   
+                   
+                                           
+                                           <div class="section last">
+                                             <div>
+                                             
+                                                  
+                                                  <input type="submit" name="save_button" value="Save" class="btn submit_form"></input >
+                                                  
+                                             </div>
+                                           </div>
+                  {%endif%}
+                  
+                  
+<input type="submit" id="load_button" name="load_button" style="visibility:hidden;"></input >                   
+</form>
+{%endblock%}
+
+{%block form1Width%}150%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+
+
+
+
+

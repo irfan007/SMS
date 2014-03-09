@@ -1,0 +1,74 @@
+{% extends 'dashboard.html'%}
+{% load staticfiles %}
+
+
+
+{% block leftMenu %}
+              <div id="left_menu">
+                   <ul id="main_menu" class="main_menu">
+                   
+                                          </ul>
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+{%endblock%}
+
+
+{% block form1Title%}
+MyAccount:
+{%endblock%}
+
+{%block form1Body%}
+<form id="add_user" method="post" action="" enctype="multipart/form-data">
+      <div style="background:lightyellow;">
+      <ul style="color:red;style:disk;">
+                	{% for e in errors %}
+                	  <li>{{e}}</li>
+                	{%endfor%}
+      </ul>
+      </div>                               
+                                                                                     
+                                          <div class="section" >
+                                                <label> User Name <sup>*</sup></label>   
+                                                <div> <input type="text" name="username" value="{{username}}" readonly class="medium"  /></div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label>Password<sup>*</sup></label>   
+                                                <div> <input type="password" name="pwd" value="{{pwd}}" class=" medium"  /></div>
+                                           </div>
+                                           <div class="section" >
+                                                <label>Confirm Password<sup>*</sup></label>   
+                                                <div> <input type="password" name="cpwd"  class="medium" value="{{cpwd}}" /></div>
+                                           </div>
+                                           
+                                          
+                                          <div class="section">
+                                          <label> Profile Image </label>   
+                                          <div style="padding-bottom:5px;"> 
+                                              <input type="file" name="image"  />
+                                              <div>
+                                               <br/>
+                                               
+                                               <img src="{%static user.getImageURL%}" alt="NO IMAGE" width="50" height="50">
+                                              </div>
+                                          </div>
+                                          </div>
+                                          
+                                           <div class="section last">
+                                             <div>
+                                                  <input type="submit" name="editUser" value="Save" class="btn submit_form"></input>
+											</div>
+                                           </div>
+                                        </form>
+{%endblock%}
+
+
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+
+
+
+
+
+

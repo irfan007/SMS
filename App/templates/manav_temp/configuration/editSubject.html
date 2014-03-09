@@ -1,0 +1,159 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+{% block leftMenu %}
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                       
+                 {%if CUP.role.v or isAdmin%}
+                       <li ><a href="/role" ><span class="ico gray shadow pictures_folder"></span><b>Role</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.user.v or isAdmin%}
+                       <li><a href="/user" ><span class="ico gray shadow pictures_folder"></span><b>User</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.staff.v or isAdmin%}
+                       <li ><a href="/staff" ><span class="ico gray shadow pictures_folder"></span><b>Staff</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.medium.v or isAdmin%}
+                       <li ><a href="/mediums/" ><span class="ico gray shadow pictures_folder"></span><b>Medium</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.section.v or isAdmin%}
+                       <li ><a href="/sections/" ><span class="ico gray shadow pictures_folder"></span><b>Section</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.standard.v or isAdmin%}
+                       <li ><a href="/standards/" ><span class="ico gray shadow pictures_folder"></span><b>Standard</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.subject.v or isAdmin%}
+                       <li class="select"><a href="/subjects/" ><span class="ico gray shadow pictures_folder"></span><b>Subject</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.grades.v or isAdmin%}
+                       <li ><a href="/grading/" ><span class="ico gray shadow pictures_folder"></span><b>Grades</b></a></li>
+                       {%endif%}
+                       {%if CUP.exam.v or isAdmin%}
+                       <li ><a href="/examType/" ><span class="ico gray shadow pictures_folder"></span><b>Exams</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.holiday.v or isAdmin%}
+                       <li ><a href="/holidays/" ><span class="ico gray shadow pictures_folder"></span><b>Holidays</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.setting.v or isAdmin%}
+                       <li><a href="/school/" ><span class="ico gray shadow pictures_folder"></span><b>Setting</b></a></li>
+                       {%endif%}
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+                             {% block form1Title %}
+                             Edit subject
+                             
+                             {% endblock %}
+                                </div><!-- End widget-header -->	
+                                
+                                {% block form1Body %}
+                                    {% for error in errors %}
+                                    <font color="red">{{error}}<br>
+                                    {% endfor %}
+                                    </font>
+                                    
+                                     
+                                      <form id="add_user" method="post" action="/subject/edit/{{para}}/">
+                                      
+                                       <table class="table table-bordered table-striped " id='mytable' width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr >
+                                                        
+                                                        <td width="10%">Subject Name</td>
+                                                        
+
+                                                        
+                                                        <td width="10%">Medium</td>
+                                                     
+                                                      <td width="10%">From Standard</td>
+                                                      <td width="10%">To Standard</td>
+                                              </tr>
+                                                 </thead>
+                                                 <tbody align="center" class="font_wght">
+                                                 <td style="vertical-align:top;">         
+                         <input type="text" maxlength="50" name="name" class=" large" value="{{name}}"  /></td>
+                                           
+                                          <td style="vertical-align:top;" >
+                                                <select name="getmediums" multiple size="1">
+                                                {% for data in mediums %}
+                                                
+                                               {% if data.id in getmediums %}
+                                                <option value="{{data.id}}" selected>{{data.name}}</option>
+                                                {% else %}
+                                                <option value="{{data.id}}" >{{data.name}}</option>
+                                                {% endif %}
+                                                {% endfor %}
+                                                </select>
+                                              </td>  
+                                                
+                                         <td style="vertical-align:top;">     
+                                        
+                                                   
+                                                
+                                                <select class="small" name="fromStandard" >
+                                                <option value="-1">Select</option>
+                                                {% for values in shortstandards %}
+                                                {% if fromStandard %}
+                                                {% ifequal fromStandard values.id %}
+                                                <option value="{{values.id}}" selected>{{values.name}}</option>
+                                                {% else %}
+                                                <option value="{{values.id}}">{{values.name}}</option>
+                                                {% endifequal %}
+                                                {% else %}
+                                               <option value="{{values.id}}">{{values.name}}</option>
+                                               {% endif %}
+                                               {% endfor %} 
+                                                       </select>       
+                                                                                 </td> 
+                                          <td style="vertical-align:top;">
+                                                                                
+                                              
+                                           
+                                                <select class="small" name="toStandard" >
+                                                <option value="-1">Select</option>
+                                                {% for values in shortstandards %}
+                                                {% if toStandard %}
+                                                {% ifequal toStandard values.id %}
+                                                <option value="{{values.id}}" selected>{{values.name}}</option>
+                                                {% else %}
+                                                <option value="{{values.id}}">{{values.name}}</option>
+                                                {% endifequal %}
+                                                {% else %}
+                                               <option value="{{values.id}}">{{values.name}}</option>
+                                               {% endif %}
+                                               {% endfor %} 
+                                                       </select>       
+                                     </td> 
+                                           
+                                          
+                                           </tr>
+                                           </tbody>
+                                           </table>
+                                           
+                                           
+                                            <div class="section last">
+                                                <div>
+                                                  <input type="submit" value="Save" name="editsubject" class="btn submit_form"></input>
+</div>
+                                           </div>
+                                        </form>
+                                </div><!--  end widget-content -->
+                         
+                            
+             <!-- start right section--> 
+{% endblock %}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}

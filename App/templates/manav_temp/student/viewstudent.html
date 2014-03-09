@@ -1,0 +1,148 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+
+
+
+
+{% block leftMenu %}
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                          <li  class="select"><a href="/students/" ><span class="ico gray shadow pictures_folder"></span><b>Admission 
+                        </b></a></li>
+                        <li ><a href="/studPromote/" ><span class="ico gray shadow pictures_folder"></span><b>Promote 
+                        </b></a></li>
+                        
+                   
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%} 
+
+
+
+{% block form1Title %}
+  Student List
+  
+  {% endblock %} 
+  {% block form1Header %}
+ <div class="btn-group btn-square" style="float:right; margin:3px 2px 0 0" >
+ 
+     <a class="btn  btn-large" href="/student/add/"><strong>Add Student</strong></a></div>
+    {% endblock %}
+ 
+  
+                           
+       {% block form1Body %}    
+                          
+
+                                
+              <div id="UITab" style="position:relative; ">
+                                         
+                                          <div class="" >
+                                          <div id="tab1" class="tab_content"> 
+                     
+                     <h3>Search Student</h3>
+<form action="/search/student/" method="POST">
+
+<table cellpadding="5">
+	<tr>
+		<td>Student ID:</td><td><input type="text" name="studentid" value="{{studentid}}" size="10"></td>  
+		<td>First Name:</td><td><input type="text" name="fname" value="{{fname}}" size="10"></td>
+		<td>Last Name:</td><td><input type="text" name="searchlname" value="{{searchlname}}" size="10"></h5></td>
+	</tr>
+	<tr>
+		<td>Standard:</td><td><select><option>Select</option></select></td>
+		<td colspan="2" align="left"><input type="submit" class="btn" name="advancesearch" value="search" />
+		</td>
+	</tr>
+	
+</table>
+
+ 
+
+</form>
+                     
+                     
+                     
+                     
+                                     
+                    <table class="table table-bordered table-striped  " >
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr >
+                                                      
+                                                        <td width="10%">Student ID</td>
+                                                        <td width="25%">Student Name</td>
+                                                        
+
+                                                      
+                                                        <td width="15%">Status</td> 
+                                                        <td width="15%">Edit</td>
+                                                        <td width="15%">Record</td>
+                                                        
+                                                        
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody align="center" class="font_wght">
+                                                     
+                                                      {% for item in rows %}
+                                                       <tr>
+                                                       
+                                                        <td>{{item.getSTUDid}}</td>
+                                                        <td>{{item.perDetail.fName}}&nbsp{{item.perDetail.lName}}</td>
+                                                       
+                                                       
+                                                         <td>
+                                                        
+                                                        {% if item.isActive%}
+                                                    <img src="{% static 'images/icon_success.gif'%}">
+                                                    {%else%}
+                                                         <img src="{% static 'images/inactive.gif'%}" width="13" height="15">
+                                                        {% endif %}
+                                                        </td>
+                                        
+                                                        <td class="brdrnone"><a href="/student/edit/{{item.id}}">
+                              <img src="{% static "images/edit.png" %}" width="28" height="28" alt="Edit Student" title="Edit Student">
+                                                        </a>
+                                                    </td>
+                                                        <td class="brdrnone"><a href="/stud/History/{{item.id}}">
+                              <img src="{% static "images/edit.png" %}" width="28" height="28" alt="Edit Student" title="Edit Student">
+                                                        </a>
+                                                    </td>
+                                                    
+                                                      </tr>
+     
+                                                    {% endfor %}
+                                                                       {% if rows %}
+                                                     <tr style="border:border-collapse;">
+                                                      	<td colspan="2" align="left">showing {{FROM}}-{{TO}} of {{totalRows}}</td>
+                                                      	<td colspan="6" align="right">
+                                                     {% if PREV %}
+                                                  <a href="/Prevstudent/{{back}}/"><< PREVIOUS</a>
+                                                  {% endif %}
+                                                  
+                                                  {% if NEXT %}
+                                                  <a href="/Nextstudent/{{pagination_parameter}}/">NEXT>></a>
+                                                  {% endif %}</td>
+                                                  </tr>
+                                                  {% else %}
+                                                  <tr>
+                                                  <td colspan="6">No data at present</td>
+                                                  </tr>  
+                                                  {% endif %}  
+                                                    </tbody>
+                                                  </table>
+                                                
+                                      </div>
+                                              
+                          
+                                      </div>
+                                </div>
+                                
+                   
+                        
+                            
+                           {% endblock %}
+                           {%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%} 
+                           

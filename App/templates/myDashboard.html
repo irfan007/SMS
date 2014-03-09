@@ -1,0 +1,235 @@
+{%extends 'dashboard.html'%}
+{%load staticfiles%}
+{%block content%}
+<script>
+function getError()
+{
+alert("Permission Restricted")
+
+}
+
+
+
+</script>
+       <div id="content" style="margin-left:0px;">
+       		<div class="inner">
+       			<div class="row-fluid element_pad" >
+       			<!-- Dashboard  widget -->
+                <div style="float:left; margin-top:20px;margin-left:8px;width:100%;";>
+                	<div style="float:left; width:{%block form1Width%}60%{%endblock%}; float:left;">
+                		<div class="widget span12 clearfix" style="height:500px">
+                			<div class="widget-header">
+                			
+                            
+                            {% block form1Header%}{%endblock%}
+                            </div>
+                            <!-- End widget-header -->     
+                                
+                            {%block widgetContent%}
+                            <div class="widget-content">
+                                
+                                {% block form1Body %}
+                            	<div>
+                            	
+                            	    {%if CUP.student.a or isAdmin%}
+                            	    <a href="/student/add">
+                            		<div class="dashColLoop borderit" >
+                            		    
+                            			<div><img src="{% static "images/admission_icn.jpg" %}"  alt="Admission" /></div>
+                            			
+                            			<div class="dashhead">Admission</div>
+                                    </div>
+                                    </a>
+                                    {%else%}
+                                    <div class="dashColLoop borderit" onclick="getError()">
+                            		    <br/>
+                            		    <br/>
+                            			<div><img src="{% static "images/admission_icn.jpg" %}" width="100px" height="100px" alt="Admission" /></div>
+                            			<br/>
+                            			<div class="dashhead">Admission</div>
+                                    </div>
+                                    {%endif%}
+                                    
+                                    
+                                    <div class="dash_gap">&nbsp;</div>
+                                    
+                                    
+                                    {%if CUP.attendance.a or isAdmin%}
+                                    <a href="/attendence/add/">  
+                                    <div class="dashColLoop borderit">
+                                    	<div><img src="{% static "images/attendance_icn.jpg" %}" alt="Attendance" /></div>
+                                        <div class="dashhead">Attendance</div>
+                                    </div>
+                                    </a>
+                                    {%else%}
+                                    <div class="dashColLoop borderit" onclick="getError()" >
+                            		    <br/>
+                            		    <br/>
+                            			<div><img src="{% static "images/attendance_icn.jpg" %}" width="100px" height="100px" alt="Attendence" /></div>
+                            			<br/>
+                            			<div class="dashhead">Attendance</div>
+                                    </div>
+                                    {%endif%}
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    <div class="dash_gap">&nbsp;</div>
+                                    
+                                    {%if CUP.fees.v or isAdmin%}
+                            	    <a href="/assignFees/"> 
+                            		<div class="dashColLoop borderit" >
+                            		    <br/>
+                            		    <br/>
+                            			<div><img src="{% static "images/fee.jpeg" %}" width="100px" height="100px" alt="Assign Fees" /></div>
+                            			<br/>
+                            			<div class="dashhead">FEES</div>
+                                    </div>
+                                    </a>
+                                    {%else%}
+                                    <div class="dashColLoop borderit" onclick="getError()" >
+                            		    <br/>
+                            		    <br/>
+                            			<div><img src="{% static "images/fee.jpeg" %}" width="100px" height="100px" alt="Assign Fees" /></div>
+                            			<br/>
+                            			<div class="dashhead">FEES</div>
+                                    </div>
+                                    {%endif%}
+                                </div>
+                                    
+                                
+                                <div style="padding:30px 0 0 0; float:left; width:100%;">
+                                    {%if CUP.library.a or isAdmin%}
+                            	    <a href="/libItemSearch/"> 
+                            		<div class="dashColLoop borderit" >
+                            		    
+                            			<div><img src="{% static "images/library.jpg" %}"  alt="Library" /></div>
+                            			
+                            			<div class="dashhead">Library</div>
+                                    </div>
+                                    </a>
+                                    {%else%}
+                                    <div class="dashColLoop borderit" onclick="getError()">
+                            		    <br/>
+                            		    <br/>
+                            			<div ><img src="{% static "images/library.jpg" %}" width="100px" height="100px" alt="Library" /></div>
+                            			<br/>
+                            			<div class="dashhead">Library</div>
+                                    </div>
+                                    {%endif%}
+                                    
+                                    
+                                    
+                                    <div class="dash_gap">&nbsp;</div>
+                                    
+                                    {%if CUP.assign.a or isAdmin%}
+                                    <a href="/subjectandteacher/">
+                                    <div class="dashColLoop borderit">
+                                        <br/>
+	                                    <div><img src="{% static "images/SAT.jpeg" %}"  width="100px" height="100px" alt="Subject & Teacher" /></div>
+	                                    <br/>
+	                                    <br/>
+	                                    <div class="dashhead">SUBJECT & TEACHER</div>
+	                                </div>
+	                                <a>
+	                                {%else%}
+                                    <div class="dashColLoop borderit" onclick="getError()">
+                                        <br/>
+                            		    <br/>
+                            			<div><img src="{% static "images/SAT.jpeg" %}" width="100px" height="100px" alt="Subject & Teacher" /></div>
+                            			<br/>
+	                                    <div class="dashhead">SUBJECT & TEACHER</div>
+	                                </div>
+	                                {%endif%}
+                                    
+                                    
+                                    
+                                    <div class="dash_gap">&nbsp;</div>
+                                    
+                                    {%if CUP.schedule.a or isAdmin%}
+                                    <a href="/timetable/">
+                                    <div class="dashColLoop borderit">
+                                    	<br/>
+                                        <br/>
+	                                    <div><img src="{% static "images/scheduler.jpeg" %}"  onclick="getError()" width="100px" height="100px" alt="TimeTable" /></div>
+	                                    <br/>
+	                                    
+	                                    <div class="dashhead">SCHEDULE &nbsp;PERIOD</div>
+	                                </div>
+	                                </a>
+	                                {%else%}
+                                    <div class="dashColLoop borderit"  onclick="getError()">
+                                        <br/>
+                            		    <br/>
+                            			<div><img src="{% static "images/scheduler.jpeg" %}"  width="100px" height="100px" alt="TimeTable" /></div>
+                            			<br/>
+	                                    <div class="dashhead">SCHEDULE &nbsp;PERIOD</div>
+	                                </div>
+	                                {%endif%}
+	                                
+	                                
+                               </div>
+                                
+                                
+                                
+                                <div class="dash_gap">&nbsp;</div>
+                            </div>
+                            <!--  end widget-content -->
+                            {% endblock%}
+                            {%endblock%}
+                        </div>
+                    </div>
+                    
+                    
+                    <div style="float:left;width:39%;float:right;">
+                     	<div class="widget  clearfix" style="height:495px">
+                     		<div class="widget-header">
+                     			<span><img src="{% static 'images/new_icon/app_1.png' %}" width="20" height="20"> NOTICE BOARD 
+                     			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     			
+                     			
+                     			<a href="/events/">Calendar View</a></span>
+                     			
+                            </div><!-- End widget-header -->
+                           
+                            <div class="widget-content">
+                            	<div  style="position: relative;" >
+                            		<ul style="position: absolute; margin: 0pt; padding: 0pt; top: 0px; width:100%; height:250px">
+                            		  <marquee direction="down" height="400px" onmouseover="this.stop();" onmouseout="this.start();" scrolldelay="50" scrollamount="2">
+                              			{% for data in allNotice %}
+                              			<li><div style="background:#E6ECF3;padding:10px 10px 10px 10px;"><label>{{data.getDate}}</label><label>{{data.message}}</label></div></li>
+                              			<br>
+                              			{% endfor %}
+                              		  </marquee>
+                              		  {%if not allNotice %}
+                              		  NOTICE BOARD IS EMPTY
+                              		  {%endif%}
+                              		</ul>
+                                </div>
+                                      
+                           </div><!--  end widget-content -->
+                                
+                        </div>
+                    </div>
+                    
+                    <!-- widget  span12 clearfix-->
+                </div>
+            </div>
+            <!--End inner -->
+        </div>
+        <!--End content -->
+        
+       
+       		
+       			
+       			
+               
+                	
+                    
+                
+            
+        
+ {%endblock%}

@@ -1,0 +1,113 @@
+{% extends 'dashboard.html'%}
+
+{% block header %}{%endblock%}
+{% block leftMenu %}{%endblock%}
+{% block topNavigation %}{%endblock%}
+{% block form2 %}{%endblock%}
+{% block form3 %}{%endblock%}
+
+
+
+{% block form1Title%}
+Add User:
+{%endblock%}
+
+{%block form1Body%}
+
+                                  {% for error in errors %}
+                                    <font color="red">{{error}}<br>
+                                    {% endfor %}
+                                    </font>
+                                    
+                                     
+                                      <form method="post" action=""> 
+                                            <div class="section" >
+                                                <label> User Name <sup>*</sup></label>   
+                                                <div> <input type="text" name="username" value="{{username}}" class="medium"  /></div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label>Password<sup>*</sup></label>   
+                                                <div> <input type="password" name="pwd" value="{{pwd}}" class=" medium"  /></div>
+                                           </div>
+                                           <div class="section" >
+                                                <label>Confirm Password<sup>*</sup></label>   
+                                                <div> <input type="password" name="cpwd"  class="medium" value="{{cpwd}}" /></div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label>Email ID<sup>*</sup></label>   
+                                                <div> <input type="text" name="email"  value="{{email}}" class="medium"  /></div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label>role <sup>*</sup></label>   
+                                                <div class="selectWidth1">
+                                                
+                                                <select class="medium"  name="role">
+                                                		<option value="-1" selected  > ---- </option>
+                                                	 {%for r in roles%}
+                                                	    {%ifequal r.id role%}
+                                                		<option value="{{r.id}}" selected>{{r.name|title}}</option>
+                                                		{%else%}
+                                                		<option value="{{r.id}}">{{r.name|title}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" selected  > NO ROLES DEFINED ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>  
+                                                
+                                                
+                                                	     
+                                                </div>
+                                           </div>
+                                         
+                                           
+                                           <div class="section">
+                                                <label>Active</label>   
+                                                <div class="selectWidth1">
+                                                  {%if active %}
+                                                  <input type="checkbox" name="active" value="1" checked />
+                                                  {%else%}
+                                                  <input type="checkbox" name="active" value="1" />
+                                                  {%endif%}
+                                                  
+                                                </div>
+                                           </div>
+                                           
+                                           <div class="section">
+                                                <label>Admin</label>   
+                                                <div class="selectWidth1">
+                                                  {%if admin %}
+                                                  <input type="checkbox" name="admin" value="1" checked />
+                                                  {%else%}
+                                                  <input type="checkbox" name="admin" value="1" />
+                                                  {%endif%}
+                                                  
+                                                </div>
+                                           </div> 
+                                          
+                                          <div class="section">
+                                          <label> Profile Image </label>   
+                                          <div style="padding-bottom:5px;"> 
+                                              <input type="file" name="image"  />
+                                          </div>
+                                          </div>
+                                          
+                                           
+                                            
+                                          
+                                           
+                                           
+                                            <div class="section last">
+                                             <div>
+                                                  <input type="submit" name="addUser" value="Add User" class="btn submit_form"></input>
+</div>
+                                           </div>
+                                        </form>
+                                        </form>
+{%endblock%}
+
+
+

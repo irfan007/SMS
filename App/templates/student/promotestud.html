@@ -1,0 +1,119 @@
+{% extends 'dashboard.html'%}
+{% load staticfiles %}
+
+
+
+{% block leftMenu %}
+              <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                          <li><a href="/students/" ><span class="ico gray shadow pictures_folder"></span><b>Admission 
+                        </b></a></li>
+                       <li class="select"><a href="/studPromote/" ><span class="ico gray shadow pictures_folder"></span><b>Promote 
+                        </b></a></li>
+                    </ul>
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+{%endblock%}
+
+{% block form1Title%}
+Promote:
+{%endblock%}
+
+{%block form1Body%}
+<script>
+function isNumberKey(evt)
+          {
+             var charCode = (evt.which) ? evt.which : event.keyCode
+             if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+ 
+             return true;
+          }
+function getstudtopromote(classId)
+{
+
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("classStudents_div").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/promoteStudDetails?getStudents="+classId,true);
+xmlhttp.send();
+}
+
+
+</script>
+
+
+<form id="add_user" method="post" action="/studPromote/" >
+      <div style="background:lightyellow;">
+      <ul style="color:red;style:disk;">
+                	{% for e in errors %}
+                	  <li>{{e}}</li>
+                	{%endfor%}
+      </ul>
+      </div>
+      
+      
+      
+     
+       <div class="section" >
+                                                <label>CLASS <sup>*</sup></label>   
+                                                <div class="selectWidth1" >
+                                                	<select class="small"  name="mss_id" onchange="getstudtopromote(this.value)" >
+                                                		<option value="-1"  selected>Select Class</option>
+                                                	  {%for c in classes%}
+                                                	    {%ifequal mss_id c.id%}
+                                                		<option value="{{c.id}}" selected>{{c.getName|upper}}</option>
+                                                		{%else%}
+                                                		<option value="{{c.id}}" >{{c.getName|upper}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > classes not defined ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                </div>
+                                          </div>
+       
+                                                		  
+                                          
+                                                        
+                                         
+            
+             							 
+             						<div id="classStudents_div">
+             						</div>	 
+                  
+                                       
+                                           
+                                           
+                                    
+                                     
+                                        
+                                        
+                                        
+										</form>
+{%endblock%}
+
+
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+
+
+
+
+

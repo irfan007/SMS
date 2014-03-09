@@ -1,0 +1,123 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+{% block leftMenu %}
+
+<script>
+function calcTotalAmt(leng)
+{
+var sum=0;
+
+
+
+for (var i=1;i<=leng;i++)
+{
+
+
+x=document.getElementById('fee'+i).value;
+
+if(x!="")
+sum=sum+parseInt(x)
+else
+sum=sum
+}
+
+document.getElementById("totalAmt").value=sum
+
+
+}
+				
+	
+function isNumberKey(evt)
+          {
+             var charCode = (evt.which) ? evt.which : event.keyCode
+             if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+ 
+             return true;
+          }
+</script>
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                                       <li><a href="/feeCategory/" ><span class="ico gray shadow pictures_folder"></span><b>Fees Category</b></a></li>
+                   
+                       <li ><a href="/assignFees/" ><span class="ico gray shadow pictures_folder"></span><b>Assign Fees</b></a></li>
+                 <li class="select"><a href="/feePayment/" ><span class="ico gray shadow pictures_folder"></span><b>Fees Collection</b></a></li>
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+                             {% block form1Title %}
+                             Collect Fees
+                             
+                             {% endblock %}
+                                </div><!-- End widget-header -->	
+                                
+                                {% block form1Body %}
+                                    {% for error in errors %}
+                                    <font color="red">{{error}}<br></font>
+                                    {% endfor %}
+                                  <form method="post" action="/feePayment/">  
+                                  <h4>Search Student</h4>
+                     <table> 
+                     <tr>
+                     <td><label>STUDENT ID</label></td>
+                     <td>                 
+                     <input type="text" name="studentid" value=""></td>
+                     <td>
+                     <input type="submit" name="getStudent" value="Search">
+                     </td>
+                     </tr>
+                     </table>               
+                                   </form>
+                                    <table class="table table-bordered table-striped "  width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr >
+                                                        <td width="12%">Student Id</td>
+                                                        <td width="20%">StudentName</td>
+                                                        
+
+                                                        
+                                                        <td width="15%">Standard</td>
+                                                        <td width="15%">Medium</td>
+                                                        <td width="20%">Pay</td>
+                                                        
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody align="center" class="font_wght">
+                                                     
+                                                      
+                                                       <tr>
+                                                           <td>{{data.getSTUDid}}</td>
+                                                           <td>{{data.getName}}</td>
+                                                           <td>{{data.standard.name}}</td>
+                                                           <td>{{data.standard.medium.name}}</td>
+                                                                                                
+                                                        <td class="brdrnone"><a href="/feePayment/add/{{data.id}}">
+                              <img src="{% static "images/edit.png" %}" width="28" height="28" alt="View" title="View">
+                                                        </a>
+                                                    </td>
+                                                    
+                                                      </tr>
+                        
+                                
+                                                    </tbody>
+                                                  </table>
+                                     
+                                                                    
+                                           
+                                          
+                                           
+                                           
+                                           
+                                     
+                                        </form>
+                                </div><!--  end widget-content -->
+                         
+                            
+             <!-- start right section--> 
+{% endblock %}
+
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}

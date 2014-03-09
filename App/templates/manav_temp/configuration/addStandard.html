@@ -1,0 +1,340 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+{% block leftMenu %}
+
+             <div id="left_menu">
+              <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+             <script type="text/javascript">
+function addRow()
+{
+x=document.getElementById('getHide').value
+document.getElementById('getHide').value=(parseInt(x)+1).toString();
+x=document.getElementById('getHide').value
+         if (!document.getElementsByTagName) return;
+         tabBody=document.getElementsByTagName("TBODY").item(0);
+         row=document.createElement("TR");
+         cell1 = document.createElement("TD");
+         cell2 = document.createElement("TD");
+         cell3 = document.createElement("TD");
+         cell4 = document.createElement("TD");
+         cell5 = document.createElement("TD");
+         cell6 = document.createElement("TD");
+         cell7 = document.createElement("TD");
+         cell7.innerHTML='<a  onclick="addRow();" ><img src="{% static 'images/icon_addlink.gif' %}" ></a>';
+         var textbox1 = document.createElement('input');  
+		textbox1.setAttribute('type', 'text');
+		textbox1.setAttribute('name', 'standard'+x.toString());
+		textbox1.setAttribute('style','width:90px;');
+		
+		textbox1.setAttribute('value',document.getElementById('standard1').value);
+		textbox1.setAttribute('maxlength','25');
+		 var textbox2 = document.createElement('select');  
+		
+		textbox2.setAttribute('name', 'medium'+x.toString());
+		
+		textbox2.innerHTML=document.getElementById('getmed').innerHTML
+		
+		var textbox3 = document.createElement('select');  
+		
+		textbox3.setAttribute('name', 'section'+x.toString());
+		textbox3.innerHTML=document.getElementById('getsec').innerHTML
+		
+		var textbox4 = document.createElement('input');  
+		textbox4.setAttribute('type', 'text');
+		textbox4.setAttribute('name', 'period'+x.toString());
+		textbox4.setAttribute('style','width:50px;');
+		textbox4.setAttribute('maxlength','3');
+		textbox4.setAttribute('value',document.getElementById('period1').value);
+		textbox4.setAttribute('onkeypress',"return isNumberKey(event)");
+		
+        var textbox5 = document.createElement('select');  
+		
+		textbox5.setAttribute('name', 'teacher'+x.toString());
+		 textbox5.innerHTML=document.getElementById('getteacher').innerHTML
+		
+		var textbox6 = document.createElement('input');  
+		textbox6.setAttribute('type', 'text');
+		textbox6.setAttribute('name', 'timePeriod'+x.toString());
+		textbox6.setAttribute('style','width:50px;');
+		textbox6.setAttribute('maxlength','3');
+		textbox6.setAttribute('value', document.getElementById('timePeriod').value);
+		textbox6.setAttribute('placeholder','min');
+		textbox6.setAttribute('onkeypress',"return isNumberKey(event)");
+		
+         
+         
+         cell1.appendChild(textbox1);
+         cell2.appendChild(textbox2);
+         cell3.appendChild(textbox3);
+         
+         cell4.appendChild(textbox4);
+         
+         cell5.appendChild(textbox5);
+         cell6.appendChild(textbox6)
+       
+         row.appendChild(cell1);
+         row.appendChild(cell2);
+         row.appendChild(cell3);
+         row.appendChild(cell4);
+         row.appendChild(cell5);
+         row.appendChild(cell6);
+         row.appendChild(cell7);
+         tabBody.appendChild(row);
+
+
+}
+</script>
+
+             <script>
+           function setPopshortstandard(id)
+{
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  
+  
+  xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    
+    //alert(xmlhttp.responseText);
+    document.getElementById("idOf_popshortstandard").innerHTML=xmlhttp.responseText;
+    }
+  }
+  
+xmlhttp.open("GET","/responderM?popshortstandard="+id,true);
+xmlhttp.send();
+}
+function isNumberKey(evt)
+          {
+             var charCode = (evt.which) ? evt.which : event.keyCode
+             if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+ 
+             return true;
+          }
+
+             </script>
+                    <ul id="main_menu" class="main_menu">
+                       
+                  {%if CUP.role.v or isAdmin%}
+                       <li ><a href="/role" ><span class="ico gray shadow pictures_folder"></span><b>Role</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.user.v or isAdmin%}
+                       <li><a href="/user" ><span class="ico gray shadow pictures_folder"></span><b>User</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.staff.v or isAdmin%}
+                       <li ><a href="/staff" ><span class="ico gray shadow pictures_folder"></span><b>Staff</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.medium.v or isAdmin%}
+                       <li ><a href="/mediums/" ><span class="ico gray shadow pictures_folder"></span><b>Medium</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.section.v or isAdmin%}
+                       <li ><a href="/sections/" ><span class="ico gray shadow pictures_folder"></span><b>Section</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.standard.v or isAdmin%}
+                       <li class="select"><a href="/standards/" ><span class="ico gray shadow pictures_folder"></span><b>Standard</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.subject.v or isAdmin%}
+                       <li ><a href="/subjects/" ><span class="ico gray shadow pictures_folder"></span><b>Subject</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.grades.v or isAdmin%}
+                       <li ><a href="/grading/" ><span class="ico gray shadow pictures_folder"></span><b>Grades</b></a></li>
+                       {%endif%}
+                       {%if CUP.exam.v or isAdmin%}
+                       <li ><a href="/examType/" ><span class="ico gray shadow pictures_folder"></span><b>Exams</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.holiday.v or isAdmin%}
+                       <li ><a href="/holidays/" ><span class="ico gray shadow pictures_folder"></span><b>Holidays</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.setting.v or isAdmin%}
+                       <li><a href="/school/" ><span class="ico gray shadow pictures_folder"></span><b>Setting</b></a></li>
+                       {%endif%}
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+                             {% block form1Title %}
+                             Add Standard
+                             
+                             {% endblock %}
+                                </div><!-- End widget-header -->	
+                                
+                                {% block form1Body %}
+                                
+                                    {% for error in errors %}
+                                    <font color="red">{{error}}<br>
+                                    {% endfor %}
+                                    </font>
+                                    
+                                     
+                                      <form id="add_user" method="post" action="/standard/add/"> 
+                                      <input type="hidden" id="getHide" value="{{getlength}}" name="getlength">
+                                    <table class="table table-bordered table-striped " id='mytable' width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr >
+                                                        
+                                                        <td width="10%">Standard Name</td>
+                                                        
+
+                                                        
+                                                        <td width="10%">Medium</td>
+                                                        <td width="10%">Sections</td>
+                                                      <td width="10%">Periods</td>
+                                                      <td width="10%">ClassTeacher</td>
+                                                      <td width="10%">Duration</td>
+                                                       <td width="10%">Add</td>
+                                                      
+                                                        
+                                                      </tr>
+                                                    </thead>                                             
+                                   
+
+
+{% if getBack %}
+
+
+ <tbody align="center" class="font_wght">
+ 
+{% for data in overall %}
+ <tr>
+ <td>
+ <input type="text" id="standard1" maxlength='25' name="standard{{forloop.counter}}" value="{{data.0}}" style='width:90px;'>
+ </td>
+ <td>
+ 
+ <select name="medium{{forloop.counter}}" id="getmed">
+ <option value="-1">Select</option>
+ {% for v in mediums %}
+ {% ifequal v.id data.1 %}
+ <option value="{{v.id}}" selected>{{v.name}}</option>
+ {% else %}
+  <option value="{{v.id}}">{{v.name}}</option>
+  {% endifequal %}
+{% endfor %}
+</select>
+
+</td>
+<td>
+
+ <select name="section{{forloop.counter}}" id="getsec" ><option value="-1">Select</option>{% for s in sections %}{% ifequal s.id data.2 %}<option value="{{s.id}}" selected>{{s.name}}</option>{% else %}<option value="{{s.id}}">{{s.name}}</option>{% endifequal %}{% endfor %}</select>
+ 
+ </td>
+ 
+ <td>
+ <input type="text" name="period{{forloop.counter}}" id="period1" value="{{data.3}}" maxlength='3' style='width:50px;'>
+ </td>
+ <td>
+ 
+ <select name="teacher{{forloop.counter}}" id="getteacher">
+ <option value="-1">Select</option>
+ {% for t in getTeachers %}
+ {% ifequal t.id data.4 %}
+ <option value="{{t.id}}" selected>{{t.getTeacherId}}/{{t.getFullName}}</option>
+ {% else %}
+  <option value="{{t.id}}" >{{t.getTeacherId}}/{{t.getFullName}}</option>
+  {% endifequal %}
+{% endfor %}
+</select>
+
+</td>
+<td>
+ <input type="text" placeholder='min' maxlength='3' name="timePeriod1" value="{{data.5}}" id="timePeriod" value="" style='width:50px;' onkeypress="return isNumberKey(event)">
+ </td>
+ <td>
+ <a  onclick="addRow();" ><img src="{% static 'images/icon_addlink.gif' %}" ></a>
+ </td>
+  </tr>
+  {% endfor %}
+  
+{% else %}
+  <tbody align="center" class="font_wght">
+ 
+
+ <tr>
+ <td>
+ <input type="text" id="standard1" maxlength='25' name="standard1" value="" style='width:90px;'>
+ </td>
+ <td>
+ 
+ <select name="medium1" id="getmed">
+ <option value="-1">Select</option>
+ {% for v in mediums %}
+ <option value="{{v.id}}">{{v.name}}</option> 
+{% endfor %}
+</select>
+
+</td>
+<td>
+
+ <select name="section1" id="getsec" ><option value="-1">select</option>{% for s in sections %}<option value="{{s.id}}">{{s.name}}</option>{% endfor %}</select>
+ 
+ </td>
+ 
+ <td>
+ <input type="text" name="period1" id="period1" value="" maxlength='3' onkeypress="return isNumberKey(event)" style='width:50px;'>
+ </td>
+ <td>
+ 
+ <select name="teacher1" id="getteacher">
+ <option value="-1">Select</option>
+ {% for t in getTeachers %}
+ <option value="{{t.id}}">{{t.getTeacherId}}/{{t.getFullName}}</option> 
+{% endfor %}
+</select>
+
+</td>
+<td>
+ <input type="text" placeholder="min" name="timePeriod1" id="timePeriod" onkeypress="return isNumberKey(event)" value="" maxlength='3' style='width:50px;'>
+ </td>
+ <td><a  onclick="addRow();" ><img src="{% static 'images/icon_addlink.gif' %}" ></a></td>
+  </tr>
+  </div>
+ 
+ 
+ {% endif %}
+ 
+
+                        </tbody></table>
+                        
+                        
+                        
+                        
+                                           
+                                            <div class="section last">
+                                                <div>
+                                                  <input type="submit" value="Save" name="addStandard" class="btn submit_form"></input>
+<a class="btn" title="Reset Form" onclick="ResetForm()">Clear Form</a> </div>
+                                           </div>
+                                        </form>
+                                </div><!--  end widget-content -->
+                         
+                            
+             <!-- start right section--> 
+{% endblock %}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+
+
+

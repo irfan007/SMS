@@ -1,0 +1,164 @@
+{% extends 'dashboard.html'%}
+{% load staticfiles %}
+
+
+
+{% block leftMenu %}
+<div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                       
+              
+                        {%if CUP.role.v or isAdmin%}
+                       <li ><a href="/role" ><span class="ico gray shadow pictures_folder"></span><b>Role</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.user.v or isAdmin%}
+                       <li class="select"><a href="/user" ><span class="ico gray shadow pictures_folder"></span><b>User</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.staff.v or isAdmin%}
+                       <li ><a href="/staff" ><span class="ico gray shadow pictures_folder"></span><b>Staff</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.medium.v or isAdmin%}
+                       <li ><a href="/mediums/" ><span class="ico gray shadow pictures_folder"></span><b>Medium</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.section.v or isAdmin%}
+                       <li ><a href="/sections/" ><span class="ico gray shadow pictures_folder"></span><b>Section</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.standard.v or isAdmin%}
+                       <li ><a href="/standards/" ><span class="ico gray shadow pictures_folder"></span><b>Standard</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.subject.v or isAdmin%}
+                       <li ><a href="/subjects/" ><span class="ico gray shadow pictures_folder"></span><b>Subject</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.grades.v or isAdmin%}
+                       <li ><a href="/grading/" ><span class="ico gray shadow pictures_folder"></span><b>Grades</b></a></li>
+                       {%endif%}
+                       {%if CUP.exam.v or isAdmin%}
+                       <li><a href="/examType/" ><span class="ico gray shadow pictures_folder"></span><b>Exams</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.holiday.v or isAdmin%}
+                       <li><a href="/holidays/" ><span class="ico gray shadow pictures_folder"></span><b>Holidays</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.setting.v or isAdmin%}
+                       <li><a href="/school/" ><span class="ico gray shadow pictures_folder"></span><b>Setting</b></a></li>
+                       {%endif%}
+                  </ul>              
+              	  <div id="footer"> &copy; Copyright 2013  </div>
+</div>
+{%endblock%}
+
+
+{% block form1Title%}
+Edit User:
+{%endblock%}
+
+{%block form1Body%}
+<form id="add_user" method="post" action="" enctype="multipart/form-data">
+      <div style="background:lightyellow;">
+      <ul style="color:red;style:disk;">
+                	{% for e in errors %}
+                	  <li>{{e}}</li>
+                	{%endfor%}
+      </ul>
+      </div>                               
+                                              <table   border="0" cellspacing="0" cellpadding="4" id="frm">
+  <tr>
+    <td  style="padding-right:60px"  valign="top">User Name <sup>*</sup></td>
+    <td valign="top"><input type="text" name="username" value="{{username}}" class="medium"  /></td>
+  </tr>
+  <tr>
+    <td valign="top">Password<sup>*</sup></td>
+    <td valign="top"><input type="password" name="pwd"  class="medium" value="{{cpwd}}" /></td>
+  </tr>
+  <tr>
+    <td valign="top">Confirm Password<sup>*</sup></td>
+    <td valign="top"><input type="password" name="cpwd"  class="medium" value="{{cpwd}}" /></td>
+  </tr>
+  <tr>
+    <td valign="top">Email ID<sup>*</sup></td>
+    <td valign="top"><input type="text" name="email"  value="{{email}}"   maxlength="100" /></td>
+  </tr>
+  <tr>
+    <td valign="top">role <sup>*</sup></td>
+    <td valign="top"><select class="medium"  name="role">
+                                                		<option value="-1" selected  > ---- </option>
+                                                	 {%for r in roles%}
+                                                	    {%ifequal r.id role%}
+                                                		<option value="{{r.id}}" selected>{{r.name|title}}</option>
+                                                		{%else%}
+                                                		<option value="{{r.id}}">{{r.name|title}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" selected  > NO ROLES DEFINED ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select></td>
+  </tr>
+  <tr>
+    <td valign="top">Active</td>
+    <td valign="top">
+    {%if active %}
+    <input type="checkbox" name="active" value="1" checked />
+    {%else%}
+    <input type="checkbox" name="active" value="1" />
+    {%endif%}</td>
+  </tr>
+  <tr>
+  
+<td valign="top">Admin</td>
+
+<td valign="top">
+{%if admin %}
+<input type="checkbox" name="admin" value="1" checked />
+{%else%}
+<input type="checkbox" name="admin" value="1" />
+{%endif%}
+</td>
+</tr>
+
+
+
+</table>	                                         
+           <div style="width:35%; float:left;">
+                                         
+                                          <div class="section">
+                                          <label> Profile Image </label>   
+                                          <div style="padding-bottom:5px;"> 
+                                              <input type="file" name="image"  />
+                                              <div>
+                                               <br/>
+                                               
+                                               <img src="{%static user.getImageURL%}" alt="NO IMAGE" width="50" height="50">
+                                              </div>
+                                          </div>
+                                          </div>
+                                        
+                                           <div class="section last">
+                                             <div>
+                                                  <input type="submit" name="editUser" value="Save" class="btn submit_form"></input>
+											</div>
+                                        </div>  
+                                           </div>
+                                        </form>
+{%endblock%}
+
+
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+
+
+
+
+
+

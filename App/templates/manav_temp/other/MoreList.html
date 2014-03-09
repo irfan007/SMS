@@ -1,0 +1,82 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+
+           {% block leftMenu %}
+              <div id="left_menu">
+                   
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}   
+         
+
+{% block form1Title %}
+Task List
+{% endblock %}
+{% block form1Body %}
+<h3>Uncompleted Task</h3>
+<table class="table table-bordered table-striped"  id="" width="200%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr>
+                                                        <td width="3%">S.N.</td>
+                                                        <td width="5%">Description</td>
+                                                        <td width="11%">Created Date</td>
+                                                    
+                                                       
+                                                      </tr>
+                                                    </thead>
+                                                    
+                                                    <tbody align="center" class="font_wght">
+                                                      
+                                                      {%for r in uncompletedTask%}
+                                                      <tr>
+                                                        <td>{{forloop.counter}}</td>
+                                                        <td>{{r.description}}</td>
+                                                        <td>{{r.createdOn}}</td>
+                                                       
+                                                      </tr>
+                                                      {%empty%}
+                                                      <tr>
+                                                          
+                                                          <td colspan='8'>no task found </td>
+                                                          
+                                                          
+                                                      </tr>
+                                                      {%endfor%}
+                                                    </tbody>
+                                                    
+                                          </table>
+                                        <h3>  Completed Task</h3>
+                                          <table class="table table-bordered table-striped"  id="" width="200%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr>
+                                                        <td width="3%">S.N.</td>
+                                                        <td width="5%">Description</td>
+                                                        <td width="11%">Created Date</td>
+                                                        <td width="11%">Completed Date</td>
+                                                    
+                                                       
+                                                      </tr>
+                                                    </thead>
+                                                    
+                                                    <tbody align="center" class="font_wght">
+                                                      
+                                                      {%for r in completedTask%}
+                                                      <tr>
+                                                        <td>{{forloop.counter}}</td>
+                                                        <td>{{r.description}}</td>
+                                                        <td>{{r.createdOn}}</td>
+                                                        <td>{{r.completedDate}}
+                                                       
+                                                      </tr>
+                                                      {%empty%}
+                                                      <tr>
+                                                          
+                                                          <td colspan='8'>no task found </td>
+                                                          
+                                                          
+                                                      </tr>
+                                                      {%endfor%}
+                                                    </tbody>
+                                                    
+                                          </table>
+{% endblock %}

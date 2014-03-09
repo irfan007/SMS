@@ -1,0 +1,244 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+{% block leftMenu %}
+<script>
+function setPaymentDetails(value) {
+  
+  
+  
+  if (value=='d')
+  { 
+  $(".when_cash").show();
+  
+  document.getElementById('pt_date').innerHTML="DD Date";
+  document.getElementById('pt_no').innerHTML="DD No.";
+  document.getElementById('pt_ddate').innerHTML="DD Deposite Date";
+  document.getElementById('pt_cdate').innerHTML="DD Clearance Date";
+  }
+  else if(value=='chq')
+  { 
+  $(".when_cash").show();
+  
+  document.getElementById('pt_date').innerHTML="cheque Date";
+  document.getElementById('pt_no').innerHTML="cheque No.";
+  document.getElementById('pt_ddate').innerHTML="cheque Deposite Date";
+  document.getElementById('pt_cdate').innerHTML="cheque Clearance Date";
+  }
+ 
+  else if(value=='c')
+  {
+  $(".when_cash").hide(); 
+  document.getElementById('pt_date').innerHTML="Receipt Date";
+  
+  }
+  }
+function getstudentdetails(studid)
+{
+
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("studdiv").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/responderM?studid="+studid,true);
+xmlhttp.send();
+}
+function getMonthFee(mon)
+{
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("getmonthamt").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/responderM?mont="+mon,true);
+xmlhttp.send();
+
+}
+
+</script>
+
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                       
+                              <li><a href="/feeCategory/" ><span class="ico gray shadow pictures_folder"></span><b>Fees Category</b></a></li>
+                   
+                       <li ><a href="/assignFees/" ><span class="ico gray shadow pictures_folder"></span><b>Assign Fees</b></a></li>
+                 <li class="select"><a href="/feePayment/" ><span class="ico gray shadow pictures_folder"></span><b>Fees Collection</b></a></li>
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+                             {% block form1Title %}
+                             Fee Payment
+                             
+                             {% endblock %}
+                                </div><!-- End widget-header -->	
+                                
+                                {% block form1Body %}
+                                    {% for error in errors %}
+                                    <font color="red">{{error}}<br></font>
+                                    {% endfor %}
+                                 
+                                    
+                                     
+                                      <form id="add_user" method="post" action=""> 
+                                       <div style="width:50%; float:left;">
+                                            <div class="section" >
+                                                <label>Student Id<sup>*</sup> </label>   
+                                                <div> <input type="text" name="studid"  value="{{studid}}" onchange="getstudentdetails(this.value)" readonly  /></div>
+                                           </div>
+                                           <div id="studdiv">
+                                            <div class="section" >
+                                                <label>Name</label>   
+                                                <div> <input type="text" name="name"  value="{{name}}" readonly  /></div>
+                                           </div>
+                                           <div class="section" >
+                                                <label>Standard</label>   
+                                                <div> <input type="text" name="standard"  value="{{standard}}" readonly  /></div>
+                                           </div>
+                                           <div class="section" >
+                                                <label>Medium</label>   
+                                                <div> <input type="text" name="medium"  value="{{medium}}" readonly  /></div>
+                                           </div>
+                                         </div> 
+                                           <div class="section" >
+                                                <label>Session</label>   
+                                                <div class="selectWidth1"> <input type="text" name="session" value="{{session11}}-{{session12}}" readonly /></div>
+                                           </div>
+                                              <div class="section" >
+                                                <label>Month</label>   
+                                                <div class="selectWidth1"> <input type="text" name="month" value="{{month}}" readonly /></div>
+                                           </div>
+                                           <div id="getmonthamt" >
+                                                 <div class="section" >
+                                                <label>Amount</label>   
+                                                <div><input type="text" name="amount" value="{{amount}}" readonly /> </div>
+                                           </div>
+                                           </div>
+                                           </div>
+                                            <div style="width:50%; float:left;">
+                                           <div class="section" >
+                                                <label>Date<sup>*</sup> </label>   
+                                                <div> <input type="text"  id="datepick" class="datepicker"  name="date1"  value="{{date1}}" style="text-align:left"  /></div>
+                                           </div>
+                                           <div class="section" >
+                                                <label>Payment Option</label>   
+                                                <div class="selectWidth1">
+                                               
+                                               
+                                    	  <select class="small"  name="paymode" id="paymode" onchange="setPaymentDetails(this.value);">
+                                                
+                                                <option value="-1" selected >Select Payment Mode</option>
+                                                   {%if paymode == 'c'%}
+                                                   <option value="c" selected>Cash</option>
+                                                   {%else%}
+                                                   <option value="c" >Cash</option>
+                                                   {%endif%}
+                                                   
+                                                   {%if paymode == 'd'%}
+                                                   <option value="d"  selected>Draft</option>
+                                                   {%else%}
+                                                   <option value="d" >Draft</option>
+                                                   {%endif%}
+                                                   
+                                                   {%if paymode == 'chq'%}
+                                                   <option value="chq"  selected>Cheque</option>
+                                                   {%else%}
+                                                   <option value="chq" >Cheque</option>
+                                                   {%endif%}
+                                                   
+                                              
+                                              
+                                                   
+                                                   
+
+
+
+                                              </select>       
+                                    	          
+                                          </div>
+                                           </div>
+                                                 <div class="division">
+                                       
+                                        <div class="section when_cash" >
+                                                <label >Bank Name</label>   
+                                                <div> <input type="text" name="bank" value="{{bank}}" class="medium"  /></div>
+
+                                        </div>
+                                        <div class="section " >
+                                                <label id="rec_no">Recipt No.</label>   
+                                                <div> <input type="text" name="reciptno" value="{{reciptno}}" class="medium"  /></div>
+                                           </div> 
+                                        <div class="section when_cash" >
+                                                <label id="pt_no">Cheque DD No.</label>   
+                                                <div> <input type="text" name="chequeno" value="{{chequeno}}" class="medium"  /></div>
+                                           </div>   
+                                        
+                                           <div class="section" >
+                                                <label id="pt_date">Cheque DD date</label>   
+                                                <div> <input type="text" name="chequedate" class="datepicker" style="text-align:left" value="{{chequedate}}" class="medium"  /></div>
+
+                                           </div>
+                                           
+                                           
+                                           
+                                                                                      
+                                           <div class="section when_online when_cash" >
+                                                <label id="pt_ddate">Cheque/DD Deposite Date </label>   
+                                                <div> <input type="text" name="depositedate" class="datepicker" style="text-align:left" value="{{depositedate}}" class="medium"  /></div>
+                                           </div>
+                                           
+                                           <div class="section when_cash" >
+                                                <label id="pt_cdate">Cheque/DD Clearance Date </label>   
+                                                <div> <input type="text" name="cleardate" class="datepicker" style="text-align:left" value="{{cleardate}}" class="medium"  /></div>
+
+                                           </div>
+                                           
+                                       </div>                                           
+                                    
+                                                                                    
+                                            </div>
+                                           
+                                          
+                                           
+                                           
+                                           
+                                            <div class="section last">
+                                                <div>
+                                                  <input type="submit" value="Save" name="editFeePayment" class="btn submit_form"></input>
+ </div>
+                                           </div>
+                                        </form>
+                                </div><!--  end widget-content -->
+                         
+                            
+             <!-- start right section--> 
+{% endblock %}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}

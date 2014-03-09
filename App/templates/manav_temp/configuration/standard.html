@@ -1,0 +1,142 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+
+
+{% block leftMenu %}
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                        
+               {%if CUP.role.v or isAdmin%}
+                       <li ><a href="/role" ><span class="ico gray shadow pictures_folder"></span><b>Role</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.user.v or isAdmin%}
+                       <li><a href="/user" ><span class="ico gray shadow pictures_folder"></span><b>User</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.staff.v or isAdmin%}
+                       <li ><a href="/staff" ><span class="ico gray shadow pictures_folder"></span><b>Staff</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.medium.v or isAdmin%}
+                       <li ><a href="/mediums/" ><span class="ico gray shadow pictures_folder"></span><b>Medium</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.section.v or isAdmin%}
+                       <li ><a href="/sections/" ><span class="ico gray shadow pictures_folder"></span><b>Section</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.standard.v or isAdmin%}
+                       <li class="select"><a href="/standards/" ><span class="ico gray shadow pictures_folder"></span><b>Standard</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.subject.v or isAdmin%}
+                       <li ><a href="/subjects/" ><span class="ico gray shadow pictures_folder"></span><b>Subject</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.grades.v or isAdmin%}
+                       <li ><a href="/grading/" ><span class="ico gray shadow pictures_folder"></span><b>Grades</b></a></li>
+                       {%endif%}
+                       {%if CUP.exam.v or isAdmin%}
+                       <li ><a href="/examType/" ><span class="ico gray shadow pictures_folder"></span><b>Exams</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.holiday.v or isAdmin%}
+                       <li ><a href="/holidays/" ><span class="ico gray shadow pictures_folder"></span><b>Holidays</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.setting.v or isAdmin%}
+                       <li><a href="/school/" ><span class="ico gray shadow pictures_folder"></span><b>Setting</b></a></li>
+                       {%endif%}
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+
+
+{% block form1Title %}
+  Standard List
+  {% endblock %} 
+  {% block form1Header %}
+ <div class="btn-group btn-square" style="float:right; margin:3px 2px 0 0" >
+ 
+     <a class="btn  btn-large" href="/standard/add/"><strong>Add Standard</strong></a></div>
+    {% endblock %}
+ 
+  
+                           
+       {% block form1Body %}    
+                          
+
+                                
+              <div id="UITab" style="position:relative; ">
+                                         
+                                          <div class="" >
+                                          <div id="tab1" class="tab_content"> 
+                                           
+                    <table class="table table-bordered table-striped " width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr >
+                                                        
+                                                        <td width="20%">Standard Name</td>
+                                                        
+
+                                                        
+                                                        <td width="43%">Medium</td>
+                                                        <td width="25%">Sections</td>
+                                                      <td width="10%">Action</td> 
+                                                        
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody align="center" class="font_wght">
+                                                     
+                                                      {% for item in overall %}
+                                                       
+                                                    	<tr>
+                                                        
+                                                    	<td rowspan="{{item.0}}">{{item.1}}</td>
+													{% for values in item.2 %}
+													  
+                                                         <td>{{values.0.name}}</td>
+                                                         <td>
+                                                         {% for s in values.1 %}
+                                                        {{s.name}}
+                                                         {% endfor %}
+                                                         </td>
+                                                        
+                                                        <td  class="brdrnone"><a href="/standard/edit/{{values.2}}/">
+                              <img src="{% static "images/edit.png" %}" width="28" height="28" alt="Edit standard" title="Edit standard">
+                                                        </a>
+                                                    </td>  
+                                                        
+                                                         </tr><tr>
+                                                        
+                                                     {% endfor %}
+                                                    
+                                                        
+                                        
+                                                                                                     
+                                                      </tr>
+     												{% empty %}
+                                                        <tr><td colspan="4">No data at present</td></tr>
+                                                    {% endfor %}  
+                                                    </tbody>
+                                                  </table>
+                                                  <a class="btn  btn-large" href="/standard/add/"><strong>Add Standard</strong></a>
+                                      </div>
+                                              
+                          
+                                      </div>
+                                </div>
+                                
+                   
+                        
+                            
+                           {% endblock %} 
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+                           

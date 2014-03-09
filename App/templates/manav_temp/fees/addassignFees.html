@@ -1,0 +1,140 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+{% block leftMenu %}
+
+<script>
+function calcTotalAmt(leng)
+{
+var sum=0;
+
+
+
+for (var i=1;i<=leng;i++)
+{
+
+
+x=document.getElementById('fee'+i).value;
+
+if(x!="")
+sum=sum+parseInt(x)
+else
+sum=sum
+}
+
+document.getElementById("totalAmt").value=sum
+
+
+}
+				
+	
+function isNumberKey(evt)
+          {
+             var charCode = (evt.which) ? evt.which : event.keyCode
+             if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+ 
+             return true;
+          }
+</script>
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                       
+                               <li ><a href="/feeCategory/" ><span class="ico gray shadow pictures_folder"></span><b>Fees Category</b></a></li>
+                      
+                      <li class="select"><a href="/assignFees/" ><span class="ico gray shadow pictures_folder"></span><b>Assign Fees</b></a></li>
+                      <li><a href="/feePayment/" ><span class="ico gray shadow pictures_folder"></span><b>Fees Collection</b></a></li>
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+                             {% block form1Title %}
+                             Assign Fees
+                             
+                             {% endblock %}
+                                </div><!-- End widget-header -->	
+                                
+                                {% block form1Body %}
+                                    {% for error in errors %}
+                                    <font color="red">{{error}}<br></font>
+                                    {% endfor %}
+                                    
+                                    
+                                     
+                                      <form id="add_user" method="post" action="/assignFees/add/"> 
+                                       
+                                           
+                                        <table class="table table-bordered table-striped " width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                    <tr>
+                                                    {% for data in temp %}
+                                                    
+                        								<td>{{data}}</td>
+                                                    {% endfor %}
+                                                    </tr>
+                                                    </thead>
+                                                  <tbody align="center" class="font_wght">
+                                                  {% if getBack %}
+                                                  {% for o in overall1 %}
+                                              <tr> 
+                                              {% for v in o %}
+                                              {% if forloop.first %}
+                                              
+                                              <td><label>{{v.name}}-{{v.medium.name}}</label></td>
+                                              {% else %}
+                                              <td><input type="text" name="{{v.0}}" value="{{v.1}}" style="width:90px" maxlength="8" onkeypress="return isNumberKey(event)"  ></td>
+                                              {% endif %}
+                                              
+                                              {% endfor %}
+                                              </tr>
+                                              {% endfor %}
+                                                  {% else %}
+                                                  
+                                                {% for o in overall %}
+                                              <tr> 
+                                              {% for v in o %}
+                                              {% if forloop.first %}
+                                              
+                                              <td><label>{{v.name}}-{{v.medium.name}}</label></td>
+                                              {% else %}
+                                              <td><input type="text" name="{{v.0}}" value="{{v.1}}" style="width:90px" onkeypress="return isNumberKey(event)" maxlength="8"  ></td>
+                                              {% endif %}
+                                              
+                                              {% endfor %}
+                                              </tr>
+                                              {% endfor %}
+                                              {% endif %}
+                                                    </tbody>
+                                                    </table>   
+                                                         
+                                           
+                                           
+                                           
+                                     
+		                          
+                                           
+                                           
+                                           
+                                    
+                                                                                    
+                                 
+                                           
+                                          
+                                           
+                                           
+                                           
+                                            <div class="section last">
+                                                <div>
+                                                  <input type="submit" value="Save" name="addassignFees" class="btn submit_form"></input>
+<a class="btn" title="Reset Form" onclick="ResetForm()">Clear Form</a> </div>
+                                           </div>
+                                        </form>
+                                </div><!--  end widget-content -->
+                         
+                            
+             <!-- start right section--> 
+{% endblock %}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+

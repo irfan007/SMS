@@ -1,0 +1,122 @@
+{% extends 'dashboard.html'%}
+{% load staticfiles %}
+
+
+
+{% block leftMenu %}
+              <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                      <li ><a href="/teacher/upload/marks" ><span class="ico gray shadow pictures_folder"></span><b>Upload Marks</b></a></li>
+                      <li class="select"><a href="/teacher/view/marks" ><span class="ico gray shadow pictures_folder"></span><b>View Marks</b></a></li>
+                      <li ><a href="/result/" ><span class="ico gray shadow pictures_folder"></span><b>View Result</b></a></li>
+                      <li ><a href="/studPerformance/" ><span class="ico gray shadow pictures_folder"></span><b>View Performance</b></a></li>
+                      <li ><a href="/assignRollNo/" ><span class="ico gray shadow pictures_folder"></span><b>Assign Roll No</b></a></li>
+                    </ul>
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+{%endblock%}
+
+{% block form1Title%}
+View Marks:
+{%endblock%}
+
+{%block form1Body%}
+<script>
+function getSubjectOfClass(classId)
+{
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("classSubject_div").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/responder?getSubjectOfClass="+classId,true);
+xmlhttp.send();
+}
+</script>
+
+
+<form id="add_user" method="post" action="" >
+      <div style="background:lightyellow;">
+      <ul style="color:red;style:disk;">
+                	{% for e in errors %}
+                	  <li>{{e}}</li>
+                	{%endfor%}
+      </ul>
+      </div>
+      
+      
+       
+                                                		  
+                                               
+                                           
+                                          
+                                                       
+                                           <div class="section" >
+                                                <label>Select CLASS <sup>*</sup></label>   
+                                                <div class="selectWidth1" >
+                                                	<select class="small"  name="mss_id" onchange="getSubjectOfClass(this.value);">
+                                                		<option value="-1"  selected>Select Class</option>
+                                                	  {%for c in classes%}
+                                                	    {%ifequal mss_id c.id%}
+                                                		<option value="{{c.id}}" selected>{{c.getName|upper}}</option>
+                                                		{%else%}
+                                                		<option value="{{c.id}}" >{{c.getName|upper}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > classes not defined ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                </div>
+                                          </div>
+            
+             							 
+             							 <div class="section" >
+                                                <label>Select Subject <sup>*</sup></label>   
+                                                <div class="selectWidth1" id="classSubject_div">
+                                                	<select class="small"  name="subject_id" >
+                                                		<option value="-1"  selected>Select Class First</option>
+                                                	  {%for s in subjects %}
+                                                	    {%ifequal subject_id s.id%}
+                                                		<option value="{{s.id}}" selected>{{s.name|upper}}</option>
+                                                		{%else%}
+                                                		<option value="{{s.id}}" >{{s.name|upper}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > subjects not found ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                </div>
+                                          </div>
+                  
+                                         
+                                           <div class="section last">
+                                             <div>
+                                             	<input type="submit" name="viewMarks_p1" value="Continue" class="btn submit_form"></input>
+                                             </div>
+                                           </div>
+                                        </form>
+{%endblock%}
+
+
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+
+
+
+
+

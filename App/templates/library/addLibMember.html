@@ -1,0 +1,149 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+{% block leftMenu %}
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                       
+                       <li ><a href="/libItems/" ><span class="ico gray shadow pictures_folder"></span><b>Purchase Item</b></a></li>
+                        <li><a href="/manageStocks/" ><span class="ico gray shadow pictures_folder"></span><b>Item Stock</b></a></li>
+                         <li class="select"><a href="/libMembers/" ><span class="ico gray shadow pictures_folder"></span><b>Members</b></a></li>
+                          
+                          <li><a href="/Issues/" ><span class="ico gray shadow pictures_folder"></span><b>Issues</b></a></li>
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+                             {% block form1Title %}
+                             
+  <script>
+   function getPersonDetails()
+{
+ptype=document.getElementById("pType").value
+pid=document.getElementById("pId").value
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    
+    document.getElementById("persondetaildiv").innerHTML=xmlhttp.responseText;
+    
+    
+    }
+  }
+
+xmlhttp.open("GET","/libPersonDetail?ptypeid="+ptype+":"+pid,true);
+xmlhttp.send();
+}
+</script>                             
+                             
+                             
+                             Add Member
+                             
+                             {% endblock %}
+                                </div><!-- End widget-header -->	
+                                
+                                {% block form1Body %}
+                                    {% for error in errors %}
+                                    <font color="red">{{error}}</font><br>
+                                    {% endfor %}
+                                    
+                                    
+                                     
+                                      <form id="add_user" method="post" action="/libMember/add/" enctype="multipart/form-data"> 
+                                          <div class="section" >
+                                                <label> Date<sup>*</sup></label>   
+                                                 <div> <input type="text"  id="datepick" class="datepicker"  name="date"  value="{{date}}" style="text-align:left"  />
+                                                 </div>
+                                           </div>
+                                            <div class="section" >
+                                                <label>Person Type<sup>*</sup> </label>   
+                                                <div class="selectWidth1"> 
+                                                <select id="pType" name="persontype" onchange="getPersonDetails()">
+                                                {% for item in perTypes %}
+                                                {% ifequal item persontype %}
+                                                <option value="{{item}}" selected>{{item}}</option>
+                                                {% else %}
+                                                <option value="{{item}}">{{item}}</option>
+                                                {% endifequal %}
+                                                {% endfor %}
+                                                </select>
+                                                </div>
+                                           </div>
+                                           <div class="section" >
+                                                <label>Person Id<sup>*</sup> </label>   
+                                                <div > 
+                                                <input type="text" id="pId" name="personId" value="{{personId}}" onchange="getPersonDetails()">
+                                                
+                                                </div>
+                                           </div>
+                                           <div id="persondetaildiv">
+                                            <div class="section" >
+                                                <label>Name</label>   
+                                                <div> 
+                                                <input type="text" name="personname" value="{{personname}}" readonly >
+                                                
+                                                </div>
+                                           </div>
+                                               <div class="section" >
+                                                <label>Contact No</label>   
+                                                <div> 
+                                                <input type="text" name="contact" value="{{contact}}" onkeypress="return isNumberKey(event)" readonly >
+                                                
+                                                </div>
+                                           </div>
+                                                <div class="section" >
+                                                <label>Address</label>   
+                                                <div> 
+                                                <input type="text" name="address" value="{{address}}" readonly >
+                                                
+                                                </div>
+                                           </div>
+                                          
+                                              <div class="section" >
+                                                <label>Issue Period<sup>*</sup></label>   
+                                                <div> 
+                                                <input type="text" maxlength="4" placeholder="days" name="issuePeriod" value="{{issuePeriod}}" onkeypress="return isNumberKey(event)">
+                                                
+                                                </div>
+                                           </div>
+                                           </div>
+                                           <div class="section" >
+                                                <label>Membership Period</label>   
+                                                <div> 
+                                                <input type="text" maxlength="4"  placeholder="month" name="month" value="{{month}}" onkeypress="return isNumberKey(event)">
+                                                
+                                                </div>
+                                           </div>
+                                                               
+            <div class="section" >
+                                                <label >Upload Image</label>   
+                                                <div> <input type="file" name="personImage"   /></div>
+</div>   
+                                           
+                                          
+                                           
+                                            <div class="section last">
+                                                <div>
+                                                  <input type="submit" value="Save" name="addLibMember" class="btn submit_form"></input>
+</div>
+                                           </div>
+                                        </form>
+                                </div><!--  end widget-content -->
+                         
+                            
+             <!-- start right section--> 
+{% endblock %}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}

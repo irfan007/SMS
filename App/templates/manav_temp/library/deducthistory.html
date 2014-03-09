@@ -1,0 +1,114 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+{% block leftMenu %}
+
+
+</script>
+             <div id="left_menu">
+                       <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                        
+	      <li class="select"><a href="/libItems/" ><span class="ico gray shadow pictures_folder"></span><b>Purchase Item</b></a></li>
+                        <li><a href="/manageStocks/" ><span class="ico gray shadow pictures_folder"></span><b>Item Stock</b></a></li>
+                         <li><a href="/libMembers/" ><span class="ico gray shadow pictures_folder"></span><b>Members</b></a></li>
+                          
+                          <li><a href="/Issues/" ><span class="ico gray shadow pictures_folder"></span><b>Issues</b></a></li>
+                     
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              </div>
+              {%endblock%}
+
+                             {% block form1Title %}
+                             Deduct List
+                             
+                             {% endblock %}
+                                </div><!-- End widget-header -->	
+                                
+                                {% block form1Body %}
+                                   
+                                    
+                                    
+                                     
+                                      <form id="add_user" method="post" action="/fees/add/"> 
+                                       
+                                           <div class="section" >
+                                                <label>Date</label>   
+                                                <div class="selectWidth1">
+                                                <input type="text" name="date" value="{{uniqueobj.getdate}}" readonly /> 
+                                                </div>
+                                                
+                                           </div>
+                                      
+                                      
+                                          
+                                           
+                                          <div class="section" >
+                                                <label>Remark</label>   
+                                                <div class="selectWidth1">
+                                                <input type="text" value="{{uniqueobj.getremark}}" name="remark" readonly >
+                                                </div>
+                                           </div>
+                                          
+                                           
+                                                                  <table class="table table-bordered table-striped  "   width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr >
+                                                        
+                                                        <td width="20%">ItemId</td>
+                                                        
+
+                                                        
+                                                        <td width="15%">BarCode</td>
+                                                        <td width="15%">Edition</td>
+                                                        <td width="15%">Price</td>
+                                                        
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody align="center" class="font_wght">
+                                                     
+                                                      {% for item in overall %}
+                                                       <tr>
+                                                        <td>{{item.0}}</td>
+                                                        <td>{{item.1}}</td>
+                                                     <td>{{item.2}}</td>
+                                                     <td>{{item.3}}</td>   
+                                                        
+                                        
+                                                                                                     
+                                                      </tr>
+     												{% empty %}
+     												<td colspan="4">No data found</td>
+                                                    {% endfor %}  
+                                                    </tbody>
+                                                  </table>
+                                           
+                                                         
+                                           
+                                           
+                                           
+                                     
+		                          
+                                           
+                                           
+                                           
+                                    
+                                                                                    
+                                 
+                                           
+                                          
+                                           
+                                           
+                                           
+                  
+                                        </form>
+                                </div><!--  end widget-content -->
+                         
+                            
+             <!-- start right section--> 
+{% endblock %}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+

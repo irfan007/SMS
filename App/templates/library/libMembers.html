@@ -1,0 +1,122 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+
+
+
+
+{% block leftMenu %}
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                               <li ><a href="/libItems/" ><span class="ico gray shadow pictures_folder"></span><b>Purchase Item</b></a></li>
+                        <li><a href="/manageStocks/" ><span class="ico gray shadow pictures_folder"></span><b>Item Stock</b></a></li>
+                         <li class="select"><a href="/libMembers/" ><span class="ico gray shadow pictures_folder"></span><b>Members</b></a></li>
+                          
+                          <li><a href="/Issues/" ><span class="ico gray shadow pictures_folder"></span><b>Issues</b></a></li> 
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%} 
+
+
+
+
+
+{% block form1Title %}
+  Members List
+  {% endblock %} 
+  {% block form1Header %}
+ <div class="btn-group btn-square" style="float:right; margin:3px 2px 0 0" >
+ 
+     <a class="btn  btn-large" href="/libMember/add/"><strong>Add Member</strong></a></div>
+    {% endblock %}
+ 
+  
+                           
+       {% block form1Body %}    
+                          
+
+                                
+              <div id="UITab" style="position:relative; ">
+                                         
+                                          <div class="" >
+                                          <div id="tab1" class="tab_content"> 
+                                           
+                    <table class="table table-bordered table-striped  "  width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr >
+                                                        <td width="12%">S.No</td>
+                                                        <td width="20%">Person Name</td>
+                                                         <td width="20%">Person Id</td>
+																<td width="20%">Member Id</td>
+                                                        
+                                                        <td width="20%">Status</td>
+                                                        <td width="20%">Action</td>
+                                                        
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody align="center" class="font_wght">
+                                                     
+                                                      {% for item in allrows %}
+                                                       <tr>
+                                                       
+                                                        <td>{{FROM|add:forloop.counter0}}</td>
+                                                        <td>{{item.getPersonName}}</td>
+                                                    
+                                                        
+                                                         
+                                                        <td>{{item.personId}}</td>
+                                                             <td>{{item.getMemberId}}</td>
+                                                                <td>
+                                                        
+                                                        {% if item.isActive%}
+                                                    <img src="{% static 'images/icon_success.gif'%}">
+                                                    {%else%}
+                                                         <img src="{% static 'images/inactive.gif'%}" width="13" height="15">
+                                                        {% endif %}
+                                                        </td>
+                                                  
+                                        
+                                                        <td class="brdrnone"><a href="/libMember/edit/{{item.id}}">
+                              <img src="{% static "images/edit.png" %}" width="28" height="28" alt="Edit Member" title="Edit Member">
+                                                        </a>
+                                                    </td>
+                                                    
+                                                      </tr>
+     
+                                                    {% endfor %}  
+                                                 {% if allrows %}
+                                                     </tbody>
+                                                  </table>
+                                                     <p align="right">
+                                                      	
+                                                      	
+                                                     {% if PREV %}
+                                                  <a href="/PrevlibMembers/{{back}}/{{year}}"><< PREVIOUS</a>
+                                                  {% endif %}
+                                                  
+                                                  {% if NEXT %}
+                                                  <a href="/NextlibMembers/{{pagination_parameter}}/{{year}}">NEXT>></a>
+                                                  {% endif %}
+                                                  
+                                                  {% else %}
+                                                  <tr>
+                                                  <td colspan="7">No data at present</td>
+                                                  </tr>  
+                                                  {% endif %}
+                                                    </tbody>
+                                                  </table>
+                                                  <p align="left">
+                                                  <a class="btn  btn-large" href="/libMember/add/"><strong>Add Member</strong></a></p>
+                                      </div>
+                                              
+                          
+                                      </div>
+                                </div>
+                                
+                   
+                        
+                            
+                           {% endblock %} 
+                           {%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}

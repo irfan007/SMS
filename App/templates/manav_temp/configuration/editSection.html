@@ -1,0 +1,152 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+{% block leftMenu %}
+<div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                       
+               {%if CUP.role.v or isAdmin%}
+                       <li ><a href="/role" ><span class="ico gray shadow pictures_folder"></span><b>Role</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.user.v or isAdmin%}
+                       <li><a href="/user" ><span class="ico gray shadow pictures_folder"></span><b>User</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.staff.v or isAdmin%}
+                       <li ><a href="/staff" ><span class="ico gray shadow pictures_folder"></span><b>Staff</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.medium.v or isAdmin%}
+                       <li><a href="/mediums/" ><span class="ico gray shadow pictures_folder"></span><b>Medium</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.section.v or isAdmin%}
+                       <li class="select"><a href="/sections/" ><span class="ico gray shadow pictures_folder"></span><b>Section</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.standard.v or isAdmin%}
+                       <li ><a href="/standards/" ><span class="ico gray shadow pictures_folder"></span><b>Standard</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.subject.v or isAdmin%}
+                       <li ><a href="/subjects/" ><span class="ico gray shadow pictures_folder"></span><b>Subject</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.grades.v or isAdmin%}
+                       <li ><a href="/grading/" ><span class="ico gray shadow pictures_folder"></span><b>Grades</b></a></li>
+                       {%endif%}
+                       {%if CUP.exam.v or isAdmin%}
+                       <li ><a href="/examType/" ><span class="ico gray shadow pictures_folder"></span><b>Exams</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.holiday.v or isAdmin%}
+                       <li ><a href="/holidays/" ><span class="ico gray shadow pictures_folder"></span><b>Holidays</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.setting.v or isAdmin%}
+                       <li><a href="/school/" ><span class="ico gray shadow pictures_folder"></span><b>Setting</b></a></li>
+                       {%endif%}
+        </ul>              
+              <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+              {% block form1Title %}
+              Sections
+              {% endblock %}
+              </div><!-- End widget-header -->	
+                                
+                                {% block form1Body %}
+                                    {% for error in errors %}
+                                    <font color="red">{{error}}<br>
+                                    {% endfor %}
+                                    </font>
+                                    
+                                     
+                                      <form id="add_user" method="post" action="/section/edit/{{para}}/"> 
+                                      <table border="0" cellspacing="0"  cellpadding="4" id="frm">
+  <tr valign="top">
+    <td style="padding-right:20px">Section Name<sup>*</sup></td>
+    <td><input type="text" name="name" maxlength="100" class="text_width " value="{{name}}"  /></td>
+  </tr>
+  <tr valign="top">
+    <td>status</td>
+    <td><select class="small" name="status" >
+                                                
+                                                
+                                                {% ifequal status 1 %}
+                                                <option value="1" selected>Active</option>
+                                                <option value="0">InActive</option>
+                                                {% else %}
+                                                
+                                                 <option value="1">Active</option>
+                                                <option value="0" selected>InActive</option>
+                                                {% endifequal %}
+                                                                                          
+                                                
+                                                </select></td>
+  </tr>
+  
+  
+  <tr valign="top">
+  <td>&nbsp;</td>
+  <td><input type="submit" value="Save" name="editsection" class="btn submit_form"></input>
+</td>
+    
+  </tr>
+  
+</table>
+                                        </form>
+                                          <table class="table table-bordered table-striped  "   width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr >
+                                                        <td width="12%">S.No</td>
+                                                        <td width="20%">Name</td>
+                                                        
+
+                                                        
+                                                        <td width="15%">Status</td>
+                                                        <td width="20%">Edit</td>
+                                                        
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody align="center" class="font_wght">
+                                                     
+                                                      {% for item in rows %}
+                                                       <tr>
+                                                        <td>{{forloop.counter}}</td>
+                                                        <td>{{item.name}}</td>
+                                                    
+                                                        
+                                                         <td>
+                                                        
+                                                        {% if item.isActive%}
+                                                    <img src="{% static 'images/icon_success.gif'%}">
+                                                    {%else%}
+                                                         <img src="{% static 'images/inactive.gif'%}" width="13" height="15">
+                                                        {% endif %}
+                                                        </td>
+                                        
+                                                        <td class="brdrnone"><a href="/section/edit/{{item.id}}">
+                              <img src="{% static "images/edit.png" %}" width="28" height="28" alt="Edit Section" title="Edit Section">
+                                                        </a>
+                                                    </td>
+                                                    
+                                                      </tr>
+                                                      {% empty %}
+                                                      <tr>
+                                                      <td colspan="4">No data at present</td>
+                                                      </tr>
+     
+                                                    {% endfor %}  
+                                                    </tbody>
+                                                  </table>
+                                </div><!--  end widget-content -->
+                         
+                            
+             <!-- start right section--> 
+{% endblock %}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}

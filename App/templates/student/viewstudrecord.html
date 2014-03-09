@@ -1,0 +1,100 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+
+
+
+
+{% block leftMenu %}
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                      <li  class="select"><a href="/students/" ><span class="ico gray shadow pictures_folder"></span><b>Admission 
+                        </b></a></li>
+                        <li ><a href="/studPromote/" ><span class="ico gray shadow pictures_folder"></span><b>Promote 
+                        </b></a></li>  
+                   
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%} 
+
+
+
+{% block form1Title %}
+  View Record
+  
+  {% endblock %} 
+  {% block form1Header %}
+ <div class="btn-group btn-square" style="float:right; margin:3px 2px 0 0" >
+ 
+    </div>
+    {% endblock %}
+ 
+  
+                           
+       {% block form1Body %}    
+                          
+
+                                
+              <div id="UITab" style="position:relative; ">
+                                         
+                                          <div class="" >
+                                          <div id="tab1" class="tab_content"> 
+                                           
+                    <table class="table table-bordered table-striped  " >
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr >
+                                                      
+                                                        <td width="25%">Session</td>
+                                                        <td width="25%">Class</td>
+                                                        <td width="25%">RollNo</td>
+                                                        <td width="25%">View</td>
+                                                        
+														
+                                                      
+                                                         
+                                                        
+                                                        
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody align="center" class="font_wght">
+                                                     
+                                                      {% for item in getdata %}
+                                                       <tr>
+                                                       
+                                                        <td>{{item.session1}}</td>
+                                                       
+                                                        
+                                                        <td>{{item.mss.getName}}</td>
+                                                        <td>{{item.rollNo}}</td>
+                                                        
+                                                           <td class="brdrnone"><a href="/stud/data/{{item.session1}}/{{para}}">
+                              <img src="{% static "images/edit.png" %}" width="28" height="28" alt="View Student" title="View Student">
+                                                        </a>
+                                                    </td>
+                                                     
+                                        
+                                        
+                                                    
+                                                      </tr>
+                                                      {% empty %}
+                                                      <tr><td colspan="4">No record found</td></tr>
+     
+                                                    {% endfor %}
+                                                      
+                                                    </tbody>
+                                                  </table>
+                                                
+                                      </div>
+                                              
+                          
+                                      </div>
+                                </div>
+                                
+                   
+                        
+                            
+                           {% endblock %} 
+                           {%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+                           

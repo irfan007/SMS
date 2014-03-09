@@ -1,0 +1,209 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+{% block leftMenu %}
+
+
+
+             <div id="left_menu">
+              <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+ 
+
+
+             <script type="text/javascript">
+             
+             function isNumberKey(evt)
+          {
+             var charCode = (evt.which) ? evt.which : event.keyCode
+             if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+ 
+             return true;
+          }
+</script>
+
+          
+                    <ul id="main_menu" class="main_menu">
+                       
+                    {%if CUP.role.v or isAdmin%}
+                       <li ><a href="/role" ><span class="ico gray shadow pictures_folder"></span><b>Role</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.user.v or isAdmin%}
+                       <li><a href="/user" ><span class="ico gray shadow pictures_folder"></span><b>User</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.staff.v or isAdmin%}
+                       <li ><a href="/staff" ><span class="ico gray shadow pictures_folder"></span><b>Staff</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.medium.v or isAdmin%}
+                       <li><a href="/mediums/" ><span class="ico gray shadow pictures_folder"></span><b>Medium</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.section.v or isAdmin%}
+                       <li ><a href="/sections/" ><span class="ico gray shadow pictures_folder"></span><b>Section</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.standard.v or isAdmin%}
+                       <li ><a href="/standards/" ><span class="ico gray shadow pictures_folder"></span><b>Standard</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.subject.v or isAdmin%}
+                       <li ><a href="/subjects/" ><span class="ico gray shadow pictures_folder"></span><b>Subject</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.grades.v or isAdmin%}
+                       <li class="select"><a href="/grading/" ><span class="ico gray shadow pictures_folder"></span><b>Grades</b></a></li>
+                       {%endif%}
+                       {%if CUP.exam.v or isAdmin%}
+                       <li ><a href="/examType/" ><span class="ico gray shadow pictures_folder"></span><b>Exams</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.holiday.v or isAdmin%}
+                       <li ><a href="/holidays/" ><span class="ico gray shadow pictures_folder"></span><b>Holidays</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.setting.v or isAdmin%}
+                       <li><a href="/school/" ><span class="ico gray shadow pictures_folder"></span><b>Setting</b></a></li>
+                       {%endif%}
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+                             {% block form1Title %}
+                             Edit Grades
+                             
+                             {% endblock %}
+                                </div><!-- End widget-header -->	
+                                
+                                {% block form1Body %}
+                                
+                                    {% for error in errors %}
+                                    <font color="red">{{error}}<br>
+                                        </font>
+                                    {% endfor %}
+                                
+                                    
+                                     
+                                      <form id="add_user" method="post" action="/grades/edit/"> 
+                                      <input type="hidden" id="getHide" value="{{getlength}}" name="getlength">
+                                    <table class="table table-bordered table-striped " id='mytable' width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr >
+                                                        
+                                                        <td width="10%">S.No</td>
+                                                        
+
+                                                        
+                                                        <td width="10%">Grade</td>
+                                                     
+                                                      <td width="10%">From</td>
+                                                      <td width="10%">To</td>
+                                                      
+                                                   
+                                                       
+                                                      
+                                                        
+                                                      </tr>
+                                                    </thead>                                             
+                                   
+
+
+{% if getBack %}
+
+
+ <tbody align="center" class="font_wght">
+ 
+{% for data in overall %}
+
+<tr>
+
+ <td style="vertical-align:top;">
+ {{forloop.counter}}
+ </td>
+ <td style="vertical-align:top;">
+ 
+ <input type="text" value="{{data.0}}" name="grade{{data.3}}" maxlength="6" style='width:120px'>
+
+</td>
+<td style="vertical-align:top;">
+ <input type="text" name="startrange{{data.3}}" placeholder="in %" onkeypress="return isNumberKey(event)"  value="{{data.1}}" maxlength="3" style='width:60px' >
+ 
+
+</td>
+<td style="vertical-align:top;">
+ <input type="text" name="endrange{{data.3}}" placeholder="in %" value="{{data.2}}" style='width:60px' maxlength="3" onkeypress="return isNumberKey(event)"> 
+ 
+
+</td>
+<td style="vertical-align:top;">
+
+<a  onclick="addRow();" ><img src="{% static 'images/icon_addlink.gif' %}" ></a>
+ 
+ </td>
+
+ 
+  
+  </tr>
+  {% endfor %}
+  
+{% else %}
+{% for data in allrows %}
+  <tbody align="center" class="font_wght">
+ 
+
+ <tr>
+ <td style="vertical-align:top;">
+ {{forloop.counter}}
+ </td>
+ <td style="vertical-align:top;">
+ 
+ <input type="text" name="grade{{data.id}}" value="{{data.name}}" maxlength="6" style='width:120px'>
+
+</td>
+
+ 
+ <td style="vertical-align:top;">
+ <input type="text" name="startrange{{data.id}}" placeholder="in %" value="{{data.start}}" style='width:60px' maxlength="3" onkeypress="return isNumberKey(event)" >
+ 
+
+</td>
+<td style="vertical-align:top;">
+<input type="text" name="endrange{{data.id}}" placeholder="in %" value="{{data.end}}" style='width:60px' onkeypress="return isNumberKey(event)" maxlength="3">
+ 
+
+</td>
+ 
+  </tr>
+  
+ 
+{% endfor %} 
+ {% endif %}
+ 
+
+                        </tbody></table>
+                        
+                        
+                        
+                        
+                                           
+                                            <div class="section last">
+                                                <div>
+                                                  <input type="submit" value="Save" name="editGrade" class="btn submit_form" />
+ </div>
+                                           </div>
+                                        </form>
+                                </div><!--  end widget-content -->
+                         
+                            
+             <!-- start right section--> 
+{% endblock %}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+
+
+

@@ -1,0 +1,174 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+{% block leftMenu %}
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                       
+                       <li ><a href="/libItems/" ><span class="ico gray shadow pictures_folder"></span><b>Purchase Item</b></a></li>
+                        <li><a href="/manageStocks/" ><span class="ico gray shadow pictures_folder"></span><b>Item Stock</b></a></li>
+                         <li><a href="/libMembers/" ><span class="ico gray shadow pictures_folder"></span><b>Members</b></a></li>
+                          
+                          <li class="select"><a href="/Issues/" ><span class="ico gray shadow pictures_folder"></span><b>Issues</b></a></li>
+                       
+                       
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+                             {% block form1Title %}
+                             Issue Item
+                             <script>
+                             function getLastDateForMember()
+                           
+                            
+{
+
+MEMBERID=document.getElementById("memId").value
+ISSUEDATE=document.getElementById("datepick").value
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("lastdate2").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/libPersonDetail?lastDate="+MEMBERID+":"+ISSUEDATE,true);
+xmlhttp.send();
+
+}
+                             
+                            
+                             </script>
+                             
+                             {% endblock %}
+                                </div><!-- End widget-header -->	
+                                
+                                {% block form1Body %}
+                                    {% for error in errors %}
+                                    <font color="red">{{error}}<br></font>
+                                    {% endfor %}
+                                    
+                                    
+                                     
+                                      <form id="add_user" method="post" action="/libItemIssue/add/{{para}}/"> 
+                                      <br>
+                                            <table>
+                                            <tr>
+                                            
+                                           <td><label>ItemName</label></td><td>&nbsp</td><td>
+                                           <input type="text" value="{{itemname}}" name="itemname" readonly></td>
+                                           <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+                                           <td>
+                                                <label>Code</label></td><td>
+                                                &nbsp&nbsp<input type="text" name="itemcode" value="{{itemcode}}" style="width:150px;" readonly /></td>
+                                                <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+                                              <td><label>ItemId</label></td>  
+<td><input type="text" name="itemid" value="{{itemid}}" style="width:150px;" /></td>
+                                                </tr>
+                                                  <tr>
+                                            
+                                           <td><label>MemberId</label></td><td>&nbsp</td><td><input type="text" value="{{memberid}}" id="memId" name="memberid" onchange="getLastDateForMember()" ></td>
+                                           <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+                                           <td>
+                                                <label>Issue Date</label></td><td>
+                                                &nbsp&nbsp<input type="text"  id="datepick" class="datepicker" style="text-align:left;width:150px;"  name="issuedate"  value="{{issuedate}}" onchange="getLastDateForMember()"   /></td>
+                                                <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+                                              <td><label>Last Date</label></td>  
+<td>
+<div id="lastdate2">
+<input type="text" name="lastdate" style="text-align:left;width:150px;" value="{{lastdate}}" readonly  />
+</div>
+</td>
+                                                </tr>
+                                                                                           
+                                           </table>
+                                           <p align="center"><input type="submit" class="btn" name="issue" value="issue"></p>
+                                               </form>
+                                           
+                                      {% if getdata %}
+                                      <div id="UITab" style="position:relative; ">
+                                         
+                                          <div class="" >
+                                          <div id="tab1" class="tab_content">
+                                            <style type="text/css">
+.dataTables_filter {
+display: none;
+}
+</style>
+                                       <table class="table table-bordered table-striped data_table3 "  id="data_table3" width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                              <tr >
+                                                       
+                                                        <td width="25%">ItemId</td>
+                                                        
+
+                                                        
+                                                        <td width="25%">BarCode</td>
+                                                        <td width="25%">Edition</td>
+                                                        <td width="25%">Status</td>
+                                                        
+                                                        
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody align="center" class="font_wght">
+                                                     
+                                                      {% for item in allrows %}
+                                                       <tr>
+                                                      
+                                                        <td>{{item.getItemId}}</td>
+                                                        <td>{{item.barcodeNo}}</td>
+                                                        <td>{{item.info.edition}}</td>
+                                                      <td>
+                                                        
+                                                        {% if item.status%}
+                                                    <img src="{% static 'images/icon_success.gif'%}">
+                                                    {%else%}
+                                                         <img src="{% static 'images/inactive.gif'%}" width="13" height="15">
+                                                        {% endif %}
+                                                        </td>
+                                                        
+                                        
+                                                       
+                                                    
+                                                      </tr>
+     	
+                                                 
+                                                  
+                                                  
+                                                  
+                                                    {% endfor %}
+                                                    </tbody>
+     
+                                                    
+                                                  
+                                                  </table>   
+                                                  </div>
+                                                  </div>
+                                                  </div>
+                                    {% endif %}
+                                                                                    
+                                                                                      
+                                          
+                                           
+                                           
+                                           
+                                            
+                                       
+                                </div><!--  end widget-content -->
+                         
+                            
+             <!-- start right section--> 
+{% endblock %}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}

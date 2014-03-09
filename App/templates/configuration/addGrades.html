@@ -1,0 +1,289 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+{% block leftMenu %}
+
+
+
+             <div id="left_menu">
+             
+             
+             
+             
+              <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+ 
+
+
+             <script type="text/javascript">
+             
+             function isNumberKey(evt)
+          {
+             var charCode = (evt.which) ? evt.which : event.keyCode
+             if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+ 
+             return true;
+          }
+function addRow()
+{
+
+x=document.getElementById('getHide').value
+document.getElementById('getHide').value=(parseInt(x)+1).toString();
+x=document.getElementById('getHide').value
+
+         if (!document.getElementsByTagName) return;
+         tabBody=document.getElementsByTagName("TBODY").item(0);
+         row=document.createElement("TR");
+         
+         cell1 = document.createElement("TD");
+         cell1.setAttribute('style','vertical-align:top')
+         cell1.innerHTML=x.toString();
+         
+         cell2 = document.createElement("TD");
+         cell3 = document.createElement("TD");
+         cell3.setAttribute('style','vertical-align:top')
+         cell4 = document.createElement("TD");
+         cell4.setAttribute('style','vertical-align:top')
+         cell5 = document.createElement("TD");
+         cell5.setAttribute('style','vertical-align:top')
+         
+      
+         cell5.innerHTML='<a  onclick="addRow();" ><img src="{% static 'images/icon_addlink.gif' %}" ></a>';
+         
+         var textbox1 = document.createElement('input');  
+		textbox1.setAttribute('type', 'text');
+		textbox1.setAttribute('name', 'grade'+x.toString());
+		textbox1.setAttribute('style','width:120px;');
+		
+		
+		textbox1.setAttribute('maxlength','6');
+		 var textbox2 = document.createElement('input');  
+		textbox2.setAttribute('type', 'text');
+		textbox2.setAttribute('name', 'startrange'+x.toString());
+		textbox2.setAttribute('style','width:60px;');
+		textbox2.setAttribute('maxlength','3');
+		textbox2.setAttribute('placeholder','in %');
+		textbox2.setAttribute('onkeypress','return isNumberKey(event)');
+		
+		 var textbox3 = document.createElement('input');  
+		textbox3.setAttribute('type', 'text');
+		textbox3.setAttribute('name', 'endrange'+x.toString());
+		textbox3.setAttribute('style','width:60px;');
+		textbox3.setAttribute('maxlength','3');
+		textbox3.setAttribute('placeholder','in %');
+		 textbox3.setAttribute('onkeypress','return isNumberKey(event)');
+		 
+         cell2.appendChild(textbox1);
+         cell3.appendChild(textbox2);
+         
+         cell4.appendChild(textbox3);
+         
+         
+        
+        
+         row.appendChild(cell1);
+         row.appendChild(cell2);
+         row.appendChild(cell3);
+         row.appendChild(cell4);
+         row.appendChild(cell5);
+        
+         
+         
+        
+         
+         tabBody.appendChild(row);
+
+
+}
+</script>
+
+          
+                    <ul id="main_menu" class="main_menu">
+                       
+                 {%if CUP.role.v or isAdmin%}
+                       <li ><a href="/role" ><span class="ico gray shadow pictures_folder"></span><b>Role</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.user.v or isAdmin%}
+                       <li><a href="/user" ><span class="ico gray shadow pictures_folder"></span><b>User</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.staff.v or isAdmin%}
+                       <li ><a href="/staff" ><span class="ico gray shadow pictures_folder"></span><b>Staff</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.medium.v or isAdmin%}
+                       <li ><a href="/mediums/" ><span class="ico gray shadow pictures_folder"></span><b>Medium</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.section.v or isAdmin%}
+                       <li ><a href="/sections/" ><span class="ico gray shadow pictures_folder"></span><b>Section</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.standard.v or isAdmin%}
+                       <li ><a href="/standards/" ><span class="ico gray shadow pictures_folder"></span><b>Standard</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.subject.v or isAdmin%}
+                       <li ><a href="/subjects/" ><span class="ico gray shadow pictures_folder"></span><b>Subject</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.grades.v or isAdmin%}
+                       <li class="select"><a href="/grading/" ><span class="ico gray shadow pictures_folder"></span><b>Grades</b></a></li>
+                       {%endif%}
+                       {%if CUP.exam.v or isAdmin%}
+                       <li ><a href="/examType/" ><span class="ico gray shadow pictures_folder"></span><b>Exams</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.holiday.v or isAdmin%}
+                       <li ><a href="/holidays/" ><span class="ico gray shadow pictures_folder"></span><b>Holidays</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.setting.v or isAdmin%}
+                       <li><a href="/school/" ><span class="ico gray shadow pictures_folder"></span><b>Setting</b></a></li>
+                       {%endif%}
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+                             {% block form1Title %}
+                             Add Grades
+                             
+                             {% endblock %}
+                                </div><!-- End widget-header -->	
+                                
+                                {% block form1Body %}
+                                
+                                    {% for error in errors %}
+                                    <font color="red">{{error}}<br>
+                                        </font>
+                                    {% endfor %}
+                                
+                                    
+                                     
+                                      <form id="add_user" method="post" action="/grades/add/"> 
+                                      <input type="hidden" id="getHide" value="{{getlength}}" name="getlength">
+                                    <table class="table table-bordered table-striped " id='mytable' width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr >
+                                                        
+                                                        <td width="10%">S.No</td>
+                                                        
+
+                                                        
+                                                        <td width="10%">Grade</td>
+                                                     
+                                                      <td width="10%">From</td>
+                                                      <td width="10%">To</td>
+                                                      
+                                                      <td width="10%">Add</td>
+                                                       
+                                                      
+                                                        
+                                                      </tr>
+                                                    </thead>                                             
+                                   
+
+
+{% if getBack %}
+
+
+ <tbody align="center" class="font_wght">
+ 
+{% for data in overall %}
+
+<tr>
+
+ <td style="vertical-align:top;">
+ {{forloop.counter}}
+ </td>
+ <td style="vertical-align:top;">
+ 
+ <input type="text" value="{{data.0}}" name="grade{{forloop.counter}}" maxlength="6" style='width:120px'>
+
+</td>
+<td style="vertical-align:top;">
+   <input type="text" name="startrange{{forloop.counter}}" placeholder="in %" onkeypress="return isNumberKey(event)"  value="{{data.1}}" maxlength="3" style='width:60px' >
+ 
+
+</td>
+<td style="vertical-align:top;">
+ <input type="text" name="endrange{{forloop.counter}}" placeholder="in %" value="{{data.2}}" style='width:60px' maxlength="3" onkeypress="return isNumberKey(event)">
+ 
+
+</td>
+
+<td style="vertical-align:top;">
+
+<a  onclick="addRow();" ><img src="{% static 'images/icon_addlink.gif' %}" ></a>
+ 
+ </td>
+
+ 
+  
+  </tr>
+  {% endfor %}
+  
+{% else %}
+  <tbody align="center" class="font_wght">
+ 
+
+ <tr>
+ <td style="vertical-align:top;">
+ 1
+ </td>
+ <td style="vertical-align:top;">
+ 
+ <input type="text" name="grade1" value="" maxlength="6" style='width:120px'>
+
+</td>
+
+ 
+ <td style="vertical-align:top;">
+ <input type="text" name="startrange1" value="" style='width:60px' maxlength="3" onkeypress="return isNumberKey(event)" placeholder="in %" > 
+ 
+
+</td>
+<td style="vertical-align:top;">
+ <input type="text" name="endrange1" placeholder="in %" value="" style='width:60px' onkeypress="return isNumberKey(event)" maxlength="3"> 
+ 
+
+</td>
+<td style="vertical-align:top;">
+
+<a  onclick="addRow();" ><img src="{% static 'images/icon_addlink.gif' %}" ></a>
+ 
+ </td>
+ 
+  </tr>
+  
+ 
+ 
+ {% endif %}
+ 
+
+                        </tbody></table>
+                        
+                        
+                        
+                        
+                                           
+                                            <div class="section last">
+                                                <div>
+                                                  <input type="submit" value="Save" name="addGrade" class="btn submit_form" />
+ </div>
+                                           </div>
+                                        </form>
+                                </div><!--  end widget-content -->
+                         
+                            
+             <!-- start right section--> 
+{% endblock %}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+
+
+

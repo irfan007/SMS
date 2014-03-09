@@ -1,0 +1,189 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+
+
+{% block leftMenu %}
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                   {%if CUP.role.v or isAdmin%}
+                       <li ><a href="/role" ><span class="ico gray shadow pictures_folder"></span><b>Role</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.user.v or isAdmin%}
+                       <li><a href="/user" ><span class="ico gray shadow pictures_folder"></span><b>User</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.staff.v or isAdmin%}
+                       <li ><a href="/staff" ><span class="ico gray shadow pictures_folder"></span><b>Staff</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.medium.v or isAdmin%}
+                       <li ><a href="/mediums/" ><span class="ico gray shadow pictures_folder"></span><b>Medium</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.section.v or isAdmin%}
+                       <li ><a href="/sections/" ><span class="ico gray shadow pictures_folder"></span><b>Section</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.standard.v or isAdmin%}
+                       <li ><a href="/standards/" ><span class="ico gray shadow pictures_folder"></span><b>Standard</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.subject.v or isAdmin%}
+                       <li ><a href="/subjects/" ><span class="ico gray shadow pictures_folder"></span><b>Subject</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.grades.v or isAdmin%}
+                       <li ><a href="/grading/" ><span class="ico gray shadow pictures_folder"></span><b>Grades</b></a></li>
+                       {%endif%}
+                       {%if CUP.exam.v or isAdmin%}
+                       <li ><a href="/examType/" ><span class="ico gray shadow pictures_folder"></span><b>Exams</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.holiday.v or isAdmin%}
+                       <li ><a href="/holidays/" ><span class="ico gray shadow pictures_folder"></span><b>Holidays</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.setting.v or isAdmin%}
+                       <li class="select"><a href="/school/" ><span class="ico gray shadow pictures_folder"></span><b>Setting</b></a></li>
+                       {%endif%}
+                   
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%} {% block searchtop %}
+    
+       
+    
+        
+        </span></div>
+   
+    
+    {% endblock %}
+
+{% block form1Title %}
+School Details
+  
+  {% endblock %} 
+  {% block form1Header %}
+
+<div class="btn-group btn-square" style="float:right; margin:3px 2px 0 0" >
+
+<a class="btn  btn-large" href="/school/edit/{{schoolobj.0.id}}/"><strong>Edit</strong></a></div>
+
+
+{% endblock %}
+{% block form1Body %} 
+   
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="49%" bgcolor="#e8e8e8" style="padding:10px; border:#cdcdcd solid 1px;"><table width="100%" border="0" cellspacing="0" cellpadding="5">
+    
+     <tr class="payment_dtl">
+                  <td colspan="2">School Details</td>
+                  </tr>
+                  <tr class="infrm">
+                  <td><strong>School  Name:</strong></td>
+                  <td>{{schoolobj.0.name}}</td>
+                  </tr>
+
+                  <tr class="infrm">
+                  <td>Board:</td>
+                  <td>{{schoolobj.0.affiliatedBy}}</td>
+                  </tr>
+					
+					<tr class="infrm">
+                  <td>Session:</td>
+                  <td>{{schoolobj.0.getSession}}</td>
+                  </tr>
+                  
+                  <tr class="infrm">
+                  <td>Address:</td>
+                  <td>{{schoolobj.0.address}}</td>
+                  </tr>
+
+                  
+                  <tr class="infrm">
+                  <td>City:</td>
+                  <td>{{schoolobj.0.getcityname}}</td>
+                  </tr>
+                  
+                  
+                  <tr class="infrm">
+                  <td>State:</td>
+                  <td>{{schoolobj.0.getstatename}}</td>
+                  </tr>
+                  
+                  
+                  
+                  <tr class="infrm">
+                  <td>Contact No:</td>
+                  <td>{{schoolobj.0.contactNo}} </td>
+                  </tr> 
+                 
+                   <tr class="infrm">
+                   <td style="vertical-align:top;">Logo:</td>
+                   <td><img src="{% static image %}" height="80" width="80" /></td>
+                   
+                   </tr>
+                
+                  
+                  </table>
+</td>
+    <td width="2%">&nbsp;</td>
+    <td width="49%" valign="top" bgcolor="#e8e8e8" style="padding:10px; border:#cdcdcd solid 1px;">{% ifequal schoolobj.0.amount 0 %}
+                  {% else %}
+                  <table width="100%" border="0" cellspacing="0" cellpadding="5">
+                  <tr class="payment_dtl">
+                  <td colspan="2">Payment Details</td>
+                  
+                  </tr>
+                  
+                  <tr class="infrm">
+                  <td>Date:</td>
+                  <td>{{schoolobj.0.getPayDate}}</td>
+                  </tr>
+                  
+                  <tr class="infrm">
+                  <td>Amount:</td>
+                  <td>{{schoolobj.0.amount}}</td>
+                  </tr>
+                  
+                  <tr class="infrm">
+                  <td>Recipt:</td>
+                  <td>{{schoolobj.0.reciptno}}</td>
+                  </tr>
+                  
+                  <tr class="infrm">
+                  <td>Payment Mode: </td>
+                  <td>{{schoolobj.0.getPaymentMode}}</td>
+                  </tr>
+                  
+                  {% ifequal schoolobj.0.paymode "chq" %}
+                  
+                  <tr class="infrm">
+                  <td>Cheque No: </td><td>{{schoolobj.0.chequeno}}</td>
+                  </tr>
+                 {% endifequal %}
+                  {% ifequal schoolobj.0.paymode "d" %}
+                  <tr class="infrm">
+                  <td>Draft No:</td>
+                  <td>{{schoolobj.0.chequeno}}</td>
+                  </tr>
+                 
+                  </table>
+                  
+                 {% endifequal %}
+                  
+                  {% endifequal %}</td>
+  </tr>
+</table>
+
+
+{% endblock %}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}

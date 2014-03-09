@@ -1,0 +1,97 @@
+{% extends 'dashboard.html'%}
+{% load staticfiles %}
+
+
+
+{% block leftMenu %}
+              <div id="left_menu">
+                   <ul id="main_menu" class="main_menu">
+                       
+                      
+                    
+                    </ul>
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+{% block form1Title%}
+Notice:
+{%endblock%}
+
+{%block form1Body%}
+<form id="add_user" method="post" action="" enctype="multipart/form-data">
+      <div style="background:lightyellow;">
+      <ul style="color:red;style:disk;">
+                	{% for e in errors %}
+                	  <li>{{e}}</li>
+                	{%endfor%}
+      </ul>
+      </div>
+      
+      
+    <table  width="100%"  border="0" cellspacing="0" cellpadding="3">
+  <tr>
+    <td class="form_txt" width="15%" valign="top">Date</div>  </td>
+    <td><input type="text"  id="datepick" class="datepicker"  name="adddate"  value="{{adddate}}" style="text-align:left"  /></td>
+  </tr>
+  <tr>
+    <td class="form_txt"  style="vertical-align:top" >Message</div></td>
+    <td><textArea name="message"  class="medium"   />{{message}}</textArea></td>
+  </tr>
+  <tr>
+  
+   <td><pre>          </pre></td><td><pre><input type="submit" name="addNotice" value="Add" class="btn"></td>
+  </tr>
+  
+</table>
+            
+          		  <table class="table table-bordered table-striped  "  id="" width="100%">
+                                                    <thead align="center" >
+                                                     
+                                                      <tr class="tr_bg_list" >
+                                                        <td width="20%">Date</td>
+                                                        <td width="70%">Message</td>
+                                                        <td width="10%">Remove</td>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody align="center" class="font_wght">
+                                                      
+                                                     {% for data in allRows %}
+                                                      <tr class="font_wght">
+                                                        <td>{{data.getDate}}</td>
+                                                        <td>{{data.message}}</td>
+                                                        
+                                                        <td><input type="checkbox" name="{{data.id}}" value="{{data.id}}" ></td>
+                                                        
+                                                          
+                                                        </tr>
+                                                      
+                                                      {% empty %}
+                                                      
+                                                      <tr>
+                                                      
+                                                      <td colspan="3">No data at present</td>
+                                                      
+                                                      </tr>
+                                                      
+                                                      {% endfor %}
+                                                                                     
+                                          </table>                                           
+                                         <div  class="btn_margin">
+                                             <div>
+                                                  <input type="submit" name="editNotice" value="Save" class="btn submit_form"></input>
+</div>
+                                           </div>
+                                        </form>
+{%endblock%}
+
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+
+
+
+
+
+
+

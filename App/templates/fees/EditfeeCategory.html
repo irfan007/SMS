@@ -1,0 +1,117 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+{% block leftMenu %}
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                          <li class="select"><a href="/feeCategory/" ><span class="ico gray shadow pictures_folder"></span><b>Fees Category</b></a></li>
+                      
+                      <li><a href="/assignFees/" ><span class="ico gray shadow pictures_folder"></span><b>Assign Fees</b></a></li>
+                      <li><a href="/feePayment/" ><span class="ico gray shadow pictures_folder"></span><b>Fees Collection</b></a></li>         
+                 
+               		
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+                             {% block form1Title %}
+                             Edit FeeCategory                             
+                             {% endblock %}
+                                </div><!-- End widget-header -->	
+                                
+                                {% block form1Body %}
+                                    {% for error in errors %}
+                                    <font color="red">{{error}}<br>
+                                    {% endfor %}
+                                    </font>
+                                    
+                                     
+                                      <form id="add_user" method="post" action="/feeCategory/edit/{{para}}/"> 
+                                            <div class="section" >
+                                                <label>Name<sup>*</sup> </label>   
+                                                <div> <input type="text" name="name" class=" large" value="{{name}}" readonly  /></div>
+                                           </div>
+                                           
+                                         
+                                    
+                                                                                    
+                                           <div class="section" >
+                                                <label>Type</label>   
+                                                <div class="selectWidth1">
+                                                <select class="small" name="types" >
+                                                {% ifequal types 'm' %}
+                                                <option value="m" selected>monthly</option>
+                                                {% else %}
+                                                <option value="m">monthly</option>
+                                                {% endifequal %}
+                                                {% ifequal types 'q' %}
+                                                <option value="q" selected>quarterly</option>
+                                                {% else %}
+                                                <option value="q">quarterly</option>
+                                                {% endifequal %}
+                                                {% ifequal types 'h' %}
+                                                <option value="h" selected>halfyearly</option>
+                                                {% else %}
+                                                <option value="h">halfyearly</option>
+                                                {% endifequal %}
+                                                {% ifequal types 'y' %}
+                                                <option value="y" selected>yearly</option>
+                                                {% else %}
+                                                <option value="y">yearly</option>
+                                                {% endifequal %}
+                                                                                         
+                                                </select>       
+                                      </div>
+                                           </div>
+                                           <div class="section" >
+                                                <label>Months</label>   
+                                                <div class="selectWidth1">
+                                                <table>
+                                                {% for month in months %}
+                                                <tr>
+                                              <td> 
+                                              {% if forloop.counter in param %}
+                                              <input type="checkbox" name="{{forloop.counter}}" value="{{forloop.counter}}" checked />
+                                              {% else %}
+                                              <input type="checkbox" name="{{forloop.counter}}" value="{{forloop.counter}}"  />
+                                              {% endif %}
+                                              
+                                              </td><td><label>{{month}}</label></td>
+                                              </tr>
+                                              {% endfor %} 
+                                              
+                                              
+                                              </table>
+                                            
+                                                                                                                                        
+                                                      
+                                      </div>
+                                           </div> 
+                                           
+                                             <div class="section" >
+                                                <label>Facility</label>   
+                                                <div class="selectWidth1">
+                                                {% ifequal facility "1" %}
+                                                     <input type="checkbox" name="facility" value="1" checked>
+                                                {% else %}
+                                                     <input type="checkbox" name="facility" value="1">
+                                                     {% endifequal %}
+                                      </div>
+                                           </div>
+                                           
+                                           
+                                           
+                                            <div class="section last">
+                                                <div>
+                                                  <input type="submit" value="Save" name="editFeeCategory" class="btn submit_form"></input>
+</div>
+                                           </div>
+                                        </form>
+                                </div><!--  end widget-content -->
+                         
+                            
+             <!-- start right section--> 
+{% endblock %}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}

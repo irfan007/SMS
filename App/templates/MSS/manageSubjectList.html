@@ -1,0 +1,85 @@
+{%extends 'dashboard.html' %}
+{% load staticfiles%}
+
+{% block leftMenu %}
+              <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                      
+                      
+                   
+                     <li><a href="/role" ><span class="ico gray shadow pictures_folder"></span><b>Role</b></a></li>
+                       <li><a href="/user" ><span class="ico gray shadow pictures_folder"></span><b>User</b></a></li>
+                       <li  ><a href="/staff" ><span class="ico gray shadow pictures_folder"></span><b>Staff</b></a></li>
+                       <li ><a href="/mediums/" ><span class="ico gray shadow pictures_folder"></span><b>Medium</b></a></li>
+                       <li ><a href="/sections/" ><span class="ico gray shadow pictures_folder"></span><b>Section</b></a></li>
+                       <li ><a href="/standards/" ><span class="ico gray shadow pictures_folder"></span><b>Standard</b></a></li>
+                       <li ><a href="/subjects/" ><span class="ico gray shadow pictures_folder"></span><b>Subject</b></a></li>
+                       <li class="select"><a href="/manage/subject/" ><span class="ico gray shadow pictures_folder"></span><b>Assign Subject</b></a></li>
+                       <li ><a href="/holidays/" ><span class="ico gray shadow pictures_folder"></span><b>Holidays</b></a></li>
+                       <li ><a href="/school/" ><span class="ico gray shadow pictures_folder"></span><b>Setting</b></a></li>
+                    </ul>
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+{% block form1Title%}Assigned Class List{%endblock%}
+
+{% block form1Header%}
+<div class="btn-group btn-square" style="float:right; margin:3px 2px 0 0" >
+  <a class="btn  btn-large " href="/manage/subject/add">
+  	<strong>Assign to New Class</strong>
+  </a>
+</div>
+{%endblock%}
+
+
+
+{% block form1Body%}
+<div id="UITab" style="position:relative; ">
+                                         
+                                          <div class="" >
+                                          <div id="tab1" class="tab_content"> 
+                                           
+                                                  <table class="table table-bordered table-striped data_table3 "  id="data_table3" width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr>
+                                                        <td width="">S.No.</td>
+                                                        <td width="">Class</td>
+                                                        <td width="">Status</td>
+                                                        <td width="">Edit</td>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody align="center" class="font_wght">
+                                                      {%for c in classes%}
+                                                      		<tr>
+                                                      			<td>{{forloop.counter}}</td>
+                                                      			<td>{{c.getName}}</td>
+                                                        		<td>
+                                                        			{%if c.isActive%}
+                                                        				<img src="{% static 'images/icon_success.gif'%}">
+                                                        			{%else%}
+                                                        			    <img src="{% static 'images/inactive.gif'%}" width="13" height="15"> 
+                                                        			{%endif%}
+                                                        		</td>
+                                                        		<td class="brdrnone"><a href="/manage/subject/{{c.id}}"><img src="{% static 'images/edit.png'%}" width="28" height="28" alt="Edit" title="Edit"></a></td>
+                                                        	</tr>		
+                                                      {%endfor%}
+                                                      
+                                                      
+                                                    </tbody>
+                                                  </table>
+                                         </div>
+                                         </div>
+                                      </div>
+
+
+                                </div>
+                                
+                                
+                                
+                            
+{%endblock%}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+

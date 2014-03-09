@@ -1,0 +1,849 @@
+{% extends 'dashboard.html'%}
+{% load staticfiles%}
+{% block form1Title%}
+Add Student
+{%endblock%}
+
+
+{% block leftMenu %}
+              <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                         <li  class="select"><a href="/students/" ><span class="ico gray shadow pictures_folder"></span><b>Admission 
+                        </b></a></li>
+                        <li ><a href="/studPromote/" ><span class="ico gray shadow pictures_folder"></span><b>Promote 
+                        </b></a></li>
+                    </ul>
+                    
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+{%endblock%}
+
+              
+{%block widgetContent%}
+
+<script>
+var checkDisplay = function(psamel,sameaslocal) { //check ID, form ID
+			formstudent = document.getElementById(sameaslocal), checklocal = document.getElementById(psamel);
+			checklocal.onclick = function(){
+				formstudent.style.display = (this.checked) ? "none" : "block";
+				formstudent.reset();
+			};
+			check.onclick();
+		};
+function calcAge(dobString) {
+  dobString=dobString.split("-")
+  dobString=dobString[1]+'/'+dobString[0]+'/'+dobString[2];
+  
+  var birthday = new Date(dobString);
+  var age=~~((Date.now() - birthday) / (31557600000));
+  if(age<1)
+  {
+  document.getElementById('age').value='0';
+  alert("please enter valid birth date!");}
+  else{
+  document.getElementById('age').value=age;}
+}
+function isNumberKey(evt)
+          {
+             var charCode = (evt.which) ? evt.which : event.keyCode
+             if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+ 
+             return true;
+          }
+
+
+function getCityforLocal(stateId)
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("citydiv1").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/accMresponder?lstate="+stateId,true);
+xmlhttp.send();
+}
+
+function getCityforPermanent(stateId)
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("citydiv2").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/accMresponder?pstate="+stateId,true);
+xmlhttp.send();
+}
+function getSiblingName1(studid1)
+{
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    
+    document.getElementById("studNamediv1").innerHTML=xmlhttp.responseText;
+    
+    
+    }
+  }
+
+xmlhttp.open("GET","/accMresponder?studID1="+studid1,true);
+xmlhttp.send();
+}
+
+function getSiblingName2(studid2)
+{
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    
+    document.getElementById("studNamediv2").innerHTML=xmlhttp.responseText;
+    
+    
+    }
+  }
+
+xmlhttp.open("GET","/accMresponder?studID2="+studid2,true);
+xmlhttp.send();
+}
+
+
+function getSiblingName3(studid3)
+{
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    
+    document.getElementById("studNamediv3").innerHTML=xmlhttp.responseText;
+    
+    
+    }
+  }
+
+xmlhttp.open("GET","/accMresponder?studID3="+studid3,true);
+xmlhttp.send();
+}
+function getfun(xxx)
+{
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    
+    document.getElementById("fundiv").innerHTML=xmlhttp.responseText;
+    
+    
+    }
+  }
+
+xmlhttp.open("GET","/accMresponder?studID1="+xxx,true);
+xmlhttp.send();
+}
+
+function getmoresibling()
+{
+
+
+
+var label;
+label = document.createElement('label');
+label.appendChild(document.createTextNode('Another Student ID '));
+document.getElementById('moresiblings').appendChild(label);
+newdiv=document.createElement('div')
+newdiv.id="moresiblings1"
+newdiv.class="selectWidth1"
+
+document.getElementById('moresiblings').appendChild(newdiv);
+
+var textbox = document.createElement('input');  
+textbox.setAttribute('type', 'text');
+textbox.setAttribute('name', 'sib2id');
+textbox.setAttribute('onchange', 'getfun(this.value)');
+
+
+    
+    document.getElementById('moresiblings1').appendChild(textbox);
+
+var label;
+label = document.createElement('label');
+label.appendChild(document.createTextNode('Name '));
+document.getElementById('moresiblings').appendChild(label);
+newdiv=document.createElement('div')
+newdiv.id="fundiv"
+newdiv.class="selectWidth1"
+document.getElementById('moresiblings').appendChild(newdiv);
+
+var textbox = document.createElement('input');  
+textbox.setAttribute('type', 'text');
+textbox.setAttribute('name', 'sib2name');
+document.getElementById('fundiv').appendChild(textbox);
+
+
+    
+document.getElementsByName("fun")[0].disabled = true;   
+}
+</script>
+
+   
+
+
+
+
+   
+
+
+
+
+    
+
+
+<div class="content" style="margin:0 10px 0 10px" >
+{% for error in errors %}
+<font color="red">{{error}}</font>
+<br>
+{% endfor %}
+		<!-- Smart Wizard -->
+  		<div id="wizard" class="swMain" >
+  			<ul>
+
+  				<li><a href="#step-1">
+                <span class="stepDesc">Personal Detail<br />
+                </span>
+            </a></li>
+  				<li><a href="#step-2">
+                <span class="stepDesc">Parent Details<br />
+                </span>
+            </a></li>
+
+             <li><a href="#step-3">
+                <span class="stepDesc">Pre-School Detail<br />
+                </span>
+            </a></li>
+           
+             <li><a href="#step-4">
+                <span class="stepDesc">Sibling Detail<br />
+                </span>
+            </a></li>
+  			
+  			</ul>
+            
+             <form name="form1" method="post" action="/student/add/" enctype="multipart/form-data"> 
+  			<div id="step-1" style="width:100%;">
+			          <div class="widget-content" style="width:100%;">
+                                    <!-- title box -->
+									
+                                           <div class="section" >
+                                                <label> Admission Date<sup>*</sup></label>   
+                                                 <div> <input type="text"  id="datepick" class="datepicker"  name="adddate"  value="{{adddate}}" style="text-align:left"  />
+                                                 </div>
+                                           </div>
+                                           
+                                          
+                                          <!-- 
+                                            <div class="section" >
+                                                <label>Title <sup>*</sup></label>   
+                                                <div  class="selectWidth1"> <select class="small"  name="title">
+
+                                                <option value="-1" selected >Select Title</option>
+                                                   {%if title == 'm'%}
+                                                   <option value="m"  selected>Mr.</option>
+                                                   {%else%}
+                                                   <option value="m" >Mr.</option>
+                                                   {%endif%}
+                                                   
+                                                   {%if title == 'f'%}
+                                                   <option value="f"  selected>Mrs.</option>
+                                                   {%else%}
+                                                   <option value="f" >Mrs.</option>
+                                                   {%endif%}
+                                                   
+                                                   
+                                                   {%if title == 'mis'%}
+                                                   <option value="mis"  selected>Miss</option>
+                                                   {%else%}
+                                                   <option value="mis" >Miss</option>
+                                                   {%endif%}
+                                                   
+                                                   {%if title == 'd'%}
+                                                   <option value="d"  selected>Dr.</option>
+                                                   {%else%}
+                                                   <option value="d" >Dr.</option>
+                                                   {%endif%}
+                                                   
+                                                   {%if title == 'o'%}
+                                                   <option value="o"  selected>Other</option>
+                                                   {%else%}
+                                                   <option value="o" >Other</option>
+                                                   {%endif%}
+                                              </select></div>
+                                           </div>
+                                           -->
+                                           
+                                           <div class="section" >
+                                                <label>First Name <sup>*</sup></label>   
+                                                <div> <input type="text" maxlength="100" name="firstname" value="{{firstname}}" class="medium"  /></div>
+
+                                           </div>
+                                           <div class="section" >
+                                                <label>Last Name <sup>*</sup></label>   
+                                                <div> <input type="text" maxlength="100" name="lastname" value="{{lastname}}" class="medium"  /></div>
+
+                                           </div>
+                                           <div class="section" >
+                                                <label>Date of Birth<sup>*</sup></label>   
+                                                <div> <input type="text" name="dob" class="datepicker" style="text-align:left" value="{{dob}}" class="medium" onchange="calcAge(this.value);" /></div>
+
+                                           </div>
+                                           <div class="section" >
+                                                <label>age </label>   
+                                                <div> <input type="text" name="age" id="age" value="{{age}}" class="small" onkeypress="return isNumberKey(event)"    /></div>
+
+                                           </div>
+                                           
+                                           
+                                           <div class="section" >
+                                                <label>Sex<sup>*</sup> </label>   
+                                                <div class="selectWidth1">
+                                                <select name="sex" class="selectWidth1">
+                                                
+                                                <option value="-1" selected >Select Sex</option>
+                                                   {%if sex == 'm'%}
+                                                   <option value="m"  selected>Male</option>
+                                                   {%else%}
+                                                   <option value="m" >Male</option>
+                                                   {%endif%}
+                                                   {%if sex == 'f'%}
+                                                   <option value="f"  selected>Female</option>
+                                                   {%else%}
+                                                   <option value="f" >Female</option>
+                                                   {%endif%}
+                                                   
+
+                                              </select>       
+                                           </div>
+                                           </div>
+                                                                       <div class="section" >
+                                                <label>Medium<sup>*</sup> </label>   
+                                                <div class="selectWidth1">
+                                                <select name="medium">
+                                                
+                                                 <option value="-1">Select Medium</option>
+                                                 {% for item in mediums %}
+                                                 {% if medium %}
+                                                 {% ifequal medium item.id %}
+                                                
+                                                
+                                             <option value="{{item.id}}" selected>{{item.name}}</option>
+                                             {% else %}
+                                             <option value="{{item.id}}">{{item.name}}</option>
+                                             {% endifequal %}   
+                                               {% else %}
+                                               <option value="{{item.id}}">{{item.name}}</option>
+                                               {% endif %}
+                                                {% endfor %}  
+  </select>       
+                                           </div>
+                                           </div>
+
+    <div class="section" >
+                                                <label>Standard<sup>*</sup> </label>   
+                                                <div class="selectWidth1">
+                                                <select name="shortstandard">
+                                                
+                                                 <option value="-1">Select Standard</option>
+                                                 {% for item in shortstandards %}
+                                                 {% if shortstandard %}
+                                                 {% ifequal shortstandard item.id %}
+                                                
+                                                
+                                             <option value="{{item.id}}" selected>{{item.name}}</option>
+                                             {% else %}
+                                             <option value="{{item.id}}">{{item.name}}</option>
+                                             {% endifequal %}   
+                                               {% else %}
+                                               <option value="{{item.id}}">{{item.name}}</option>
+                                               {% endif %}
+                                                {% endfor %}  
+  </select>       
+                                           </div>
+                                           </div>
+
+
+ <div class="section" >
+                                                <label>Section<sup>*</sup> </label>   
+                                                <div class="selectWidth1">
+                                                <select name="section">
+                                                
+                                                 <option value="-1">Select Section</option>
+                                                 {% for item in sections %}
+                                                 {% if section %}
+                                                 {% ifequal section item.id %}
+                                                
+                                                
+                                             <option value="{{item.id}}" selected>{{item.name}}</option>
+                                             {% else %}
+                                             <option value="{{item.id}}">{{item.name}}</option>
+                                             {% endifequal %}   
+                                               {% else %}
+                                               <option value="{{item.id}}">{{item.name}}</option>
+                                               {% endif %}
+                                                {% endfor %}  
+  </select>       
+                                           </div>
+                                           </div>
+
+                            
+            <div class="section" >
+                                                <label >Upload Image</label>   
+                                                <div> <input type="file" name="studImage"   /></div>
+</div>     
+
+{% if overallFac %}
+
+ <div class="section" >
+                                                <label >Facilities</label>   
+                         <div>
+                         <table><tr>
+                         {% for fac in overallFac %}
+                         <td>
+                         <label>{{fac.0.name}}</label></td><td>
+                         {% if fac.1 %}
+                         <input type="checkbox" name="fac{{fac.0.id}}" value="1" checked>
+                         {% else %}
+                         <input type="checkbox" name="fac{{fac.0.id}}" value="1">
+                         {% endif %}
+                         </td>
+                         </td>
+                         <td>&nbsp&nbsp</td>
+                         {% endfor %}
+                         </tr></table>
+                        </div>
+</div>                   
+                     {% endif %}                      
+                                           <br>
+                                           <br>
+                                          <!-- 
+                                           <div class="section" >
+                                                <label>Email Id </label>   
+                                                <div> <input type="text"  name="email" value="{{email}}" class="medium"  /></div>
+
+                                           </div>
+                                           -->
+                                           <fieldset>
+                                           <legend>Local Address Details</legend>
+                                           
+                                                                                      
+                                           <div class="section" >
+                                                <label>Address <sup>*</sup></label>   
+                                                <div> <input type="text" id="laddress" name="laddress" value="{{laddress}}" class="large" maxlength="100"  /></div>
+                                           </div>
+                                           
+                                           
+                                           
+                                           <div class="section" >
+                                                <label>State <sup>*</sup></label>   
+                                                <div class="selectWidth1" >
+                                                	<select class="small" id="lstate"  name="lstate" onchange="getCityforLocal(this.value)">
+                                                		<option value="-1"  selected>Select State</option>
+                                                	  {%for s in states%}
+                                                	    {%ifequal getlstate s.id%}
+                                                		<option value="{{s.id}}" selected>{{s.name|title}}</option>
+                                                		{%else%}
+                                                		<option value="{{s.id}}" >{{s.name|title}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > no states found ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                	
+                                                	        
+                                                </div>
+                                           </div>
+                                           <div class="section" >
+                                                <label>City <sup>*</sup></label>   
+                                                <div class="selectWidth1" id="citydiv1">
+                                                	<select class="small"  name="lcity" id="lcity" >
+                                                	<option value="-1" selected>Select City</option>
+                                                	    {%for c in lcities%}
+                                                	    {%ifequal getlcity c.id%}
+                                                	    <option value="{{c.id}}" selected  >{{c.name}}</option>
+                                                	    {%else%}
+                                                	    <option value="{{c.id}}"  >{{c.name}}</option>
+                                                	    {%endifequal%}
+                                                	    {%empty%}
+                                                		
+                                                		{%endfor%}
+                                                	</select>       
+                                           </div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label>Pincode</label>   
+                                                <div> <input type="text" id="lpincode" name="lpincode" value="{{lpincode}}" class="medium" maxlength="12" onkeypress="return isNumberKey(event)"  /></div>
+
+                                           </div>
+                                           
+                                           
+                                           
+                                           <div class="section" >
+                                                <label>Contact(R)</label>   
+                                                <div> <input type="text" id="lcontact" name="lcontact" value="{{lcontact}}" class="medium"  maxlength="12" onkeypress="return isNumberKey(event)"  /></div>
+
+                                           </div>
+												
+                                           
+                                           <div class="section" >
+                                                <label>Mobile no<sup>*</sup></label>   
+                                                <div> <input type="text" id="lmobile" name="lmobileno" value="{{lmobileno}}" class="medium" maxlength="12" onkeypress="return isNumberKey(event)"  /></div>
+                                           </div>
+                                    </fieldset>
+                                    <fieldset>
+                                           <legend>Permanent Address Details</legend>
+                                           
+                                               <div class="section" >
+                                                <label>Same As Local </label>   
+                                                <div> <input type="checkbox" id="psamel" name="psamel" value="1"  /></div>
+                                           </div>
+                                           <br>
+                                           <div id="sameaslocal">
+                                               <div class="section" >
+                                                <label>Address <sup>*</sup></label>   
+                                                <div> <input type="text" id="paddress" name="paddress" value="{{paddress}}"  maxlength="100" class="large"   /></div>
+                                           </div>
+                                           
+                                           
+                                           
+                                           <div class="section" >
+                                                <label>State <sup>*</sup></label>   
+                                                <div class="selectWidth1" >
+                                                	<select class="small"  id="pcity" name="pstate" onchange="getCityforPermanent(this.value)">
+                                                		<option value="-1"  selected>Select State</option>
+                                                	  {%for s in states%}
+                                                	    {%ifequal getpstate s.id%}
+                                                		<option value="{{s.id}}" selected>{{s.name|title}}</option>
+                                                		{%else%}
+                                                		<option value="{{s.id}}" >{{s.name|title}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > no states found ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                	
+                                                	        
+                                                </div>
+                                           </div>
+                                           <div class="section" >
+                                                <label>City <sup>*</sup></label>   
+                                                <div class="selectWidth1" id="citydiv2">
+                                                	<select class="small"  name="pcity" id="pcity" >
+                                                	<option value="-1" selected>Select City</option>
+                                                	    {%for c in pcities%}
+                                                	    {%ifequal getpcity c.id%}
+                                                	    <option value="{{c.id}}" selected  >{{c.name}}</option>
+                                                	    {%else%}
+                                                	    <option value="{{c.id}}"  >{{c.name}}</option>
+                                                	    {%endifequal%}
+                                                	    {%empty%}
+                                                		<option value="-1" selected  >Select State First</option>
+                                                		{%endfor%}
+                                                	</select>       
+                                           </div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label>Pincode</label>   
+                                                <div> <input type="text" id="ppincode" name="ppincode" value="{{ppincode}}" class="medium" maxlength="12" onkeypress="return isNumberKey(event)"  /></div>
+
+                                           </div>
+                                           
+                                           
+                                           
+                                           <div class="section" >
+                                                <label>Contact(R)</label>   
+                                                <div> <input type="text" id="pcontact" name="pcontact" value="{{pcontact}}" class="medium" maxlength="12" onkeypress="return isNumberKey(event)"  /></div>
+
+                                           </div>
+												
+                                           
+                                           <div class="section" >
+                                                <label>Mobile no<sup>*</sup></label>   
+                                                <div> <input type="text" id="pmobile" name="pmobileno" value="{{pmobileno}}" class="medium" maxlength="12" onkeypress="return isNumberKey(event)"  /></div>
+                                           </div>
+                                           </div>
+                                           <script type="text/javascript">
+	checkDisplay("psamel", "sameaslocal");
+	</script>
+                                    </fieldset> 
+                                             
+                                </div>
+            
+			
+			</div>
+  			<div id="step-2" style="width:100%;">
+			           <div class="widget-content" style="width:100%;">
+                                    <!-- title box -->
+                                    
+                                <table>
+                                <tr>
+                                <td colspan="2">     
+                                <h3>Father Details</h3> 
+                                </td>
+                                <td colspan="2">
+                                <h3>Mother Details</h3>
+                                </td>
+                                <td colspan="2"><h3>Emergency Contact</h3></td>
+                                </tr>
+                                <tr><td><label><pre>Name     </pre></label></td>
+                                <td><pre><input type="text" name="fathername" maxlength="100" value="{{fathername}}" />       <pre></td>
+                                <td><label><pre>Name     </pre> </label></td>
+                                <td>  <pre><input type="text" maxlength="100" name="mothername" value="{{mothername}}" />       <pre></td>
+                                <td><label><pre>Name     </pre> </label></td>
+                                <td>  <pre><input type="text" maxlength="100" name="otherpersonname" value="{{otherpersonname}}" />       <pre></td>
+                                </tr>
+                                
+                                
+                                
+                                <tr><td><label><pre>Occupation     </pre></label></td>
+                                <td><pre><input type="text" name="fatheroccupation" maxlength="100" value="{{fatheroccupation}}" />       <pre></td>
+                                <td><label><pre>Occupation     </pre> </label></td>
+                                <td>  <pre><input type="text" maxlength="100" name="motheroccupation" value="{{motheroccupation}}" />       <pre></td>
+                                <td><label><pre>ContactNo     </pre> </label></td>
+                                <td>  <pre><input type="text" maxlength="12" name="otherpersonno" value="{{otherpersonno}}" onkeypress="return isNumberKey(event)" />       <pre></td>
+                                </tr>
+                                <tr><td><label><pre>Income     </pre></label></td>
+                                <td><pre><input type="text" maxlength='12' onkeypress="return isNumberKey(event)" name="fathersalary" value="{{fathersalary}}" />       <pre></td>
+                                <td><label><pre>Income     </pre> </label></td>
+                                <td>  <pre><input type="text" maxlength='12' onkeypress="return isNumberKey(event)" name="mothersalary" value="{{mothersalary}}" />       <pre></td>
+                                <td><label><pre>Relation     </pre> </label></td>
+                                <td>  <pre><input type="text" name="relation" maxlength="100" value="{{relation}}" />       <pre></td>
+                                </tr>
+                                <tr><td><label><pre>Contact(o)     </pre></label></td>
+                                <td><pre><input type="text" maxlength='12' name="fatherofficeno" onkeypress="return isNumberKey(event)" value="{{fatherofficeno}}" />       <pre></td>
+                                <td><label><pre>Contact(o)     </pre> </label></td>
+                                <td>  <pre><input type="text" maxlength="12" onkeypress="return isNumberKey(event)" name="motherofficeno" value="{{motherofficeno}}" />       <pre></td>
+                                <td><label></label></td>
+                                <td>  </td>
+                                </tr>
+                                <tr><td><label><pre>Mobile     </pre></label></td>
+                                <td><pre><input type="text" maxlength='12' onkeypress="return isNumberKey(event)" name="fathermobileno" value="{{fathermobileno}}" />       <pre></td>
+                                <td><label><pre>Mobile     </pre> </label></td>
+                                <td>  <pre><input type="text" maxlength='12' onkeypress="return isNumberKey(event)" name="mothermobileno" value="{{mothermobileno}}" />       <pre></td>
+                                <td><label></label></td>
+                                <td>  <pre>      <pre></td>
+                                </tr>
+                                
+                                </table>
+                                                               
+                                 
+                                 
+                                </div>
+					
+			
+			</div>                      
+  			<div id="step-3">
+
+			            <div class="widget-content">
+                                    <!-- title box -->
+                                          
+                                          <div class="section" >
+                                                <label>School Name </label>   
+                                                <div> <input type="text" name="preschoolname" maxlength="100" value="{{preschoolname}}"  class="medium"  /></div>
+                                          </div>
+                                          <div class="section" >
+                                                <label>Admission No </label>   
+                                                <div> <input type="text" name="oldAddNo" maxlength="10" value="{{oldAddNo}}"  class="medium"  /></div>
+                                          </div>
+                                              <div class="section" >
+                                                <label>Roll No </label>   
+                                                <div> <input type="text" name="oldRollNo" maxlength="10" value="{{oldRollNo}}"   class="medium"  /></div>
+                                          </div>
+                                          
+                                          <div class="section " >
+                                                <label >Standard</label>   
+                                                <div> <input type="text"  name="prestandard" value="{{prestandard}}" class="medium" /></div>
+
+                                        </div>
+                                          
+                                          <div class="section">
+                                                <label>Year of Passing</label>   
+                                                <div class="selectWidth1">
+                                                <input type="text" maxlength="6" onkeypress="return isNumberKey(event)" name="prepassingyear" value="{{prepassingyear}}" />
+                                                
+                                               
+
+
+                                                     
+                                      </div>
+                                           </div>
+                                           
+                                            
+                                                                                                                    
+                                       
+                                        
+                                        <div class="section" >
+                                                <label >Medium</label>   
+                                                <div> <input type="text" name="premedium" maxlength="20" value="{{premedium}}" class="medium"  /></div>
+</div>
+                                          <div class="section" >
+                                                <label >Upload Report Card</label>   
+                                                <div> <input type="file" name="documents" value="{{documents}}"  /></div>
+</div>
+                           <div class="section" >
+                                                <label >Upload Trasfer Certificate</label>   
+                                                <div> <input type="file" name="tc" value=""  /></div>
+</div>
+
+                           <div class="section" >
+                                                <label >Upload Character Certificate</label>   
+                                                <div> <input type="file" name="cc" value=""  /></div>
+</div>
+                           <div class="section" >
+                                                <label >Upload Migration Certificate</label>   
+                                                <div> <input type="file" name="mc" value=""  /></div>
+</div>
+
+
+
+                                       </div></div>
+
+
+
+                                                                             
+                      
+                                         			<div id="step-4">
+
+			            <div class="widget-content">
+                                   
+                                          <table>
+                                <tr>
+                                <td colspan="2">     
+                                <h3>SIBLING 1</h3> 
+                                </td>
+                                <td colspan="2">
+                                <h3>SIBLING 2</h3>
+                                </td>
+                                <td colspan="2"><h3>SIBLING 3</h3></td>
+                                </tr>
+                                <tr><td><label><pre>STUDENT ID     </pre></label></td>
+                                <td><pre><input type="text"  name="sib1id"  value="{{sib1id}}" style='width:150px'   onchange="getSiblingName1(this.value)"  />       <pre></td>
+                                <td><label><pre>STUDENT ID     </pre> </label></td>
+                                <td>  <pre><input type="text"  name="sib2id"  value="{{sib2id}}" style='width:150px'   onchange="getSiblingName2(this.value)"  />       <pre></td>
+                                <td><label><pre>STUDENT ID     </pre> </label></td>
+                                <td>  <pre><input type="text"  name="sib3id"  value="{{sib3id}}" style='width:150px'   onchange="getSiblingName3(this.value)"  />       <pre></td>
+                                </tr>
+                                <tr><td><label><pre>STUDENT NAME     </pre></label></td>
+                                <td id='studNamediv1'><pre><input type="text"  name="sib1name"  value="{{sib1name}}" readonly style='width:150px'/>       <pre></td>
+                                <td><label><pre>STUDENT NAME     </pre> </label></td>
+                                <td id='studNamediv2'><pre><input type="text"  name="sib2name" readonly  value="{{sib2name}}" style='width:150px'/>       <pre></td>
+                                <td><label><pre>STUDENT NAME     </pre> </label></td>
+                                <td id='studNamediv3'><pre><input type="text"  name="sib3name" readonly  value="{{sib3name}}" style='width:150px'/>       <pre></td>
+                                </tr>
+                                     </table>     
+                                          
+                                                           
+                                                         
+                                       
+                                       
+                                      
+                                          
+                                                                                     
+                                            
+                                                                                                                    
+                                       
+                                        
+                                       
+<div class="section last">
+                                               <div>
+                                                <input type="submit" name="addStudent" class="btn" value="submit"  />
+                                               </div>
+                                           </div>
+ 
+
+                                        
+                                                                                  
+                                                               
+                                         
+                                           <input type="hidden" value="{{warned}}" name="warned"/>
+                                </div>
+            </p>
+
+			</div>
+            
+            
+         
+            </form>
+  			
+  		</div>
+                                        
+                                        
+{%endblock%}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+

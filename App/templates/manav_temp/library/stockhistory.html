@@ -1,0 +1,133 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+
+
+
+
+{% block leftMenu %}
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                       <li ><a href="/libItems/" ><span class="ico gray shadow pictures_folder"></span><b>Purchase Item</b></a></li>
+                        <li class="select"><a href="/manageStocks/" ><span class="ico gray shadow pictures_folder"></span><b>Item Stock</b></a></li>
+                         <li><a href="/libMembers/" ><span class="ico gray shadow pictures_folder"></span><b>Members</b></a></li>
+                          
+                          <li><a href="/Issues/" ><span class="ico gray shadow pictures_folder"></span><b>Issues</b></a></li> 
+                   
+                       
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%} 
+
+
+
+
+
+{% block form1Title %}
+  Stock History
+  {% endblock %} 
+  {% block form1Header %}
+ <div class="btn-group btn-square" style="float:right; margin:3px 2px 0 0" >
+ 
+     </div>
+    {% endblock %}
+ 
+  
+                           
+       {% block form1Body %}    
+                  <h3>Added</h3        
+
+                                
+              <div id="UITab" style="position:relative; ">
+                                         
+                                          <div class="" >
+                                          <div id="tab1" class="tab_content"> 
+                                           
+                    <table class="table table-bordered table-striped"   width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr >
+                                                        
+                                                        <td width="10%">Date</td>
+                                                        <td width="10%">Name</td>
+                                                        <td width="10%">Contact No</td>
+														<td width="20%">Address</td>
+                                                        <td width="5%">ReciptNo</td>
+                                                        <td width="5%">TotalBill</td>
+                                                        <td width="10%">PaymentMode</td>
+                                                        
+                                                        
+                                                        
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody align="center" class="font_wght">
+                                                     
+                                                      {% for item in allrows %}
+                                                       <tr>
+                                                        <td>{{item.getdate}}</td>
+                                                            <td>{{item.name}}</td>
+                                                        <td>{{item.contact}}</td>
+                                                        <td>{{item.address}}</td>
+                                                        <td>{{item.getrecipt}}</td>
+                                                        <td>{{item.getbillamt}}</td>
+                                                        <td>{{item.getPaymentMode}}</td>
+                                                    
+                                                    
+                                                        
+                                    
+                                                    
+                                                      </tr>
+     													{% empty %}
+     													<td colspan="7">No data Exist</td>
+                                                    {% endfor %}  
+                                                    </tbody>
+                                                  </table>
+                                      </div>
+                                              
+                          
+                                      </div>
+                                      <h3>Deducted</h3>
+                                      <table class="table table-bordered table-striped"   width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr >
+                                                        
+                                                        <td width="10%">Date</td>
+                                                        <td width="10%">Remark</td>
+                                                        <td width="10%">View</td>
+													                                                        
+                                                        
+                                                        
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody align="center" class="font_wght">
+                                                     
+                                                      {% for item in getrows %}
+                                                       <tr>
+                                                        <td>{{item.getdate}}</td>
+                                                            <td>{{item.getremark}}</td>
+                                                      <td class="brdrnone"><a href="/stockdeducted/{{item.id}}/">
+                              <img src="{% static "images/edit.png" %}" width="28" height="28" alt="View" title="View">
+                                                        </a>
+                                                    </td>
+                                                        
+                                                    
+                                                    
+                                                        
+                                    
+                                                    
+                                                      </tr>
+     													{% empty %}
+     													<td colspan="3">No data Exist</td>
+                                                    {% endfor %}  
+                                                    </tbody>
+                                                  </table>
+                                </div>
+                                
+                   
+                   
+                        
+                            
+                           {% endblock %} 
+                           {%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+                           

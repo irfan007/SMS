@@ -1,0 +1,157 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+{% block leftMenu %}
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                     <li ><a href="/libItems/" ><span class="ico gray shadow pictures_folder"></span><b>Purchase Item</b></a></li>
+                        <li><a href="/manageStocks/" ><span class="ico gray shadow pictures_folder"></span><b>Item Stock</b></a></li>
+                         <li><a href="/libMembers/" ><span class="ico gray shadow pictures_folder"></span><b>Members</b></a></li>
+                          
+                          <li class="select"><a href="/Issues/" ><span class="ico gray shadow pictures_folder"></span><b>Issues</b></a></li>  
+                       
+                       
+                       
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+                             {% block form1Title %}
+                             Search Item
+                             
+                             {% endblock %}
+                                </div><!-- End widget-header -->	
+                                
+                                {% block form1Body %}
+                                    {% for error in errors %}
+                                    <font color="red">{{error}}<br></font>
+                                    {% endfor %}
+                                    
+                                    
+                                     
+                                      <form id="add_user" method="post" action="/libItemSearch/"> 
+                                      <br>
+                                            <table>
+                                            <tr>
+                                            <td>
+                                                <label>Type</label></td>
+                                                <td>&nbsp&nbsp</td>
+                                                   
+                                                <td>
+                                                <div class="selectWidth2">
+                                                <select name="type">
+                                                {% for data in types %}
+                                                {% ifequal type data %}
+                                                <option selected>{{data}}</option>
+                                                {% else %}
+                                                <option>{{data}}</option>
+                                                {% endifequal %}
+                                                {% endfor %}
+                                                </select>
+                                                </div>
+                                                </td>
+                                           <td>&nbsp&nbsp&nbsp&nbsp</td>
+                                           <td><label>Name</label></td><td>&nbsp</td><td><input type="text" value="{{itemname}}" name="itemname"></td>
+                                           <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+                                           <td>
+                                                <label>Code</label></td><td>
+                                                &nbsp&nbsp<input type="text" name="itemcode" value="{{itemcode}}" style="width:150px;" /></td>
+                                                </tr>
+                                                <tr>
+                                            <td>
+                                                <label>Author</label></td>
+                                                <td>&nbsp&nbsp</td>
+                                                   
+                                                <td>
+                                                <input type="text" name="author" value="{{author}}" style="width:150px;" />
+                                                </td>
+                                           <td>&nbsp&nbsp&nbsp&nbsp</td>
+                                           <td><label>Publisher</label></td><td>&nbsp</td><td><input type="text" value="{{publisher}}" name="publisher" style="width:150px;" /></td>
+                                           <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+                                           <td>
+                                              <input type="submit" name="Search" value="Search" class="btn"> </td>
+                                                
+                                                </tr>
+                                           
+                                           </table>
+                                                </form>
+                                           
+                                      {% if getdata %}
+                                      
+                                                          
+              <div id="UITab" style="position:relative; ">
+                                         
+                                          <div class="" >
+                                          <div id="tab1" class="tab_content"> 
+                                             <style type="text/css">
+.dataTables_filter {
+display: none;
+}
+</style>
+                         <table class="table table-bordered table-striped data_table3 "  id="data_table3" width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                              <tr >
+                                                       
+                                                        <td width="20%">Name</td>
+                                                        
+
+                                                        
+                                                        <td width="15%">Code</td>
+                                                        <td width="20%">Quantity</td>
+                                                        <td width="20%">Type</td>
+                                                        <td width="20%">Issue</td>
+                                                        
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody align="center" class="font_wght">
+                                                     
+                                                      {% for item in allrows %}
+                                                       <tr>
+                                                      
+                                                        <td>{{item.itemName}}</td>
+                                                        <td>{{item.itemCode}}</td>
+                                                        <td>{{item.gettotalquantity}}</td>
+                                                    <td>{{item.type}}</td>
+                                                        
+                                        
+                                                        <td class="brdrnone"><a href="/libItemIssue/add/{{item.id}}/">
+                              <img src="{% static "images/edit.png" %}" width="28" height="28" alt="Edit Item" title="Edit Item">
+                                                        </a>
+                                                    </td>
+                                                    
+                                                      </tr>
+     
+                                                 
+                                                    {% endfor %}
+                                                    </tbody> 
+                                                  
+                                                  
+                                                 
+     
+                                                    
+                                                  
+                                                  </table>
+                                      </div>
+                                              
+                          
+                                      </div>
+                                </div>
+                                
+               
+                                    {% endif %}
+                                                                                    
+                                                                                      
+                                          
+                                           
+                                           
+                                           
+                                            
+                                      
+                                </div><!--  end widget-content -->
+                         
+                            
+             <!-- start right section--> 
+{% endblock %}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}

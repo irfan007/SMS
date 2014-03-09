@@ -1,0 +1,122 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+
+
+
+
+{% block leftMenu %}
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                       
+                         <li><a href="/libItems/" ><span class="ico gray shadow pictures_folder"></span><b>Purchase Item</b></a></li>
+                        <li class="select"><a href="/manageStocks/" ><span class="ico gray shadow pictures_folder"></span><b>Item Stock</b></a></li>
+                         <li><a href="/libMembers/" ><span class="ico gray shadow pictures_folder"></span><b>Members</b></a></li>
+                          
+                          <li><a href="/Issues/" ><span class="ico gray shadow pictures_folder"></span><b>Issues</b></a></li>
+                       
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%} 
+
+
+
+
+
+{% block form1Title %}
+  Stock Management 
+  {% endblock %} 
+  {% block form1Header %}
+ <div class="btn-group btn-square" style="float:right; margin:3px 2px 0 0" >
+ 
+   </div>
+    {% endblock %}
+ 
+  
+                           
+       {% block form1Body %}    
+                          
+
+                                
+              <div id="UITab" style="position:relative; ">
+                                         
+                                          <div class="" >
+                                          <div id="tab1" class="tab_content"> 
+                                           
+                    <table class="table table-bordered table-striped "    width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr >
+                                                        <td width="5%">S.No</td>
+                                                        <td width="20%">Name</td>
+                                                        
+
+                                                        
+                                                        <td width="15%">Code</td>
+                                                        <td width="10%">Quantity</td>
+                                                        <td width="20%">Type</td>
+                                                        <td width="15%">Action</td>
+                                                        <td width="15%">History</td>
+                                                        
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody align="center" class="font_wght">
+                                                     
+                                                      {% for item in allrows %}
+                                                       <tr>
+                                                       <td>{{FROM|add:forloop.counter0}}</td>
+                                                        <td>{{item.itemName}}</td>
+                                                        <td>{{item.itemCode}}</td>
+                                                        <td>{{item.gettotalquantity}}</td>
+                                                    <td>{{item.type}}</td>
+                                                        
+                                        
+                                                 <td class="brdrnone"><a href="/libstock/modify/{{item.id}}/">
+                              <img src="{% static "images/edit.png" %}" width="28" height="28" alt="Edit Item" title="Edit Item">
+                                                        </a>
+                                                    </td>
+                                                              <td class="brdrnone"><a href="/libstock/history/{{item.id}}/">
+                              <img src="{% static "images/edit.png" %}" width="28" height="28" alt="Item History" title="Item History">
+                                                        </a>
+                                                    </td>
+                                                    
+                                                      </tr>
+     
+                                                 
+                                                  {% endfor %}
+                                                  
+                                                    {% if allrows %}
+                                                    </tbody>
+                                                  </table>
+                                                 <p align="right">
+                                                     {% if PREV %}
+                                                  <a href="/PrevmanageStocks/{{back}}/"><< PREVIOUS</a>
+                                                  {% endif %}
+                                                  
+                                                  {% if NEXT %}
+                                                  <a href="/NextmanageStocks/{{pagination_parameter}}/">NEXT>></a>
+                                                  {% endif %}</td>
+                                                  </tr>
+                                                  {% else %}
+                                                  <tr>
+                                                  <td colspan="7">No data at present</td>
+                                                  </tr>  
+                                                  {% endif %}
+                                                  </tbody>
+                                                  </table>
+                                                    
+                                                 
+                                                 
+                                                 
+                                      </div>
+                                              
+                          
+                                      </div>
+                                </div>
+                                
+                   
+                        
+                            
+                           {% endblock %} 
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%} 

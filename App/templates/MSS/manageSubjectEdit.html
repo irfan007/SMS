@@ -1,0 +1,145 @@
+{% extends 'dashboard.html'%}
+{% load staticfiles %}
+
+
+
+{% block leftMenu %}
+              <div id="left_menu">
+                   <ul id="main_menu" class="main_menu">
+                   
+                     
+                     <li><a href="/role" ><span class="ico gray shadow pictures_folder"></span><b>Role</b></a></li>
+                       <li><a href="/user" ><span class="ico gray shadow pictures_folder"></span><b>User</b></a></li>
+                       <li  ><a href="/staff" ><span class="ico gray shadow pictures_folder"></span><b>Staff</b></a></li>
+                       <li ><a href="/mediums/" ><span class="ico gray shadow pictures_folder"></span><b>Medium</b></a></li>
+                       <li ><a href="/sections/" ><span class="ico gray shadow pictures_folder"></span><b>Section</b></a></li>
+                       <li ><a href="/standards/" ><span class="ico gray shadow pictures_folder"></span><b>Standard</b></a></li>
+                       <li ><a href="/subjects/" ><span class="ico gray shadow pictures_folder"></span><b>Subject</b></a></li>
+                       <li class="select"><a href="/manage/subject/" ><span class="ico gray shadow pictures_folder"></span><b>Assign Subject</b></a></li>
+                       <li ><a href="/holidays/" ><span class="ico gray shadow pictures_folder"></span><b>Holidays</b></a></li>
+                       <li ><a href="/school/" ><span class="ico gray shadow pictures_folder"></span><b>Setting</b></a></li>
+                    </ul>
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+{% block form1Title%}
+Assigne Subject And Teacher:
+{%endblock%}
+
+{%block form1Body%}
+<script>
+function getSubject(classId)
+{
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("subject_div").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/responder?class="+classId,true);
+xmlhttp.send();
+}
+</script>
+
+
+<form id="add_user" method="post" action="" >
+      <div style="background:lightyellow;">
+      <ul style="color:red;style:disk;">
+                	{% for e in errors %}
+                	  <li>{{e}}</li>
+                	{%endfor%}
+      </ul>
+      </div>
+      
+      
+       
+                                                		  
+                                               
+                                                        
+                                           <div class="section" >
+                                                <label>CLASS <sup>*</sup></label>   
+                                                <input type="text" value="{{mss.getName}}" readonly />
+                                          </div>
+            
+                  <div id="subject_div">
+          		  <table class="table table-bordered table-striped  "  id="" width="100%">
+                                                    <thead align="center" >
+                                                     
+                                                      <tr class="tr_bg_list" >
+                                                        <td width="32%">Subject</td>
+                                                        <td width="32%">Assigned Teacher</td>
+                                                        <td width="36%">Class Teacher</td>
+                                                      </tr>
+                                                    </thead>
+                                                    
+                                                    
+                                                    <tbody align="center" class="font_wght">
+                                                     
+                                                     {% for sid,s,tid,ct in rows%}
+                                                      <tr class="font_wght">
+                                                        <td>{{s|title}}</td>
+                                                        
+                                                        
+                                                        <td>
+                                                        	<select class="small"  name="t_{{sid}}" >
+	                                                        	<option value="-1"  selected>Select Teacher</option>
+	                                                        	{%for t in teachers %}
+	                                                        		{%ifequal tid t.id%}
+	                                                        	<option value="{{t.id}}" selected>{{EP}}{{t.empId}} / {{t.getFullName}}</option>
+                                                					{%else%}
+                                                				<option value="{{t.id}}" >{{EP}}{{t.empId}} / {{t.getFullName}}</option>
+                                                					{%endifequal%}
+                                                				{%empty%}
+                                                				<option value="-1" > teacher not defined ! </option>
+                                                      			{%endfor%}
+                                                       	
+                                                			</select>
+                                                		</td>
+                                                		
+                                                		
+                                                		<td>
+                                                        	
+                                                        	{%if  ct%}
+                                                  				<input type="checkbox" name="ct_{{sid}}" value="1"  checked />
+                                                  			 {%else%}
+                                                  				<input type="checkbox" name="ct_{{sid}}" value="1"   />
+                                                  			 {%endif%}
+                                                  		 </td>
+                                                           
+                                                      </tr>
+                                                      {% endfor %}
+                                                          
+                                               </tbody>
+                                               
+                                           </table>                                           
+                              </div>
+                                         
+                                           <div class="section last">
+                                             <div>
+                                                  <input type="submit" name="manageSubjectEdit" value="Save" class="btn submit_form"></input>
+</div>
+                                           </div>
+                                        </form>
+{%endblock%}
+
+
+
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+
+
+
+

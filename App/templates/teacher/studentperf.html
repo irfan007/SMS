@@ -1,0 +1,222 @@
+{% extends 'dashboard.html'%}
+{% load staticfiles %}
+
+
+
+{% block leftMenu %}
+              <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                      
+                      <li ><a href="/teacher/upload/marks" ><span class="ico gray shadow pictures_folder"></span><b>Upload Marks</b></a></li>
+                      <li ><a href="/teacher/view/marks" ><span class="ico gray shadow pictures_folder"></span><b>View Marks</b></a></li>
+                      <li ><a href="/result/" ><span class="ico gray shadow pictures_folder"></span><b>View Result</b></a></li>
+                      <li class="select"><a href="/studPerformance/" ><span class="ico gray shadow pictures_folder"></span><b>View Performance</b></a></li>
+                      <li ><a href="/assignRollNo/" ><span class="ico gray shadow pictures_folder"></span><b>Assign Roll No</b></a></li>
+                    </ul>
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+{%endblock%}
+
+{% block form1Title%}
+View Result:
+{%endblock%}
+
+{%block form1Body%}
+<script>
+function isNumberKey(evt)
+          {
+             var charCode = (evt.which) ? evt.which : event.keyCode
+             if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+ 
+             return true;
+          }
+function getStudentsOfClass(classId)
+{
+
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("classStudents_div").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/getstudM?getStudentsOfClass="+classId,true);
+xmlhttp.send();
+}
+</script>
+
+
+<form id="add_user" method="post" action="/studPerformance/" >
+      <div style="background:lightyellow;">
+      <ul style="color:red;style:disk;">
+                	{% for e in errors %}
+                	  <li>{{e}}</li>
+                	{%endfor%}
+      </ul>
+      </div>
+      
+                                        
+                                        
+                                        <div class="section" >
+                                          <label>SESSION <sup>*</sup></label>   
+                                                <div class="selectWidth1" >
+                                                	<select class="small"  name="selected_session" ">
+                                                		<option value="-1"  selected>Select Session</option>
+                                                	  {%for s in allSession%}
+                                                	    {%ifequal s.0 selected_session %}
+                                                		<option value="{{s.0}}" selected>{{s.0|upper}}</option>
+                                                		{%else%}
+                                                		<option value="{{s.0}}" >{{s.0|upper}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > not found ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                </div>
+                                        </div>
+                                          
+                                                
+                                        <div class="section" >
+                                          <label>CLASS <sup>*</sup></label>   
+                                                <div class="selectWidth1" >
+                                                	<select class="small"  name="mss_id" onchange="getStudentsOfClass(this.value);">
+                                                		<option value="-1"  selected>Select Class</option>
+                                                	  {%for c in classes%}
+                                                	    {%ifequal mss_id c.id%}
+                                                		<option value="{{c.id}}" selected>{{c.getName|upper}}</option>
+                                                		{%else%}
+                                                		<option value="{{c.id}}" >{{c.getName|upper}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > classes not defined ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                </div>
+                                          </div>
+       
+                                                		  
+                                          
+                                                        
+                                         
+            
+             							 
+             							 <div class="section" >
+                                                <label>StudentId <sup>*</sup></label>   
+                                                <div class="selectWidth1" id="classStudents_div">
+                                                	<select class="small"  name="classStudent_id" >
+                                                		<option value="-1"  selected>Select Class First</option>
+                                                	  {%for s in students %}
+                                                	    {%ifequal classStudent_id s.id%}
+                                                		<option value="{{s.id}}" selected>{{s.getstudentId|upper}}</option>
+                                                		{%else%}
+                                                		<option value="{{s.id}}" >{{s.getstudentId|upper}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > subjects not found ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                </div>
+                                          </div>
+                  
+                                       
+                                           
+                                           
+                                        <div class="section last">
+                                             <div>
+                                             	<input type="submit" name="result" value="View Result" class="btn submit_form"></input>
+                                             </div>
+                                           </div>
+                                        </form>
+                                        
+                                        <hr/>
+                                        {%if data%}
+                                      
+                                        
+                                        
+                                        
+										
+										
+										<table class="table table-bordered"   width="100%" style="background:lightcyan;" >
+                                         	<tbody align="center">
+                                                   
+                                                   
+												   
+												   <tr>
+												   		<td align="left"><label>&nbsp;&nbsp;&nbsp; STUDENT NAME : &nbsp;&nbsp;{{studname|upper}} </label></td>
+												   </tr>
+												   	 
+												   
+												                                             		
+                                            </tbody>
+										</table>
+										<table class="table table-bordered"   width="100%" style="background:lightyellow;" >
+                                         	<tbody align="center">
+                                                   
+                                                   
+												   
+												   <tr>
+												   		<td><label>Exam</label></td>
+												   		{% for d in exams %}
+												   		<td colspan="3"><label> {{d.name}} </label></td>
+												   		{% endfor %}
+												   	</tr>
+												   	 
+												   <tr><td><label>Subject</label></td>
+												   {% for d in exams %}
+												   <td><label>obtain</label></td>
+												   <td><label>max</label></td>
+												   <td><label>percent</label></td>
+												  {% endfor %}
+												   
+												   
+												   </tr>
+												   {% for ovl in overall %}
+												      <tr>
+												       
+												      {% for data in ovl %}
+												      <td>{{data}}</td>
+												      
+												     
+												      
+												      
+												       {% endfor %}
+												       </tr>
+												       {% endfor %}  
+												   <tr>
+												   <td><label>Total</label></td>    
+												   {% for data in performance %}
+												   <td><label>{{data.0}}</label></td>
+												   <td><label>{{data.1}}</label></td>
+												   <td><label>{{data.2}}%</label></td>
+												   {% endfor %}       
+												   </tr>                                          		
+                                            </tbody>
+										</table>
+										
+										
+										{% endif %}
+{%endblock%}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+
+
+
+
+
+
+

@@ -1,0 +1,223 @@
+{% extends 'dashboard.html'%}
+{% load staticfiles %}
+
+
+
+{% block leftMenu %}
+              <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                      
+                      <li ><a href="/teacher/upload/marks" ><span class="ico gray shadow pictures_folder"></span><b>Upload Marks</b></a></li>
+                      <li ><a href="/teacher/view/marks" ><span class="ico gray shadow pictures_folder"></span><b>View Marks</b></a></li>
+                      <li class="select"><a href="/result/" ><span class="ico gray shadow pictures_folder"></span><b>View Result</b></a></li>
+                      <li ><a href="/studPerformance/" ><span class="ico gray shadow pictures_folder"></span><b>View Performance</b></a></li>
+                      <li ><a href="/assignRollNo/" ><span class="ico gray shadow pictures_folder"></span><b>Assign Roll No</b></a></li>
+                    </ul>
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+{%endblock%}
+
+{% block form1Title%}
+View Result:
+{%endblock%}
+
+{%block form1Body%}
+<script>
+function getStudentsOfClass(classId)
+{
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("classStudents_div").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/responder?getStudentsOfClass="+classId,true);
+xmlhttp.send();
+}
+</script>
+
+
+<form id="add_user" method="post" action="" >
+      <div style="background:lightyellow;">
+      <ul style="color:red;style:disk;">
+                	{% for e in errors %}
+                	  <li>{{e}}</li>
+                	{%endfor%}
+      </ul>
+      </div>
+      
+      
+       
+                                                		  
+                                           <div class="section" >
+                                                <label>EXAM <sup>*</sup></label>   
+                                                <div class="selectWidth1" >
+                                                	<select class="small"  name="exam_id" >
+                                                		<option value="-1"  selected>Select Exam</option>
+                                                	  {%for e in exams %}
+                                                	    {%ifequal exam_id e.id%}
+                                                		<option value="{{e.id}}" selected>{{e.name|upper}}</option>
+                                                		{%else%}
+                                                		<option value="{{e.id}}" >{{e.name|upper}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > exam not defined ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                </div>
+                                          </div>
+                                                        
+                                           <div class="section" >
+                                                <label>CLASS <sup>*</sup></label>   
+                                                <div class="selectWidth1" >
+                                                	<select class="small"  name="mss_id" onchange="getStudentsOfClass(this.value);">
+                                                		<option value="-1"  selected>Select Class</option>
+                                                	  {%for c in classes%}
+                                                	    {%ifequal mss_id c.id%}
+                                                		<option value="{{c.id}}" selected>{{c.getName|upper}}</option>
+                                                		{%else%}
+                                                		<option value="{{c.id}}" >{{c.getName|upper}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > classes not defined ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                </div>
+                                          </div>
+            
+             							 
+             							 <div class="section" >
+                                                <label>ROLLNO <sup>*</sup></label>   
+                                                <div class="selectWidth1" id="classStudents_div">
+                                                	<select class="small"  name="classStudent_id" >
+                                                		<option value="-1"  selected>Select Class First</option>
+                                                	  {%for s in students %}
+                                                	    {%ifequal classStudent_id s.id%}
+                                                		<option value="{{s.id}}" selected>{{s.rollNo|upper}}</option>
+                                                		{%else%}
+                                                		<option value="{{s.id}}" >{{s.rollNo|upper}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" >  not found ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                </div>
+                                          </div>
+                  
+                                       
+                                           
+                                           
+                                        <div class="section last">
+                                             <div>
+                                             	<input type="submit" name="result" value="View Result" class="btn submit_form"></input>
+                                             </div>
+                                           </div>
+                                        </form>
+                                        
+                                        <hr/>
+                                        {%if data%}
+                                        <table class="table table-bordered"   width="100%" style="background:lightyellow">
+                                         	<tbody align="center">
+                                                   
+                                                   
+                                                   <tr>
+												   		<td ><label> ROLL NO :</label></td>
+												   		<td colspan="2"  ><label> {{classStudentObj.rollNo}} </label></td>
+                                                   </tr>
+                                                   <tr>
+												   		<td><label> NAME :</label></td>
+												   		<td colspan="2"><label> {{name|upper}} </label></td>
+                                                   </tr>
+                                                   <tr>
+												   		<td ><label> MEDIUM : {{mssObj.medium.name|upper}} </label></td>
+												   		<td><label> STANDARD : {{mssObj.standard.name|upper}} </label></td>
+												   		<td><label> SECTION : {{mssObj.section.name|upper}} </label></td>
+												   </tr>
+												                                                      		
+                                            </tbody>
+										</table>
+										
+										<table class="table table-bordered"   width="100%" style="background:lightyellow;" >
+                                         	<tbody align="center">
+                                                   
+                                                   <tr>
+												   		<td colspan="5"  ><label> {{exam.name|upper}} EXAMINATION</label></td>
+												   </tr>
+												   
+												   <tr>
+												   		<td><label> SUBJECT </label></td>
+												   		<td><label> STATUS </label></td>
+												   		<td><label> MAXIMUM MARKS</label></td>
+												   		<td><label> PASSING MARKS</label></td>
+												   		<td><label> OBTAINED MARKS</label></td>
+												   </tr>
+												   {% for d in data %}
+												   <tr>
+												   		<td style="color:#B82E00"><label> {{d.0|upper}} </label></td>
+												   		{% ifequal d.1 1%}
+												   			<td style="color:green"><label> PASS </label></td>
+												   		{%else%}
+												   			<td style="color:red"><label> FAIL </label></td>
+												   		{%endifequal%}
+												   		<td style="color:#B82E00"><label> {{d.2}} </label></td>
+												   		<td style="color:#B82E00"><label> {{d.3}} </label></td>
+												   		{% ifequal d.1 -1%}
+												   		<td style="color:blue"><label> ABSENT</label></td>
+												   		{%else%}
+												   		<td style="color:#B82E00"><label> {{d.4}}</label></td>
+												   		{%endifequal%}
+												   </tr>
+												   {%empty%}
+												   <tr>
+												   		<td colspan="2"><label> NOT FOUND ! </label></td>
+												   		
+												   </tr>
+												   {%endfor%}
+												   <tr><td colspan="5"><br/></td></tr>
+												   <tr>
+												   		<td><label> TOTAL </label></td>
+												   		<td><label> =</label></td>
+												   		<td><label>{{result.maxSum}} </label></td>
+												   		<td><label> </label></td>
+												   		<td><label>{{result.obtainedSum}} </label></td>
+												   </tr>
+												   <tr>
+												   		<td><label> STATUS </label></td>
+												   		{%if result.status%}
+												   		<td style="color:green"><label>PASS</label></td>
+												   		{%else%}
+												   		<td style="color:red"><label>FAIL</label></td>
+												   		{%endif%}
+												   		<td></td>
+												   		<td><label> PERCENTAGE </label></td>
+												   		<td style="color:blue"><label> {{result.percent}}% {%if result.stdGrade%} ( {{result.stdGrade}} ) {%endif%}</label></td>
+												   </tr>
+												                                                      		
+                                            </tbody>
+										</table>
+										{%endif%}
+{%endblock%}
+
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+
+
+
+
+
+

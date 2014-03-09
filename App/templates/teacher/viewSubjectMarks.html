@@ -1,0 +1,141 @@
+{% extends 'dashboard.html'%}
+{% load staticfiles %}
+
+
+
+{% block leftMenu %}
+               <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                      
+                      <li ><a href="/teacher/upload/marks" ><span class="ico gray shadow pictures_folder"></span><b>Upload Marks</b></a></li>
+                      <li ><a href="/teacher/view/marks" ><span class="ico gray shadow pictures_folder"></span><b>View Marks</b></a></li>
+                      <li ><a href="/result/" ><span class="ico gray shadow pictures_folder"></span><b>View Result</b></a></li>
+                      <li ><a href="/studPerformance/" ><span class="ico gray shadow pictures_folder"></span><b>View Performance</b></a></li>
+                      <li class="select"><a href="/assignRollNo/" ><span class="ico gray shadow pictures_folder"></span><b>Assign Roll No</b></a></li>
+                    </ul>
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+{% block form1Title%}
+View Result:
+{%endblock%}
+
+{%block form1Body%}
+ 
+ 
+
+   
+ <table class="table table-bordered"   width="100%" style="background:lightyellow">
+                                                    
+      <tbody align="center" >
+                                                      	
+                                                      	 
+   <tr>
+   		<td><label> SESSION </label></td>
+   		<td colspan="2"> <label> {{sm.hasSession|upper}} </label> </td>
+   </tr>
+   
+   <tr>
+   		<td><label> EXAM DATE </label></td>
+   		<td colspan="2"> <label> {{sm.testDate|upper}} </label> </td>
+   </tr>
+   
+   
+   
+   <tr>
+   		<td><label> MEDIUM : {{mss.medium.name|upper}} </label></td>
+   		<td><label> STANDARD : {{mss.standard.name|upper}} </label></td>
+   		<td><label> SECTION : {{mss.section.name|upper}} </label></td>
+   </tr>
+                                                      		
+                                                    </tbody>
+</table>
+
+
+
+<table class="table table-bordered"   width="100%" style="background:lightyellow">
+                                                    
+      <tbody align="center" >
+                                                      	
+   <tr >
+   		<td colspan="2" align="center"><label> EXAM : {{sm.testName|upper}} </label></td>
+   		<td colspan="2" align="center"><label> SUBJECT : {{sm.subject|upper}} </label></td>
+   </tr>
+                                                      	 
+   <tr>
+   		<td><label> TOTAL STUDENT </label></td>
+   		<td><label> {{detail.total}} </label></td>
+   		<td><label> MAX MARKS </label></td>
+   		<td><label> {{detail.max}} </label></td>
+   </tr>
+   
+   <tr >
+   		<td style="color:green"><label> PASS </label></td>
+   		<td style="color:green"><label > {{detail.pass}} </label></td>
+   		<td><label> PASSING MARKS </label></td>
+   		<td><label> {{detail.min}} </label></td>
+   </tr>
+   
+   <tr style="color:red">
+   		<td><label > FAIL </label></td>
+   		<td><label> {{detail.fail}} </label></td>
+   		<td></td>
+   		<td></td>
+   </tr>
+   
+   <tr style="color:blue">
+   		<td ><label> ABSENT </label></td>
+   		<td><label> {{detail.absent}} </label></td>
+   		<td></td>
+   		<td></td>
+   </tr>
+   
+   
+                                                      		
+	</tbody>
+</table>
+ 
+ 
+<table class="table table-bordered"   width="100%" style="background:lightyellow">
+                                                    
+    <tbody align="center" >
+                                                      	
+   <tr style="background:lightcyan">
+   		<th><label> ROLL NO. </label></th>
+   		<th><label> NAME </label></th>
+   		<th><label> MARKS </label></th>
+   		
+   </tr>
+   
+   
+   {%for r in data%}
+   {%if r.3%}
+   <tr style="background:#FFCCCC">
+   		<td><label> {{r.0}} </label></td>
+   		<td><label> {{r.1}} </label></td>
+   		<td><label> {{r.2}} </label></td>
+   </tr>
+   
+   {%else%}
+   <tr>
+   		<td><label> {{r.0}} </label></td>
+   		<td><label> {{r.1}} </label></td>
+   		<td {%ifequal r.2 'ABSENT' %}style="color:blue;"{%endifequal%}><label> {{r.2}} </label></td>
+   </tr>
+   {%endif%}
+   {%endfor%}                                             		
+
+</tbody>
+</table>
+{%endblock%}
+
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+
+
+
+
+
+

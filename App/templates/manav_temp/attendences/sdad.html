@@ -1,0 +1,79 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+{% block leftMenu %}
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                       
+                       
+                       <li ><a href="/attendences/" ><span class="ico gray shadow pictures_folder"></span><b>Staff Attendence</b></a></li>
+                      
+                       <li class="select"><a href="/report/attendence/" ><span class="ico gray shadow pictures_folder"></span><b>View Report</b></a></li>
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+                             {% block form1Title %}
+                             Attendence Report
+                             
+                             {% endblock %}
+                                </div><!-- End widget-header -->	
+                                
+                                {% block form1Body %}
+                                    {% for error in errors %}
+                                    <font color="red">{{error}}<br></font>
+                                    {% endfor %}
+                                   <script> 
+                                    
+                                    function isNumberKey(evt)
+          {
+             var charCode = (evt.which) ? evt.which : event.keyCode
+             if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+ 
+             return true;
+          }
+                                    
+                                     </script>
+                                      <form id="add_user" method="post" action="/report/attendence/"> 
+                                           <div class="section" >
+                                                <label>Year<sup>*</sup> </label>   
+                                                <div> <input type="text" maxlength="6"  name="year"  value="{{year}}" style="text-align:left" onkeypress="return isNumberKey(event)"  /></div>
+                                           </div>
+                                           
+                                          <div class="section" >
+                                                <label>Month<sup>*</sup> </label>   
+                                                <div class="selectWidth1"> <select name="month">
+                                                {% for data in months %}
+                                                {% ifequal forloop.counter month %}
+                                                <option value="{{forloop.counter}}" selected>{{data}}</option>
+                                                {% else %}
+                                                <option value="{{forloop.counter}}">{{data}}</option>
+                                                {% endifequal %}
+                                                {% endfor %}
+                                                </select>
+                                                
+                                                </div>
+                                           </div>
+                                    
+                                                                                    
+                                 
+                                           
+                                          
+                                           
+                                           
+                                           
+                                            <div class="section last">
+                                                <div>
+                                                  <input type="submit" value="Export To Excel" name="attendenceExcel" class="btn submit_form"></input>
+ </div>
+                                           </div>
+                                        </form>
+                                </div><!--  end widget-content -->
+                         
+                            
+             <!-- start right section--> 
+{% endblock %}
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}

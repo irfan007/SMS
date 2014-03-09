@@ -1,0 +1,129 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+
+
+
+
+{% block leftMenu %}
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                       
+                                           <li><a href="/feeCategory/" ><span class="ico gray shadow pictures_folder"></span><b>Fees Category</b></a></li>
+                   
+                       <li ><a href="/assignFees/" ><span class="ico gray shadow pictures_folder"></span><b>Assign Fees</b></a></li>
+                 <li class="select"><a href="/feePayment/" ><span class="ico gray shadow pictures_folder"></span><b>Fees Collection</b></a></li>
+                
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              {%endblock%}
+
+
+
+
+
+{% block form1Title %}
+  Payment List
+  {% endblock %} 
+  {% block form1Header %}
+ <div class="btn-group btn-square" style="float:right; margin:3px 2px 0 0" >
+ <a class="btn  btn-large" href="/pendingfee/"><strong>FeeDefaulters</strong></a>
+     </div>
+    {% endblock %}
+ 
+  
+                           
+       {% block form1Body %}    
+                          
+
+                         {% for error in  errors %}
+                         <font color="red">{{error}}</font>
+                         {% endfor %}
+                                
+              <div id="UITab" style="position:relative; ">
+                                         
+                                          <div class="" >
+                                          <div id="tab1" class="tab_content">
+                                          
+                     <form method="post" action="/feePayment/">  
+                     <h4>Search Student</h4>
+                     <table> 
+                     <tr>
+                     <td><label>STUDENT ID</label></td>
+                     <td>                 
+                     <input type="text" name="studentid" value=""></td>
+                     <td>
+                     <input type="submit" name="getStudent" value="Search">
+                     </td>
+                     </tr>
+                     </table>               
+                                   </form>
+                                           
+                    <table class="table table-bordered table-striped "  width="100%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr >
+                                                        <td width="12%">Student Id</td>
+                                                        <td width="20%">StudentName</td>
+                                                        
+
+                                                        
+                                                        <td width="15%">PaymentMode</td>
+                                                        <td width="15%">Date of Payment</td>
+                                                        <td width="20%">View</td>
+                                                        
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody align="center" class="font_wght">
+                                                     
+                                                      {% for item in allrows %}
+                                                       <tr>
+                                                        <td>{{item.studid.getSTUDid}}</td>
+                                                        <td>{{item.studid.getName}}</td>
+                                                    
+                                                        
+                                                         <td>
+                                                        {{item.getPaymentMode}}
+                                                 
+                                                        </td>
+                                                        <td>
+                                                        {{item.rdate}}
+                                                 
+                                                        </td>
+                                        
+                                                        <td class="brdrnone"><a href="/feePayment/edit/{{item.id}}">
+                              <img src="{% static "images/edit.png" %}" width="28" height="28" alt="View" title="View">
+                                                        </a>
+                                                    </td>
+                                                    
+                                                      </tr>
+                         {% empty %}
+     												<tr>
+     												<td colspan="5">No data found</td>
+     												</tr>  
+                                                    {% endfor %}
+                                
+                                                    </tbody>
+                                                  </table>
+                                                  <a class="btn  btn-large" href="/pendingfee/"><strong>FeeDefaulters</strong></a>
+                                                  <p align="right">
+                                                  {% if PREV %}
+                                                  <a href="/PrevfeePayment/{{back}}/"><< PREVIOUS</a>
+                                                  {% endif %}
+                                                  
+                                                  {% if NEXT %}
+                                                  <a href="/NextfeePayment/{{pagination_parameter}}/">NEXT>></a>
+                                                  {% endif %}
+                                                  </p>
+                                      </div>
+                                              
+                          
+                                      </div>
+                                </div>
+                                
+                   
+                        
+                            
+                           {% endblock %} 
+           {%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}                

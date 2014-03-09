@@ -1,0 +1,478 @@
+{% extends 'dashboard.html'%}
+{% load staticfiles %}
+
+
+{% block leftMenu %}
+<div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                       
+              
+                        {%if CUP.role.v or isAdmin%}
+                       <li ><a href="/role" ><span class="ico gray shadow pictures_folder"></span><b>Role</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.user.v or isAdmin%}
+                       <li><a href="/user" ><span class="ico gray shadow pictures_folder"></span><b>User</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.staff.v or isAdmin%}
+                       <li class="select"><a href="/staff" ><span class="ico gray shadow pictures_folder"></span><b>Staff</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.medium.v or isAdmin%}
+                       <li ><a href="/mediums/" ><span class="ico gray shadow pictures_folder"></span><b>Medium</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.section.v or isAdmin%}
+                       <li ><a href="/sections/" ><span class="ico gray shadow pictures_folder"></span><b>Section</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.standard.v or isAdmin%}
+                       <li ><a href="/standards/" ><span class="ico gray shadow pictures_folder"></span><b>Standard</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.subject.v or isAdmin%}
+                       <li ><a href="/subjects/" ><span class="ico gray shadow pictures_folder"></span><b>Subject</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.grades.v or isAdmin%}
+                       <li ><a href="/grading/" ><span class="ico gray shadow pictures_folder"></span><b>Grades</b></a></li>
+                       {%endif%}
+                       {%if CUP.exam.v or isAdmin%}
+                       <li ><a href="/examType/" ><span class="ico gray shadow pictures_folder"></span><b>Exams</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.holiday.v or isAdmin%}
+                       <li ><a href="/holidays/" ><span class="ico gray shadow pictures_folder"></span><b>Holidays</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.setting.v or isAdmin%}
+                       <li ><a href="/school/" ><span class="ico gray shadow pictures_folder"></span><b>Setting</b></a></li>
+                       {%endif%}
+                  </ul>              
+              	  <div id="footer"> &copy; Copyright 2013  </div>
+</div>
+{%endblock%}
+
+
+{% block form1Title%}
+Edit Staff:
+{%endblock%}
+
+{%block widgetContent%}
+
+<script>
+
+function calcAge(dobString) {
+  dobString=dobString.split("-")
+  dobString=dobString[1]+'/'+dobString[0]+'/'+dobString[2];
+  
+  var birthday = new Date(dobString);
+  var age=~~((Date.now() - birthday) / (31557600000));
+  if(age<20)
+  {alert("please enter valid birth date!");}
+  else{
+  document.getElementById('age').value=age;}
+}
+
+
+
+function getCity(stateId)
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("citydiv").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/responder?state="+stateId,true);
+xmlhttp.send();
+}
+
+function getCity2(stateId)
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("citydiv2").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/responder?state="+stateId,true);
+xmlhttp.send();
+}
+</script>
+
+<div class="content" style="margin:0 10px 0 10px" >
+<div style="background:lightyellow;">
+      <ul style="color:red;style:disk;">
+                	{% for e in errors %}
+                	  <li>{{e}}</li>
+                	{%endfor%}
+      </ul>
+      <ul style="color:green;style:disk;">
+                	{% for w in warns %}
+                	  <li>{{w}}</li>
+                	{%endfor%}
+      </ul>
+      
+</div>
+		<!-- Smart Wizard -->
+  		<div id="wizard" class="swMain" >
+  			<ul>
+
+  				<li><a href="#step-1">
+                <span class="stepDesc">Personal Details<br/>
+                </span>
+                </a>
+                </li>
+                
+                <li><a href="#step-2">
+                <span class="stepDesc">Other Details<br/>
+                </span>
+                </a>
+                </li>
+  			</ul>
+            
+            <form name="form1" method="post" action="" enctype="multipart/form-data" > 
+  			<div id="step-1" style="width:100%;">
+			           <div class="widget-content">
+                                    <!-- title box -->
+                                    
+                                     
+
+                                          
+                                           
+                                          <div class="section" >
+                                                <label>Emp Id</label>   
+                                                <div>
+                                            <input type="text" name="empid" class="medium" readonly  value="{{empPrefix}}{{empid}}"/>       
+                                               </div>
+                                          </div>
+                                          
+                                            <div class="section" >
+                                                <label>Title <sup>*</sup></label>   
+                                                <div  class="selectWidth1"> <select class="small"  name="title">
+
+                                                <option value="-1" selected >Select Title</option>
+                                                   {%if title == 'm'%}
+                                                   <option value="m"  selected>Mr.</option>
+                                                   {%else%}
+                                                   <option value="m" >Mr.</option>
+                                                   {%endif%}
+                                                   
+                                                   {%if title == 'f'%}
+                                                   <option value="f"  selected>Mrs.</option>
+                                                   {%else%}
+                                                   <option value="f" >Mrs.</option>
+                                                   {%endif%}
+                                                   
+                                                   
+                                                   {%if title == 'ms'%}
+                                                   <option value="ms"  selected>Miss</option>
+                                                   {%else%}
+                                                   <option value="ms" >Miss</option>
+                                                   {%endif%}
+                                                   
+                                                   
+                                              </select></div>
+                                           </div>
+                                           
+                                         
+                                           <div class="section" >
+                                                <label> First Name <sup>*</sup></label>   
+                                                <div> <input type="text" maxlength="100" name="fname" value="{{fname}}" class="medium"  /></div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label> Last Name <sup>*</sup></label>   
+                                                <div> <input type="text" name="lname" maxlength="100" value="{{lname}}" class="medium"  /></div>
+                                           </div>
+                                           
+                                           
+                                           <div class="section" >
+                                                <label>DOB</label>   
+                                                <div> <input type="text" name="dob" class="datepicker" style="text-align:left" value="{{dob}}" class="medium"  onchange="calcAge(this.value);" /></div>
+
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label> Age</label>   
+                                                <div> <input type="text" name="age" id="age" value="{{age}}" class="medium" onkeypress="return isNumberKey(event)" /></div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label> Email</label>   
+                                                <div> <input type="text" name="email" maxlength="150" value="{{email}}" class="medium"  /></div>
+                                           </div>
+                                           
+                                           <br/>
+                                           <br/>
+                                           <fieldset>
+                                           <legend><h3>Local Residence  </h3></legend>
+                                           <div class="section" >
+                                                <label>Address <sup>*</sup></label>   
+                                                <div> <textArea name="ladd" maxlength="500" value="{{ladd}}" class="medium"/>{{ladd}}</textArea></div>
+                                           </div>
+                                           <div class="section" >
+                                                <label>State <sup>*</sup></label>   
+                                                <div class="selectWidth1" >
+                                                	<select class="small"  name="lstate" onchange="getCity(this.value)">
+                                                		<option value="-1"  selected>Select State</option>
+                                                	  {%for s in states%}
+                                                	    {%ifequal lstate s.id%}
+                                                		<option value="{{s.id}}" selected>{{s.name|title}}</option>
+                                                		{%else%}
+                                                		<option value="{{s.id}}" >{{s.name|title}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > no states found ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                	
+                                                	        
+                                                </div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label>City <sup>*</sup> </label>   
+                                                <div class="selectWidth1" id="citydiv">
+                                                	<select class="small"  name="lcity" >
+                                                	<option value="-1" selected>Select City</option>
+                                                	    {%for c in cities%}
+                                                	    {%ifequal lcity c.id%}
+                                                	    <option value="{{c.id}}" selected  >{{c.name}}</option>
+                                                	    {%else%}
+                                                	    <option value="{{c.id}}"  >{{c.name}}</option>
+                                                	    {%endifequal%}
+                                                	    {%empty%}
+                                                		<option value="-1" selected  >Select State First</option>
+                                                		{%endfor%}
+                                                	</select>       
+                                                </div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label> Pincode <sup>*</sup></label>   
+                                                <div> <input type="text" maxlength="12" name="lpin" value="{{lpin}}" class="medium"  onkeypress="return isNumberKey(event)"/></div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label> Mobile No. <sup>*</sup> </label>   
+                                                <div> <input type="text" maxlength="12" name="lmobile" value="{{lmobile}}" class="medium"  onkeypress="return isNumberKey(event)"/></div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label> Landline No. <sup>*</sup> </label>   
+                                                <div> <input type="text" maxlength="12" name="llandline" value="{{llandline}}" class="medium" onkeypress="return isNumberKey(event)" /></div>
+                                           </div>
+                                           
+                                           </fieldset>
+                                           
+                                           
+                                           
+                                           <br/>
+                                           <br/>
+                                           <br/>
+                                           <br/>
+                                           
+                                           
+                                           <fieldset>
+                                           <legend><h3>Permanent Residence </h3></legend>
+                                           <div class="section" >
+                                                <label>Address <sup>*</sup></label>   
+                                                <div> <textArea name="padd" maxlength="500" value="{{padd}}" class="medium"/>{{padd}}</textArea></div>
+                                           </div>
+                                           <div class="section" >
+                                                <label>State <sup>*</sup></label>   
+                                                <div class="selectWidth1" >
+                                                	<select class="small"  name="pstate" onchange="getCity2(this.value)">
+                                                		<option value="-1"  selected>Select State</option>
+                                                	  {%for s in states2%}
+                                                	    {%ifequal pstate s.id%}
+                                                		<option value="{{s.id}}" selected>{{s.name|title}}</option>
+                                                		{%else%}
+                                                		<option value="{{s.id}}" >{{s.name|title}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > no states found ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                	
+                                                	        
+                                                </div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label>City <sup>*</sup></label>   
+                                                <div class="selectWidth1" id="citydiv2">
+                                                	<select class="small"  name="pcity" >
+                                                	<option value="-1" selected>Select City</option>
+                                                	    {%for c in cities2%}
+                                                	    {%ifequal pcity c.id%}
+                                                	    <option value="{{c.id}}" selected  >{{c.name}}</option>
+                                                	    {%else%}
+                                                	    <option value="{{c.id}}"  >{{c.name}}</option>
+                                                	    {%endifequal%}
+                                                	    {%empty%}
+                                                		<option value="-1" selected  >Select State First</option>
+                                                		{%endfor%}
+                                                	</select>       
+                                                </div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label> Pincode <sup>*</sup></label>   
+                                                <div> <input type="text" maxlength="12" name="ppin" value="{{ppin}}" class="medium"  onkeypress="return isNumberKey(event)"/></div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label> Mobile No. <sup>*</sup></label>   
+                                                <div> <input type="text" name="pmobile" maxlength="12" value="{{pmobile}}" class="medium"  onkeypress="return isNumberKey(event)"/></div>
+                                           </div>
+                                           
+                                           <div class="section" >
+                                                <label> Landline No. <sup>*</sup></label>   
+                                                <div> <input type="text" maxlength="12" name="plandline" value="{{plandline}}" class="medium"  onkeypress="return isNumberKey(event)"/></div>
+                                           </div>
+                                           
+                                           </fieldset>
+                   							
+                   						
+                   						  <br/>
+                                          <br/>
+                                          
+                                          <div class="section">
+                                          <label> upload Photo <sup>*</sup></label>   
+                                          
+                                          {%if photoPath%}
+                                          <div >
+                                          <img style="border:3px solid black;" src="{% static photoPath %}" alt="NO IMAGE" width="200" height="200" />
+                                          </div>
+                                          {%endif%}
+                                          
+                                         
+                                          
+                                         
+                                          <label> upload Photo <sup>*</sup></label>   
+                                          <div style="padding-bottom:5px;"> 
+                                              <input type="file" name="image"  />
+                                          </div>
+                                          </div>
+                                          
+                                          
+                                           
+                                          
+                     </div>                                  
+                                           
+			</div>   
+			
+			
+			
+			<div id="step-2" style="width:100%;">
+			           <div class="widget-content">
+                                    <!-- title box -->
+                                                                               
+                                          
+                                         <div class="section" >
+                                                <label>joining Date</label>   
+                                                <div> <input type="text" name="joindate" class="datepicker" style="text-align:left" value="{{joindate}}" class="medium"   /></div>
+
+                                         </div> 
+                                          
+                                          
+                                         <div class="section" >
+                                       
+                                                <label> Total Experience </label>   
+                                                <div> <input type="text" maxlength="6" name="totalExp" value="{{totalExp}}" class="medium"  onkeypress="return isNumberKey(event)"/></div>
+                                         </div>
+                                          
+                                         <div class="section" >
+                                       
+                                                <label> Designation </label>   
+                                                <div> <input type="text" maxlength="100" name="desig" value="{{desig}}" class="medium"  /></div>
+                                         </div>
+                                          
+                                         <div class="section" >
+                                       
+                                                <label> Salary </label>   
+                                                <div> <input type="text" maxlength="12" name="salary" value="{{salary}}" class="medium"  onkeypress="return isNumberKey(event)"/></div>
+                                         </div>
+                                           
+                                           <div class="section" >
+                                                <label>Login As User </label>   
+                                                <div class="selectWidth1" >
+                                                	<select class="small"  name="user" >
+                                                		<option value="-1"  selected>Select User</option>
+                                                	  {%for u in users %}
+                                                	    {%ifequal user u.id%}
+                                                		<option value="{{u.id}}" selected>{{u.username|title}}</option>
+                                                		{%else%}
+                                                		<option value="{{u.id}}" >{{u.username|title}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > no user found ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                	
+                                                	        
+                                                </div>
+                                           </div>
+                                           
+                                           
+                                           <div class="section last">
+                                             <div>
+                                                  <input type="submit" name="editStaff" value="Save" class="btn submit_form"></input>
+											</div>
+                                           </div>
+                                         
+                                          
+                     </div>                                  
+                                           
+			</div>
+			
+			
+			
+			
+			
+  	      </form>  
+	   
+	   </div>
+            
+      </div>
+                                        
+
+
+                           
+
+{%endblock%}
+
+
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}
+

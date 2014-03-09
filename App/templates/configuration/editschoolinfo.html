@@ -1,0 +1,364 @@
+{% extends 'dashboard.html'%}
+{% load staticfiles %}
+
+{% block leftMenu %}
+
+ <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                     {%if CUP.role.v or isAdmin%}
+                       <li ><a href="/role" ><span class="ico gray shadow pictures_folder"></span><b>Role</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.user.v or isAdmin%}
+                       <li><a href="/user" ><span class="ico gray shadow pictures_folder"></span><b>User</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.staff.v or isAdmin%}
+                       <li ><a href="/staff" ><span class="ico gray shadow pictures_folder"></span><b>Staff</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.medium.v or isAdmin%}
+                       <li ><a href="/mediums/" ><span class="ico gray shadow pictures_folder"></span><b>Medium</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.section.v or isAdmin%}
+                       <li ><a href="/sections/" ><span class="ico gray shadow pictures_folder"></span><b>Section</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.standard.v or isAdmin%}
+                       <li ><a href="/standards/" ><span class="ico gray shadow pictures_folder"></span><b>Standard</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.subject.v or isAdmin%}
+                       <li ><a href="/subjects/" ><span class="ico gray shadow pictures_folder"></span><b>Subject</b></a></li>
+                       {%endif%}
+                       
+                       
+                       {%if CUP.grades.v or isAdmin%}
+                       <li ><a href="/grading/" ><span class="ico gray shadow pictures_folder"></span><b>Grades</b></a></li>
+                       {%endif%}
+                       {%if CUP.exam.v or isAdmin%}
+                       <li ><a href="/examType/" ><span class="ico gray shadow pictures_folder"></span><b>Exams</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.holiday.v or isAdmin%}
+                       <li ><a href="/holidays/" ><span class="ico gray shadow pictures_folder"></span><b>Holidays</b></a></li>
+                       {%endif%}
+                       
+                       {%if CUP.setting.v or isAdmin%}
+                       <li class="select"><a href="/school/" ><span class="ico gray shadow pictures_folder"></span><b>Setting</b></a></li>
+                       {%endif%}
+                     <script>
+                     function getCityforLocal(stateId)
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("citydiv1").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","/accMresponder?lstate="+stateId,true);
+xmlhttp.send();
+}
+function addMedium()
+{
+x=document.getElementById('getMedLength').value
+x=parseInt(x)+1
+document.getElementById('getMedLength').value=x
+var textbox1 = document.createElement('input');  
+		textbox1.setAttribute('type', 'text');
+		textbox1.setAttribute('name', 'medium'+x.toString());
+xxxx=document.createElement("br");		
+document.getElementById('extraMedium').appendChild(textbox1)
+document.getElementById('extraMedium').appendChild(xxxx)
+
+}                     
+
+function isNumberKey(evt)
+          {
+             var charCode = (evt.which) ? evt.which : event.keyCode
+             if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+ 
+             return true;
+          }
+
+
+</script
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+{% endblock %}
+{% block form1Title%}
+Edit School Details
+{%endblock%}
+
+{%block widgetContent%}
+
+
+
+<div class="content" style="margin:0 10px 0 10px" >
+<div style="background:lightyellow;">
+      <ul style="color:red;style:disk;">
+                	{% for e in errors %}
+                	  <li>{{e}}</li>
+                	{%endfor%}
+      </ul>
+      <ul style="color:green;style:disk;">
+                	{% for w in warns %}
+                	  <li>{{w}}</li>
+                	{%endfor%}
+      </ul>
+      
+</div>
+		<!-- Smart Wizard -->
+  		<div id="wizard" class="swMain" >
+  			<ul>
+
+  				<li><a href="#step-1">
+                <span class="stepDesc">Information<br/>
+                </span>
+                </a>
+                </li>
+                
+                <li><a href="#step-2">
+                <span class="stepDesc">Payment Details<br/>
+                </span>
+                </a>
+                </li>
+  			</ul>
+            
+            <form id="add_user" method="post" action="/school/edit/{{para}}/" enctype="multipart/form-data">  
+            
+  			<div id="step-1" style="width:100%;">
+			           <div class="widget-content">
+                                    <!-- title box -->
+                                    
+                                     
+
+                                          
+                                           
+                              <div class="section" >
+                                                <label>School Name<sup>*</sup> </label>   
+                                                <div> <input type="text" name="name" class=" large" value="{{name}}"   /></div>
+                                           </div>
+                                            <div class="section" >
+                                                <label>Board</label>   
+                                                <div> <input type="text" name="board1" class="medium" value="{{board1}}" maxlength="100"  /></div>
+                                           </div>
+                                          
+                                           <div class="section">
+                                           <label>Academic Year<sup>*</sup></label> 
+                                           <div>
+                                           
+                                                             
+                                   
+                                    <table>
+                                    <tr><td colspan="2"><label>Start Month</label></td><td colspan="2"><label>&nbsp&nbsp&nbspEnd Month</label></td></tr>
+                                      {% for data in months %}
+                                      <tr>
+                                      <td>
+                                      {% ifequal forloop.counter startsession %}
+                                      <input type="radio" name="startsession" value="{{forloop.counter}}" checked multiple>
+                                      {% else %}
+		<input type="radio" name="startsession" value="{{forloop.counter}}" multiple>
+		{% endifequal %}
+                                      </td>
+                                      <td>
+                                    
+                                   <label> {{data}}</label>
+                                      </td>
+                                    <td>
+                                    &nbsp&nbsp&nbsp
+                                      {% ifequal forloop.counter endsession %}
+                                      <input type="radio" name="endsession" value="{{forloop.counter}}" checked>
+                                      {% else %}
+		<input type="radio" name="endsession" value="{{forloop.counter}}">
+		{% endifequal %}
+                                      </td>
+                                      <td>
+                                    
+                                   <label> {{data}}</label>
+                                      </td>
+                                      </tr>
+                                      {% endfor %}
+                                           
+                                           </table>
+                                           </div>
+                                           
+                                           
+                                           
+                                           </div>
+                                          
+                                           
+                                            <div class="section" >
+                                                <label>Address<sup>*</sup> </label>   
+                                                <div> <input type="text" name="address" class=" large" value="{{address}}"   /></div>
+                                           </div>
+                                               <div class="section" >
+                                                <label>Contact No<sup>*</sup> </label>   
+                                                <div> <input type="text" name="contact" class=" medium" value="{{contact}}" maxlength="12" onkeypress="return isNumberKey(event)" placeholder="in digit"  /></div>
+                                           </div>
+                                           
+                                          <div class="section" >
+                                                <label>State <sup>*</sup></label>   
+                                                <div class="selectWidth1" >
+                                                	<select class="small"  name="lstate" onchange="getCityforLocal(this.value)">
+                                                		<option value="-1"  selected>Select State</option>
+                                                	  {%for s in states%}
+                                                	    {%ifequal getlstate s.id%}
+                                                		<option value="{{s.id}}" selected>{{s.name|title}}</option>
+                                                		{%else%}
+                                                		<option value="{{s.id}}" >{{s.name|title}}</option>
+                                                		{%endifequal%}
+                                                      {%empty%}
+                                                         <option value="-1" > no states found ! </option>
+                                                      {%endfor%}
+                                                       	
+                                                	</select>
+                                                	
+                                                	        
+                                                </div>
+                                           </div>
+                                           <div class="section" >
+                                                <label>City <sup>*</sup></label>   
+                                                <div class="selectWidth1" id="citydiv1">
+                                                	<select class="small"  name="lcity" >
+                                                	<option value="-1" selected>Select City</option>
+                                                	    {%for c in lcities%}
+                                                	    {%ifequal getlcity c.id%}
+                                                	    <option value="{{c.id}}" selected  >{{c.name}}</option>
+                                                	    {%else%}
+                                                	    <option value="{{c.id}}"  >{{c.name}}</option>
+                                                	    {%endifequal%}
+                                                	    {%empty%}
+                                                		
+                                                		{%endfor%}
+                                                	</select>       
+                                           </div>
+                                           </div>
+                                       <div class="section" >
+                                                <label >Website</label>   
+                                                <div> <input type="text" name="website" value="{{website}}" maxlength="50" class="medium" /></div>
+</div>                                     
+                                                                            <div class="section" >
+                                                <label >Upload LOGO</label>   
+                                                <div> <input type="file" name="logoImage"  /></div>
+</div>
+                                        
+                                          
+                                          
+                                           
+                                         
+                                           
+                                           
+                                         
+                                           
+                                           
+                                       
+                                       
+                                          
+                                           
+                                          
+                     </div>                                  
+                                           
+			</div>   
+			
+			
+			
+			<div id="step-2" style="width:100%;">
+			           <div class="widget-content">
+                                    <!-- title box -->
+                                      <div class="section" >
+                                                <label>Date </label>   
+                                                <div> <input type="text"  id="datepick"   name="date1"  value="{{getPayDate}}" style="text-align:left" readonly  /></div>
+                                           </div>                                         
+                                      <div class="section">
+                                      <label>Amount</label>
+                                      <div><input type="text" name="amount" value="{{amount}}" maxlength="8" readonly >
+                                      </div></div>    
+                                   <div class="section" >
+                                                <label>Payment Option</label>   
+                                                <div class="selectWidth1">
+                                               
+                                          <input type="text" readonly value="{{paymode}}">     
+                                    	         
+                                    	          
+                                          </div>
+                                           </div>
+                                           
+                                               <div class="division">
+                                       
+                                        <div class="section when_cash" >
+                                                <label >Bank Name</label>   
+                                                <div> <input type="text" maxlength="50" name="bank" value="{{bank}}" readonly class="medium"  /></div>
+
+                                        </div>
+                                        <div class="section " >
+                                                <label id="rec_no">Recipt No.</label>   
+                                                <div> <input type="text" name="reciptno" maxlength="25" value="{{reciptno}}" readonly class="medium"  /></div>
+                                           </div> 
+                                        <div class="section when_cash" >
+                                                <label id="pt_no">Cheque DD No.</label>   
+                                                <div> <input type="text" name="chequeno" maxlength="25" readonly  value="{{chequeno}}" class="medium"  /></div>
+                                           </div>   
+                                        
+                                           <div class="section" >
+                                                <label id="pt_date">Cheque DD date</label>   
+                                                <div> <input type="text" name="chequedate"  style="text-align:left" value="{{chequedate}}" class="medium" readonly  /></div>
+
+                                           </div>
+                                           
+                                           
+                                           
+                                                                                      
+                                      
+                                       </div>
+                                           
+                                    
+    
+                                           
+                                           
+                                           <div class="section last">
+                                             <div>
+                                                  <input type="submit" name="editSchool" value="Save" class="btn submit_form"></input>
+											</div>
+                                           </div>
+                                         
+                                          
+                     </div>                                  
+                                           
+			</div>
+			
+			
+			
+			
+			
+  	      </form>  
+	   
+	   </div>
+            
+      </div>
+                                        
+
+
+                           
+
+{%endblock%}
+
+
+
+{%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}

@@ -1,0 +1,162 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+
+
+
+
+{% block leftMenu %}
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                    <li class="select"><a href="/attendences/" ><span class="ico gray shadow pictures_folder"></span><b>Staff Attendence</b></a></li>
+                      
+                      <li><a href="/report/attendence/" ><span class="ico gray shadow pictures_folder"></span><b>View Report</b></a></li>      
+               
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              
+              
+              <script>
+  function isNumberKey(evt)
+          {
+             var charCode = (evt.which) ? evt.which : event.keyCode
+             if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+ 
+             return true;
+          }
+ 
+ function getattendenceforemployee1()
+{
+
+sessionvalue=document.getElementById("sessionId").value
+monthvalue=document.getElementById("monthid").value
+
+location.href="/attendence/data/"+sessionvalue+'/'+monthvalue
+
+}
+          
+  
+ 
+  </script>
+              {%endblock%}
+
+
+
+
+
+{% block form1Title %}
+  <font size="3">Attendence List for {{getmonths}} {{selectsession}}</font>  
+  {% endblock %} 
+  {% block form1Header %}
+ <div class="btn-group btn-square" style="float:right; margin:3px 2px 0 0" >
+ 
+     <a class="btn  btn-large" href="/attendence/add/"><strong>Add Attendence</strong></a></div>
+    {% endblock %}
+ 
+  
+                           
+          
+                          
+    
+             
+             
+            
+                                                
+                                                
+                                  
+                 <div class="widget  clearfix" style="margin-top:20px;">
+                                
+ {% block form1Body %}
+				
+				
+							 <table>
+             <tr>
+             <td></td>
+             <td><label>Session:</label></td><td>&nbsp&nbsp</td><td style="vertical-align:center;">
+             <select id="sessionId" onchange="getattendenceforemployee1()" name="selectsession">
+             {% for data in sessionlist %}
+             {% ifequal selectsession data %}
+             <option value="{{data}}" selected>{{data}}</option>
+             {% else %}
+             <option value="{{data}}">{{data}}</option>
+             {% endifequal %}
+             {% endfor %}
+              
+             </td>
+             <td><label>&nbsp&nbsp&nbspSelect Month:&nbsp&nbsp</label></td>
+             <td><select id="monthid" onchange="getattendenceforemployee1()" class="selectWidth2">
+             {% for data in months %}
+             {% ifequal month forloop.counter %}
+             <option value="{{forloop.counter}}" selected>{{data}}</option>
+             {% else %}
+             <option value="{{forloop.counter}}">{{data}}</option>
+             {% endifequal %}
+             {% endfor %}
+             </select></td>
+             
+             </tr>
+            
+            
+            
+             </tr></table>        
+             <script>
+             
+             </script>
+                                     
+                                <div class="widget-content">
+                                <div id="UITab" style="position:relative; ">
+                                         
+                                        <div style="width:100%" class="" id="scroll_area" >
+                                          <div id="tab1" class="tab_content"> 
+                                          <div id="tablevalues">
+          									<table class="table table-bordered table-striped"  id="" width="200%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr >
+                                                        <td width="20">Employees</td>
+                                                        {% for d in allrows %}
+                                                        <td width="10">{{d.getday}}</td>
+                                                        {% endfor %}
+                                                        
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody align="center" class="font_wght">
+                                                     
+                                                      {% for v in overall %}
+													<tr>	                                                      
+     													<td>{{v.0}}</td>
+     													{% for ddd in v.1 %}
+     													<td><pre><font face="arial">{{ddd}}</font></pre></td>
+     													{% endfor %}
+     													</tr>
+     													
+     													
+     													
+     											{% empty %}
+     <tr><td colspan="5">No data at present</td></tr>		
+                                                    {% endfor %}
+                                                   
+                                                    </tbody>
+                                                    
+                                          </table>
+                                          <a class="btn  btn-large" href="/attendence/add/"><strong>Add Attendence</strong></a>
+                                     </div>
+                                 
+									 </form>
+									 <br>
+                                      </div>
+                                      </div>
+                                      </div>
+                                      </div>
+               
+                                      </div>
+                                      </div>
+                        
+                            
+                           {% endblock %}
+ {%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}                          
+                           
+                            
+                           

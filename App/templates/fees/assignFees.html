@@ -1,0 +1,141 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+
+
+
+
+{% block leftMenu %}
+<script>
+function getSessionFees()
+{
+x=document.getElementById('selected_session').value
+
+location.href="/assignFees/"+x+'/'
+}
+</script>
+             <div id="left_menu">
+                    <ul id="main_menu" class="main_menu">
+                            <li ><a href="/feeCategory/" ><span class="ico gray shadow pictures_folder"></span><b>Fees Category</b></a></li>
+                      
+                      <li class="select"><a href="/assignFees/" ><span class="ico gray shadow pictures_folder"></span><b>Assign Fees</b></a></li>
+                      <li><a href="/feePayment/" ><span class="ico gray shadow pictures_folder"></span><b>Fees Collection</b></a></li>
+               
+        </ul>              
+                    <div id="footer"> &copy; Copyright 2013  </div>
+              </div>
+              
+              
+             
+              {%endblock%}
+
+
+
+
+
+{% block form1Title %}
+  <font size="3">Fees Amount</font>  
+  {% endblock %} 
+  {% block form1Header %}
+ <div class="btn-group btn-square" style="float:right; margin:3px 2px 0 0" >
+ 
+     <a class="btn  btn-large" href="/assignFees/add/"><strong>Assign Fees</strong></a></div>
+    {% endblock %}
+ 
+  
+                           
+          
+                          
+    
+             
+             
+            
+                                                
+                                                
+                                  
+                 <div class="widget  clearfix" style="margin-top:20px;">
+                                
+ {% block form1Body %}
+				
+				
+							        
+          
+          
+                                     
+                                <div class="widget-content">
+                                <div id="UITab" style="position:relative; ">
+                                         
+                                        <div style="width:100%" class="" id="scroll_area" >
+                                          <div id="tab1" class="tab_content"> 
+                                          <div id="tablevalues">
+                                          {% for error in errors %}
+                                          <font color="red">{{error}}</font>
+                                          {% endfor %}
+                                             <form name="jump1">
+                                          <table><tr><td> <label>Select Session:&nbsp&nbsp&nbsp&nbsp</label></td><td><select name="selectsession" id="selected_session" class="selectWidth1" OnChange='getSessionFees()'>{%for data in sessionlist %}{% ifequal data selectsession %} <option value="{{data}}" selected>{{data}}</option>{% else %}
+                                          <option value="{{data}}" >{{data}}</option>
+                                          {% endifequal %}
+                                          {% endfor %}</select>
+                                          </form>
+                                          
+                                          </td></tr></table>
+                                          
+                                          
+          									<table class="table table-bordered table-striped"  id="" width="200%">
+                                                    <thead align="center"  class="tr_bg_list">
+                                                      <tr >
+                                                        {% for data in temp %}
+                                                        <td>{{data}}</td>
+                                                        {% endfor %} 
+                                                        
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody align="center" class="font_wght">
+                                                     
+                                                      {% for v in overall %}
+													<tr>	                                                      
+     													<td><label>{{v.0.name}}-{{v.0.medium.name}}</label></td>
+     													<td>{{v.1}}</td>
+     													<td>{{v.2}}</td>
+     													<td>{{v.3}}</td>
+     													<td>{{v.4}}</td>
+     													<td>{{v.5}}</td>
+     													<td>{{v.6}}</td>
+     													<td>{{v.7}}</td>
+     													<td>{{v.8}}</td>
+     													<td>{{v.9}}</td>
+     													<td>{{v.10}}</td>
+     													<td>{{v.11}}</td>
+     													<td>{{v.12}}</td>
+     													<td>{{v.13}}</td>
+     													</tr>
+     													
+     													
+     													
+     											{% empty %}
+     <tr><td colspan="14">No data at present</td></tr>		
+                                                    {% endfor %}
+                                                   
+                                                    </tbody>
+                                                    
+                                          </table>
+                                          <a class="btn  btn-large" href="/assignFees/add/"><strong>Assign Fees</strong></a>
+                                     </div>
+                                 
+									 </form>
+									 <br>
+                                      </div>
+                                      </div>
+                                      </div>
+                                      </div>
+               
+                                      </div>
+                                      </div>
+                        
+                            
+                           {% endblock %}
+ {%block form1Width%}100%{%endblock%}
+{%block form2%}{%endblock%}
+{%block form3%}{%endblock%}                          
+                           
+                            
+                           
